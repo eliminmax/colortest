@@ -4,7 +4,7 @@ A series of tiny, static programs written in various languages that all
 output a specific, strictly-defined pattern of ANSI escape codes and
 whitespace to create a 256-color test pattern.
 
-So far, I've implemented it in C, POSIX Shell, Python 3, and Rust. I am working on a brainfuck implementation.
+So far, I've implemented it in C, POSIX Shell, Python 3, Node.js, and Rust. I am working on a brainfuck implementation.
 
 
 ## Questions and Answers
