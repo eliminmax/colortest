@@ -175,7 +175,13 @@ clear formatting and input 2 newlines
 <<<------ go to cell 6 and set it to '0' (the character)
 
 <<<<<<. go to cell 0 and begin escape code
+
 >>>. go to cell 3 and open escape sequence
+
 >>>. go to cell 6 and print '0'
+
 >. go to cell 7 and print 'm' to end sequence
+
 <<<<<.. go to cell 2 (newline) and print twice
+
+
