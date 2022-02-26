@@ -49,7 +49,7 @@ tape pointer @                 ^
 
 > move to cell 5
 
-set cell 5 to '4' (CHAR 0c34) — this will be the first numeric printable
+set cell 5 to '4' (CHAR 0c34) ; this will be the first numeric printable
    4    8    c   10   14   18   1c   20   24   28   2c   30   34
 ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++
 
@@ -101,7 +101,7 @@ go to cell 8 and set it to 0x0a
     . open escape sequence
 
     >> return to cell 5 (numeric starting at 4)
-    .++++. output 4¸ add 4 to value¸ output 8
+    .++++. output 4; add 4 to value; output 8
 
     <.> print ; from previous cell and return to cell 5
 
@@ -150,7 +150,7 @@ pop over to cell 6 and reset it to 0 (the character)
     . open escape sequence
 
     >> return to cell 5 (numeric starting at 4)
-    .++++. output 4¸ add 4 to value¸ output 8
+    .++++. output 4; add 4 to value; output 8
 
     <.> print ; form previous cell and return to cell 5
 
@@ -178,4 +178,4 @@ clear formatting and input 2 newlines
 >>>. go to cell 3 and open escape sequence
 >>>. go to cell 6 and print '0'
 >. go to cell 7 and print 'm' to end sequence
-<<<<<.
+<<<<<.. go to cell 2 (newline) and print twice
