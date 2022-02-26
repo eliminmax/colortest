@@ -1,0 +1,3 @@
+[submodule "colortest-cargo"]
+	path = colortest-cargo
+	url = ../colortest-cargo/
