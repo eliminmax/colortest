@@ -1,4 +1,4 @@
-#!/usr/bin/bf
+#!/usr/bin/env bf
 
 ### SET UP INITIAL VALUES
 
