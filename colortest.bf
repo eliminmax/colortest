@@ -1,187 +1,357 @@
 #!/usr/bin/env bf
+# vi:sw=5:ts=5:sts=5:et:nowrap:noai
+In these comments cells are zero indexed and cell values are hex unless specified otherwise
 
-### SET UP INITIAL VALUES
-
-set cell 0 to ANSI escape code (CHAR 0x1b)
-   4    8    c   10   14   18   1c
-++++ ++++ ++++ ++++ ++++ ++++ +++
-
-tape state is now 1b ……
-tape pointer @     ^
-
-> move to cell 1
-
-set cell 1 to space (CHAR 0x20)
-   4    8    c   10   14   18   1c   20
-++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++
-
-tape state is now 1b 20 ……
-tape pointer @        ^
-
-> move to cell 2
-
-set cell 2 to newline (CHAR 0x0a)
-   4    8    c   10   14   18   1c   20
-++++ ++++ ++
-
-tape state is now 1b 20 0a ……
-tape pointer @           ^
-
-> move to cell 3
-
-set cell 3 to open square bracket (can't type it because bf) (CHAR 0x5b)
-   4    8    c   10   14   18   1c   20   24   28   2c   30   34   38   3c
-++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ 
-   40   44   48  4c   50   54   58   5c
-++++ ++++ ++++ ++++ ++++ ++++ ++++ +++ 
-
-tape state is now 1b 20 0a 5b ……
-tape pointer @              ^
-
-> move to cell 4
-
-set cell 4 to ; (CHAR 0x3b)
-   4    8    c   10   14   18   1c   20   24   28   2c   30   34   38   3c
-++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ +++ 
-
-tape state is now 1b 20 0a 5b 3b ……
-tape pointer @                 ^
-
-> move to cell 5
-
-set cell 5 to '4' (CHAR 0c34) ; this will be the first numeric printable
-   4    8    c   10   14   18   1c   20   24   28   2c   30   34
-++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++
-
-tape state is now 1b 20 0a 5b 3b 34 ……
-tape pointer @                    ^
-
-> move to cell 6
-
-set cell 6 to 0 (the character) (CHAR 0x30)
-   4    8    c   10   14   18   1c   20   24   28   2c   30
-++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++
-
-tape state is now 1b 20 0a 5b 3b 34 30 ……
-tape pointer @                       ^
-
-> move to cell 7
-
-set cell 7 to m (CHAR 0x6d)
-   4    8    c   10   14   18   1c   20   24   28   2c   30   34   38   3c
-++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ 
-   40   44   48  4c   50   54   58   5c   60   64   68   6c   70
-++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ +
+Not particularly optimized here
 
 
-tape state is now 1b 20 0a 5b 3b 34 30 6d …… ……
-tape pointer @                          ^
-
-### BEGIN OUTPUT
-
-<<<< < return to cell 2 (newline)
-. output newline
-
-
-
-##### Colors 0 through 9
-
-go to cell 8 and set it to 0x0a
-
->>>> >>
-   4    8    c
-++++ ++++ ++
-
-[ loop until a cell with value 0 is hit
-
-    <<<< <<<< return to cell 0 (ANSI escape code)
-    . begin escape code
-
-    >>> return to cell 3 (open square bracket)
-    . open escape sequence
-
-    >> return to cell 5 (numeric starting at 4)
-    .++++. output 4; add 4 to value; output 8
-
-    <.> print ; from previous cell and return to cell 5
-
-    ---. decrement cell 5 down to 5 (the character) and print
-
-    - reset cell 5 to 4 (the character)
-
-    <.> print ; from previous cell and return to cell 5
-
-    >.+ go to cell 6 and print it out and increment it
-
-    >. go to cell 7 and print it out
-
-    <<<<<<..>>>>>> go to cell 1 and print it twice
-
-    >- go to cell 8 and decrement it by 1
+[
+Code in this loop will never execute, making it effectively a comment
+Used snippets from the Esolang wiki:
+ - https://esolangs.org/wiki/Brainfuck_algorithms
+ - https://esolangs.org/wiki/Brainfuck_constants
+wherever used, I'll credit it with the comment ({algorithm|constant} {name} from esolang wiki)
+If the algorithm name has characters with meaning in brainfuck, I will substitue or delete those characters
 ]
-ends on cell 8
 
-pop
 
-tape state is now 1b 20 0a 5b 3b 34 3a 6d 00 ……
-tape pointer @                             ^
+@@@@ STEP 0 @@@@
 
-##### Finish the first line with colors 10 through 15
 
-set cell 8 to 1 (the character) (CHAR 31)
-   4    8    c   10   14   18   1c   20   24   28   2c   30   34   38   3c
-++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ ++++ +
+initialize cell to the sequence |00|00|00|0a|1b|5b|34|38|3b|35|20|6d|…
 
-go to cell 9 and set it to 0x06
+
+@ STEP 0:0 initialize first four cells to |00|00|00|10|
+
+(constant 16 nonwrapping from esolang wiki)
+>>++++[>++++<-]>
+
+@ STEP 0:1 set each cell to the closest multiple of 16 that's less than its intended value
+[
+-         >    00
++         >    10
++++++     >    50
++++       >    30
++++       >    30
++++       >    30
++++       >    30
+++        >    20
+++++++    >    60
+<<<<<<<<<      back to cell 2
+]
+
+@ STEP 0:2 finish setting values
+
+++++++++++    > 0a
++++++++++++   > 1b
++++++++++++   > 5b
+++++          > 34
+++++++++      > 38
++++++++++++   > 3b
++++++         > 35
+              > 20
++++++++++++++   6d
+<<<<<<<<<<      back to cell 3
+
+
+@@@@ STEP 1 @@@@
+
+first 16 colors
+
+@ STEP 1:0 create counter in cell 2
+
+(constant 16 nonwrapping from esolang wiki)
+++++[>++++<-]>
+
+cells are now as follows
+  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f …
+|00|00|10|0a|1b|5b|34|38|3b|35|20|6d|00|00|00|00|…
+
+pointer is at cell 2
+
+@ STEP 1:1 loop
+
+print newline
+>.<
+[
+     >>
+     print escape sequence
+     .>   ESC
+     .>   Open square bracket
+     .>   '4'
+     .>   '8'
+     .>   ';'
+     .<   '5'
+     .>   ';'
+     >>> jump ahead to cell c
+
+     Print decimal representation of cell c
+     (algorithm "Print value of cell x as number (8 bit)" from esolang wiki)
+     >>++++++++++<<[->+>-[>+>>]>[+[-<+>]>+>>]<<<<<<]>>[-]>>>++++++++++<[->-[>+>>]>[+[-
+     <+>]>+>>]<<<<<]>[-]>>[>++++++[-<++++++++>]<.<<+>+>[-]]<[<[->-<]++++++[->++++++++
+     <]>.[-]]<<++++++[-<++++++++>]<.[-]<<[-<+>]<
+     That algorithm cleans itself up (putting us back at cell c with its initial value)
+
+     add one for next round and finish printing escape sequence
+     +<
+     .<   'm' to close off escape sequence
+     ..   ' ' * 2
+     back to cell 2 (from cell a)
+     <<<<<<<<
+     - decrement counter
+]
+
+
+@ STEP 1:2 end escape and newlines to end section
+
+currently at cell 2
 >
-   4    8
-++++ ++
+>.             ESC
+>.             Open square bracket
+>----.++++     '0' using 34 cell (cell 6)
+>>>>>.         'm'
+currently at cell b
 
-pop over to cell 6 and reset it to 0 (the character)
-<<<
----- ---- --
->>>
 
-[ loop until a cell with value 0 is hit
-    <<<< <<<< < return to cell 0 (ANSI escape code)
-    . begin escape code
+<<<<<<<< back to cell 3
+newlines
+..
 
-    >>> return to cell 3 (open square bracket)
-    . open escape sequence
+@@@@ STEP 2 @@@@
 
-    >> return to cell 5 (numeric starting at 4)
-    .++++. output 4; add 4 to value; output 8
+color cube hell
 
-    <.> print ; form previous cell and return to cell 5
+@ STEP 2:0 set up first hell loop
 
-    ---. decrement cell 5 down to 5 (the character) and print
+each row has 3 segments of 6 colors each
 
-    - reset cell 5 to 4 (the character)
+going to be a bit of a verbose pseudocode to avoid characters with meaning in brainfuck
+(all numbers in decimal here)
+with a staring number i we want:
+     i plus x for x in 0 through 6 followed by
+     i plus x for x in 36 through 42 followed by
+     i plus x for x in 72 through 78
 
-    <.> print ; from previous cell and return to cell 5
+  0  1  2  3  4  5  6  7  8  9  a  b  c …
+|00|00|00|0a|1b|5b|34|38|3b|35|20|6d|10|…
+           ^
+at cell 3
 
-    go to cell 8 and print it out then come back to cell 6 and print/increment
-    >>>.<<.+
+<
+++++++
+<
+++
+<
+++++++
 
-    >. go to cell 7 and print out m to end sequence
-    
-    <<<<<<..>>>>>> go to cell 1 and print it twice
+  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f …
+|06|02|06|0a|1b|5b|34|38|3b|35|20|6d|10|00|00|00|…
+  ^
 
-    >>- go to cell 9 and decrement it
+@ STEP 2:1 first hell loop
+[ outer loop starts at cell 0
+     ->
+     [    middle loop starts at cell 1
+          -> countdown and start inner loop
+          [ inner loop starts at cell 2
+               go to cell 4
+               >>
+               print start of escape sequence
+               .>   ESC
+               .>   Open square bracket
+               .>   '4'
+               .>   '8'
+               .>   ';'
+               .<   '5'
+               .>   ';'
+               go to cell c
+               >>>
+               (algorithm "Print value of cell x as number (8 bit)" from esolang wiki)
+               >>++++++++++<<[->+>-[>+>>]>[+[-<+>]>+>>]<<<<<<]>>[-]>>>++++++++++<[->-[>+>>]>[+[-
+               <+>]>+>>]<<<<<]>[-]>>[>++++++[-<++++++++>]<.<<+>+>[-]]<[<[->-<]++++++[->++++++++
+               <]>.[-]]<<++++++[-<++++++++>]<.[-]<<[-<+>]<
+               + add one for next run
+               <.<.. finish escape sequence and print spaces
+               <<<<<<<< back to cell 2
+               - countdown
+          ]
+          reset inner counter
+          ++++++
+          add 30 to cell c then go to cell 4
+          >>>>>>>>>>++++++++++++++++++++++++++++++<<<<<<<<
+          blank column then go to cell 1
+          .>.>----.++++>>>>>.<..<<<<<<<<<
+     ]
+     final sextuple ends with newline rather than space so it's not in the middle loop above
+ > to cell 2
+     [ inner loop starts at cell 2
+          go to cell 4
+          >>
+          print start of escape sequence
+          .>   ESC
+          .>   Open square bracket
+          .>   '4'
+          .>   '8'
+          .>   ';'
+          .<   '5'
+          .>   ';'
+          go to cell c
+          >>>
+          (algorithm "Print value of cell x as number (8 bit)" from esolang wiki)
+          >>++++++++++<<[->+>-[>+>>]>[+[-<+>]>+>>]<<<<<<]>>[-]>>>++++++++++<[->-[>+>>]>[+[-
+          <+>]>+>>]<<<<<]>[-]>>[>++++++[-<++++++++>]<.<<+>+>[-]]<[<[->-<]++++++[->++++++++
+          <]>.[-]]<<++++++[-<++++++++>]<.[-]<<[-<+>]<
+          + add one for next run
+          <.<.. finish escape sequence and print spaces
+          <<<<<<<< back to cell 2
+          - countdown
+     ]
+     reset counter
+     ++++++
+     clear ANSI formatting
+     >>.>.>----.++++>>>>>.
+     subtract 0x48 from cell c
+     >------------------------------------------------------------------------
+     new line
+     <<<<<<<<<.<<
+     reset counter
+     ++
+     back to cell 0
+     <
 ]
 
-clear formatting and input 2 newlines
+@ STEP 2:2 between the halves
 
-<<<------ go to cell 6 and set it to '0' (the character)
+newline
+>>>.
+>>>>>>>>>
+add 0x48 to cell c
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Back to cell 0
+<<<<<<<<<<<<
+Set up counter
+++++++
 
-<<<<<<. go to cell 0 and begin escape code
+@ STEP 2:3 hell loop 2
+[ outer loop starts at cell 0
+     ->
+     [    middle loop starts at cell 1
+          -> countdown and start inner loop
+          [ inner loop starts at cell 2
+               go to cell 4
+               >>
+               print start of escape sequence
+               .>   ESC
+               .>   Open square bracket
+               .>   '4'
+               .>   '8'
+               .>   ';'
+               .<   '5'
+               .>   ';'
+               go to cell c
+               >>>
+               (algorithm "Print value of cell x as number (8 bit)" from esolang wiki)
+               >>++++++++++<<[->+>-[>+>>]>[+[-<+>]>+>>]<<<<<<]>>[-]>>>++++++++++<[->-[>+>>]>[+[-
+               <+>]>+>>]<<<<<]>[-]>>[>++++++[-<++++++++>]<.<<+>+>[-]]<[<[->-<]++++++[->++++++++
+               <]>.[-]]<<++++++[-<++++++++>]<.[-]<<[-<+>]<
+               + add one for next run
+               <.<.. finish escape sequence and print spaces
+               <<<<<<<< back to cell 2
+               - countdown
+          ]
+          reset inner counter
+          ++++++
+          add 30 to cell c then go to cell 4
+          >>>>>>>>>>++++++++++++++++++++++++++++++<<<<<<<<
+          blank column then go to cell 1
+          .>.>----.++++>>>>>.<..<<<<<<<<<
+     ]
+     final sextuple ends with newline rather than space so it's not in the middle loop above
+ > to cell 2
+     [ inner loop starts at cell 2
+          go to cell 4
+          >>
+          print start of escape sequence
+          .>   ESC
+          .>   Open square bracket
+          .>   '4'
+          .>   '8'
+          .>   ';'
+          .<   '5'
+          .>   ';'
+          go to cell c
+          >>>
+          (algorithm "Print value of cell x as number (8 bit)" from esolang wiki)
+          >>++++++++++<<[->+>-[>+>>]>[+[-<+>]>+>>]<<<<<<]>>[-]>>>++++++++++<[->-[>+>>]>[+[-
+          <+>]>+>>]<<<<<]>[-]>>[>++++++[-<++++++++>]<.<<+>+>[-]]<[<[->-<]++++++[->++++++++
+          <]>.[-]]<<++++++[-<++++++++>]<.[-]<<[-<+>]<
+          + add one for next run
+          <.<.. finish escape sequence and print spaces
+          <<<<<<<< back to cell 2
+          - countdown
+     ]
+     reset counter
+     ++++++
+     clear ANSI formatting
+     >>.>.>----.++++>>>>>.
+     subtract 0x48 from cell c
+     >------------------------------------------------------------------------
+     new line
+     <<<<<<<<<.<<
+     reset counter
+     ++
+     back to cell 0
+     <
+]
 
->>>. go to cell 3 and open escape sequence
+@ STEP 2:4 cleanup
 
->>>. go to cell 6 and print '0'
+>>>.
+>>>>>>>>>
+add 0x48 to cell c
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Back to cell 1
+<<<<<<<<<<<
 
->. go to cell 7 and print 'm' to end sequence
+@@@@ STEP 3 @@@@
 
-<<<<<.. go to cell 2 (newline) and print twice
+@ STEP 3:1
 
+set up counter for final section
 
+cell 1 starts at 2 and cell 2 starts at 6
+
+do the following to get cell 2 to 24
+
+[->+++++++++<]>
+
+@ STEP 3:2 final loop
+
+  0  1  2  3  4  5  6  7  8  9  a  b  c …
+|00|00|18|0a|1b|5b|34|38|3b|35|20|6d|e8|…
+        ^
+[
+     - countdown
+     escape sequence start
+     >>.  ESC
+     >.   Open square bracket
+     >.   '4'
+     >.   '8'
+     >.   ';'
+     >.   '5'
+     <.   ';'
+     go to cell c
+     >>>>
+     (algorithm "Print value of cell x as number (8 bit)" from esolang wiki)
+     >>++++++++++<<[->+>-[>+>>]>[+[-<+>]>+>>]<<<<<<]>>[-]>>>++++++++++<[->-[>+>>]>[+[-
+     <+>]>+>>]<<<<<]>[-]>>[>++++++[-<++++++++>]<.<<+>+>[-]]<[<[->-<]++++++[->++++++++
+     <]>.[-]]<<++++++[-<++++++++>]<.[-]<<[-<+>]<
+     + add one for next run
+     <.<.. finish escape sequence and print spaces
+     <<<<<<<< back to cell 2
+]
+clear escape formatting
+>>.>.>----.++++>>>>>.
+
+back to cell 3 for the final newlines
+<<<<<<<<..
