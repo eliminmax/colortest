@@ -1,4 +1,4 @@
-
+#!/bin/sh
 # Print the first 16 colors - these vary by terminal configuration
 echo
 i=0
