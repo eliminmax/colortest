@@ -1,17 +1,17 @@
 # Colortest
 
-A series of tiny, static programs written in various languages that all
+A series of tiny, non-interactive programs written in various languages that all
 output a specific, strictly-defined pattern of ANSI escape codes and
 whitespace to create a 256-color test pattern.
 
-So far, I've implemented it in C, POSIX Shell, Python 3, Node.js, and Rust. I am working on a brainfuck implementation.
+So far, I've implemented it in C, POSIX Shell, Python 3, Node.js,  Rust, and brainfuck.
 
 
 ## Questions and Answers
 
 ### Why?
 
-Why not? It's what I find fun, and 
+Why not? It's what I find fun, and
 [it's not the first time](https://github.com/eliminmax/eli-bash-colors)
 I've messed with ANSI escape sequences in the terminal.
 
@@ -19,7 +19,7 @@ It also gives me a sense of how different languages are designed.
 
 ### The pattern itself:
 
-The following is the pattern itself, with the ANSI escape character 
+The following is the pattern itself, with the ANSI escape character
 replaced by a question mark:
 
 ```text
