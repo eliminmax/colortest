@@ -4,7 +4,7 @@ A series of tiny, non-interactive programs written in various languages that all
 output a specific, strictly-defined pattern of ANSI escape codes and
 whitespace to create a 256-color test pattern.
 
-So far, I've implemented it in C, POSIX Shell, Python 3, Node.js, Perl, Rust, and brainfuck.
+So far, I've implemented it in C, POSIX Shell, Python 3, Node.js, Perl, Rust, Java, and brainfuck.
 
 
 ## Questions and Answers
