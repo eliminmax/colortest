@@ -22,14 +22,14 @@ int main()
             printf(ESC "[48;5;%dm  ", i + ii);
         }
         printf(ESC "[0m  ");
-        for(int ii = 0; ii < 6; ii++)
+        for(int ii = 36; ii < 42; ii++)
         {
-            printf(ESC "[48;5;%dm  ", i + ii+ 36);
+            printf(ESC "[48;5;%dm  ", i + ii);
         }
         printf(ESC "[0m  ");
-        for(int ii = 0; ii < 6; ii++)
+        for(int ii = 72; ii < 78; ii++)
         {
-            printf(ESC "[48;5;%dm  ", i + ii + 72);
+            printf(ESC "[48;5;%dm  ", i + ii);
         }
         printf(ESC "[0m\n");
 
@@ -42,14 +42,14 @@ int main()
             printf(ESC "[48;5;%dm  ", i + ii);
         }
         printf(ESC "[0m  ");
-        for(int ii = 0; ii < 6; ii++)
+        for(int ii = 36; ii < 42; ii++)
         {
-            printf(ESC "[48;5;%dm  ", i + ii+ 36);
+            printf(ESC "[48;5;%dm  ", i + ii);
         }
         printf(ESC "[0m  ");
-        for(int ii = 0; ii < 6; ii++)
+        for(int ii = 72; ii < 78; ii++)
         {
-            printf(ESC "[48;5;%dm  ", i + ii + 72);
+            printf(ESC "[48;5;%dm  ", i + ii);
         }
         printf(ESC "[0m\n");
 
