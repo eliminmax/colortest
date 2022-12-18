@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 # Print the first 16 colors - these vary by terminal configuration
 print()
