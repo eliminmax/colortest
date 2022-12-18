@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print the first 16 colors - these vary by terminal configuration
-echo
+printf '\n'
 i=0
 while [ $i -lt 16 ]; do
     printf "\033[48;5;%dm  " $i
@@ -31,7 +31,7 @@ while [ $i -lt 52 ]; do
     printf "\033[0m\n"
     i=$((i + 6))
 done
-echo
+printf '\n'
 i=124
 while [ $i -lt 160 ]; do
     ii=0
@@ -54,7 +54,7 @@ while [ $i -lt 160 ]; do
     printf "\033[0m\n"
     i=$((i + 6))
 done
-echo
+printf '\n'
 
 # Finally, the 24 grays
 i=232
