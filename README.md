@@ -2,9 +2,11 @@
 
 A series of tiny, non-interactive programs written in various languages that all
 output a specific, strictly-defined pattern of ANSI escape codes and
-whitespace to create a 256-color test pattern.
+whitespace to create a 256-color test pattern, and generate it following a specific procedure.
 
-So far, I've implemented it in C, POSIX Shell, Python 3, Node.js, Perl, Rust, Java, and brainfuck.
+So far, I've implemented it in C, POSIX Shell, Python 3, Javascript (Node.js), Perl, Rust, Ruby, Java, and Brainfuck. Future plans include x86_64 Assembly with Linux syscalls, Go, C#, Oil, elvish, and possibly C++.
+
+I am experienced with some of those languages, and others I learned barely enough to implement this program as I was working on them.
 
 
 ## Questions and Answers
