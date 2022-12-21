@@ -51,7 +51,7 @@ initialize cell to the sequence |00|00|00|0a|1b|5b|34|38|3b|35|20|6d|…
 +++++         > 35
               > 20
 +++++++++++++   6d
-<<<<<<<<<<      back to cell 3
+<<<<<<<<<<      back to cell 1
 
 
 @@@@ STEP 1 @@@@
