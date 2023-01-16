@@ -19,7 +19,7 @@ I've messed with ANSI escape sequences in the terminal.
 
 It also gives me a sense of how different languages are designed.
 
-### The pattern itself:
+## The pattern itself:
 
 The following is the pattern itself, with the ANSI escape character
 replaced by '␛':
@@ -43,3 +43,5 @@ replaced by '␛':
 
 ␛[48;5;232m  ␛[48;5;233m  ␛[48;5;234m  ␛[48;5;235m  ␛[48;5;236m  ␛[48;5;237m  ␛[48;5;238m  ␛[48;5;239m  ␛[48;5;240m  ␛[48;5;241m  ␛[48;5;242m  ␛[48;5;243m  ␛[48;5;244m  ␛[48;5;245m  ␛[48;5;246m  ␛[48;5;247m  ␛[48;5;248m  ␛[48;5;249m  ␛[48;5;250m  ␛[48;5;251m  ␛[48;5;252m  ␛[48;5;253m  ␛[48;5;254m  ␛[48;5;255m  ␛[0m
 ```
+
+The MD5 checksum of the output should be `5ee6c8ad78719bc2a515fbee5957ba06`. *Note: I am aware that it is trivial to find MD5 hash collisions, and would not rely on MD5 for security under any circumstance. Given the assumption that it looks right, and I just want to validate that nothing is off about the whitespace, I think it should be fine.*
