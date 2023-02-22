@@ -49,7 +49,6 @@ func main() {
 	}
 	fmt.Println("\x1b[0m\n")
 
-
 }
 
 // vi:noet
