@@ -308,8 +308,8 @@ Set up counter
 
 >>>.
 >>>>>>>>>
-add 0x48 to cell c
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+add 0x47 to cell c
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Back to cell 1
 <<<<<<<<<<<
 
@@ -340,13 +340,12 @@ do the following to get cell 2 to 24
      >.   ';'
      >.   '5'
      <.   ';'
-     go to cell c
-     >>>>
+     go to cell c and add one
+     >>>> +
      (algorithm "Print value of cell x as number (8 bit)" from esolang wiki)
      >>++++++++++<<[->+>-[>+>>]>[+[-<+>]>+>>]<<<<<<]>>[-]>>>++++++++++<[->-[>+>>]>[+[-
      <+>]>+>>]<<<<<]>[-]>>[>++++++[-<++++++++>]<.<<+>+>[-]]<[<[->-<]++++++[->++++++++
      <]>.[-]]<<++++++[-<++++++++>]<.[-]<<[-<+>]<
-     + add one for next run
      <.<.. finish escape sequence and print spaces
      <<<<<<<< back to cell 2
 ]
