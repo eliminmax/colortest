@@ -12,6 +12,7 @@ At time of writing, I've implemented it in the following languages:
 * C
 * C#
 * Go
+* Haskell
 * Java
 * Javascript (Node.js)
 * Kotlin
