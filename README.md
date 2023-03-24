@@ -23,6 +23,7 @@ At time of writing, I've implemented it in the following languages:
 * R
 * Ruby
 * Rust
+* Scala
 
 I am experienced with some of those languages, and others I learned barely enough to implement this program as I was working on them.
 
