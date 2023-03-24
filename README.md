@@ -20,6 +20,7 @@ At time of writing, I've implemented it in the following languages:
 * Posix Shell
 * PowerShell
 * Python 3
+* R
 * Ruby
 * Rust
 
