@@ -17,6 +17,7 @@ At time of writing, I've implemented it in the following languages:
 * Javascript (Node.js)
 * Kotlin
 * Perl
+* PHP
 * Posix Shell
 * PowerShell
 * Python 3
