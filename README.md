@@ -10,6 +10,7 @@ At time of writing, I've implemented it in the following languages:
 
 * Brainfuck
 * C
+* C++
 * C#
 * Go
 * Haskell
