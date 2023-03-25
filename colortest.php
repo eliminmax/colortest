@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 /* Print the first 16 colors - these vary by terminal configuration */
 echo "\n";
