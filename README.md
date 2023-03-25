@@ -12,6 +12,7 @@ At time of writing, I've implemented it in the following languages:
 * C
 * C++
 * C#
+* Fortran 95
 * Go
 * Haskell
 * Java
@@ -19,7 +20,7 @@ At time of writing, I've implemented it in the following languages:
 * Kotlin
 * Perl
 * PHP
-* Posix Shell
+* POSIX Shell
 * PowerShell
 * Python 3
 * R
