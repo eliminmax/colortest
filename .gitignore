@@ -1,0 +1,12 @@
+# Exclude by default
+*
+# Include README.md, this file, and the actual source files
+!README.md
+!colortest.*
+!.gitignore
+# Exclude these extensions (From built files)
+*.o
+*.hi
+*.class
+*.exe
+*.out
