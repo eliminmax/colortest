@@ -5,7 +5,7 @@
 
 int main()
 {
-    // Print the first 16 colors - these vary by terminal configuration
+    /* Print the first 16 colors - these vary by terminal configuration */
     printf("\n");
     for(int i = 0; i < 16; i++)
     {
@@ -13,8 +13,8 @@ int main()
     }
     printf(ESC "[0m\n\n");
 
-    // Print the 6 sides of the color cube - these are more standardized
-    // but the order is a bit odd, thus the need for this trickery
+    /* Print the 6 sides of the color cube - these are more standardized */
+    /* but the order is a bit odd, thus the need for this trickery */
     for(int i = 16; i < 52; i += 6)
     {
         for(int ii = 0; ii < 6; ii++)
@@ -55,7 +55,7 @@ int main()
 
     }
     printf("\n");
-    // Finally, the 24 grays
+    /* Finally, the 24 grays */
     for(int i = 232; i < 256; i++)
     {
         printf(ESC "[48;5;%dm  ", i);
