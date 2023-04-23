@@ -12,6 +12,7 @@ At time of writing, I've implemented it in the following languages:
 * C
 * C++
 * C#
+* Fender (a language created by 3 of my fellow Champlain College seniors, available [here](https://github.com/FenderLang/Fender))
 * Fortran 95
 * Go
 * Haskell
@@ -22,7 +23,7 @@ At time of writing, I've implemented it in the following languages:
 * PHP
 * POSIX Shell
 * PowerShell
-* Python 3
+* Python
 * R
 * Ruby
 * Rust
