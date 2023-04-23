@@ -10,8 +10,9 @@ At time of writing, I've implemented it in the following languages:
 
 * Brainfuck
 * C
-* C++
 * C#
+* C++
+* Cobol
 * Fender (a language created by 3 of my fellow Champlain College seniors, available [here](https://github.com/FenderLang/Fender))
 * Fortran 95
 * Go
@@ -19,9 +20,9 @@ At time of writing, I've implemented it in the following languages:
 * Java
 * Javascript (Node.js)
 * Kotlin
-* Perl
 * PHP
 * POSIX Shell
+* Perl
 * PowerShell
 * Python
 * R
