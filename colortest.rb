@@ -1,19 +1,15 @@
 #!/usr/bin/env ruby
 
 # Print the first 16 colors - these vary by terminal configuration
-
 puts ""
-
 for i in 0..15
   print "\x1b[48;5;#{i}m  "
 end
-
 puts "\x1b[0m"
 puts
 
 # Print the 6 sides of the color cube - these are more standardized
 # but the order is a bit odd, thus the need for this trickery
-
 for i in (16...52).step(6)
   row_a = []
   row_b = []
@@ -70,7 +66,6 @@ end
 puts
 
 # Finally, the 24 grays
-
 for i in 232...256
   print "\x1b[48;5;#{i}m  "
 end
