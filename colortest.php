@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 /* Print the first 16 colors - these vary by terminal configuration */
 echo "\n";
 for ($i = 0; $i < 16; $i++) {
@@ -45,4 +46,5 @@ for($i = 232; $i < 256; $i++) {
     echo "\x1b[48;5;${i}m  ";
 }
 echo "\x1b[0m\n\n"
+
 ?>
