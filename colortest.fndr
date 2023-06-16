@@ -14,14 +14,12 @@ println(esc, "[0m\n")
 
 # Print the 6 sides of the color cube - these are more standardized
 # but the order is a bit odd, thus the need for this trickery
-
 i = 16; while({i < 52}, {
     ii = 0; while({ii < 6}, {
         print(esc, "[48;5;", i+ii, "m  ")
         ii = ii + 1
     })
     print(esc, "[0m  ")
-
     ii = 36; while({ii < 42}, {
         print(esc, "[48;5;", i+ii, "m  ")
         ii = ii + 1
@@ -32,18 +30,15 @@ i = 16; while({i < 52}, {
         ii = ii + 1
     })
     println(esc, "[0m")
-
     i = i + 6
 })
 println("")
-
 i = 124; while({i < 160}, {
     ii = 0; while({ii < 6}, {
         print(esc, "[48;5;", i+ii, "m  ")
         ii = ii + 1
     })
     print(esc, "[0m  ")
-
     ii = 36; while({ii < 42}, {
         print(esc, "[48;5;", i+ii, "m  ")
         ii = ii + 1
@@ -54,13 +49,11 @@ i = 124; while({i < 160}, {
         ii = ii + 1
     })
     println(esc, "[0m")
-
     i = i + 6
 })
 println("")
 
 # Finally, the 24 grays
-
 i = 232; while({i < 256}, {
         print(esc, "[48;5;", i, "m  ")
     i = i + 1
