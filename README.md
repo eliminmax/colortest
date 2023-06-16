@@ -6,14 +6,15 @@ whitespace to create a 256-color test pattern, and generate it following a speci
 
 ## Languages
 
-At time of writing, I've implemented it in the following languages:
+At the current moment, I've implemented it in the following languages:
 
+* AWK
 * Brainfuck
 * C
 * C#
 * C++
 * Cobol
-* Fender (a language created by 3 of my fellow Champlain College seniors, available [here](https://github.com/FenderLang/Fender))
+* Fender (a language created by 3 of my fellow Champlain College students in my senior year, available [here](https://github.com/FenderLang/Fender))
 * Fortran 95
 * Go
 * Haskell
@@ -36,9 +37,7 @@ I am experienced with some of those languages, and others I learned barely enoug
 
 ### Why?
 
-Why not? It's what I find fun, and
-[it's not the first time](https://github.com/eliminmax/eli-bash-colors)
-I've messed with ANSI escape sequences in the terminal.
+Why not? It's what I find fun, and [it's not the first time](https://github.com/eliminmax/eli-bash-colors) I've messed with ANSI escape sequences in the terminal.
 
 It also gives me a sense of how different languages are designed.
 
