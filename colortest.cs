@@ -8,6 +8,7 @@ namespace colortest {
                 Console.Write("\x1b[48;5;{0}m  ", i);
             }
             Console.WriteLine("\x1b[0m\n"); // Double new-line is intentional
+
             // Print the 6 sides of the color cube - these are more standardized
             // but the order is a bit odd, thus the need for this trickery
             for (int i = 16; i < 52; i+=6) {
@@ -40,6 +41,7 @@ namespace colortest {
                 Console.WriteLine("\x1b[0m");
             }
             Console.WriteLine();
+
             // Finally, the 24 grays
             for(int i = 232; i < 256; i++) {
                 Console.Write("\x1b[48;5;{0}m  ", i);
