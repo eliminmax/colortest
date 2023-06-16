@@ -4,10 +4,9 @@ program colortest
   character(len=7) :: COLORSTART
   integer(kind=2)  :: i, ii
   character(len=4) :: COLOREND
-
   ESC = achar(27)
   NL = achar(10)
-  COLORSTART = ESC // "[48;5;" ! Start of every escape sequence used
+  COLORSTART = ESC // "[48;5;" ! Start of almost every escape sequence used
   COLOREND = ESC // "[0m"
 
   ! Print the first 16 colors - these vary by terminal configuration
@@ -19,7 +18,6 @@ program colortest
 
   ! Print the 6 sides of the color cube - these are more standardized
   ! but the order is a bit odd, thus the need for this trickery
-
   do i = 16, 46, 6
     do ii = 0, 5
       write (*, "(A, I0, A)", advance="no") COLORSTART, (i+ii), "m  "
