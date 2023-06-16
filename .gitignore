@@ -2,7 +2,6 @@
 *
 # Include README.md, this file, and the actual source files
 !README.md
-!CREDITS.md
 !colortest.*
 !.gitignore
 # Exclude these extensions (From built files)
