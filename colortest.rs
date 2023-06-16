@@ -1,11 +1,11 @@
 fn main() {
-    println!();
-
     // Print the first 16 colors - these vary by terminal configuration
+    println!();
     for i in 0..16 {
         print!("\x1b[48;5;{}m  ", format!("{}", i));
     }
     println!("\x1b[0m\n");
+
     // Print the 6 sides of the color cube - these are more standardized
     // but the order is a bit odd, thus the need for this trickery
     for i in (16..52).step_by(6) {
