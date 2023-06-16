@@ -1,5 +1,4 @@
 #!/usr/bin/env perl
-
 use strict;
 use warnings;
 
@@ -27,7 +26,6 @@ for (my $i = 16; $i < 52; $i+=6) {
     printf "\e[0m\n";
 }
 printf "\n";
-
 for (my $i = 124; $i < 160; $i+=6) {
     for (my $ii = 0; $ii < 6; $ii++) {
         printf "\e[48;5;%dm  ", ($i+$ii);
