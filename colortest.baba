@@ -1,0 +1,372 @@
+// at various points I use things that are adapted from the 99 bottles of beer
+// program by FLeckami#3853 and uploaded as a GitHub gist by the language
+// creator. I will mention those when they come up.
+// The gist url is as follows:
+// https://gist.github.com/RocketRace/9e090babcf04e44597ce2326536eaadf
+
+// Additionally, I adapted a function from the Fibonacci program made by the language creator
+// which can be found on a GitHub gist as well.
+// The gist url is as follows:
+// https://gist.github.com/RocketRace/4124bd6aeea10a75706593e82d321ea7
+
+
+// numbers - adapted from the 99 bottles program, with the following changes:
+// 99 removed and 0, 100, and 200 added
+0 is you
+1 is you and move
+2 is 1 and 1
+3 is 2 and 1
+4 is 2 and 2
+5 is 3 and 2
+6 is 3 and 3
+7 is 4 and 3
+8 is 4 and 4
+9 is 5 and 4
+10 is 5 and 5
+20 is 10 and 10
+30 is 10 and 20
+40 is 20 and 20
+50 is 20 and 30
+60 is 30 and 30
+70 is 40 and 30
+80 is 40 and 40
+90 is 50 and 40
+100 is 50 and 50
+200 is 100 and 100
+
+// ascii representation of decimal values
+0_str is 40 and 8
+1_str is 40 and 9
+2_str is 50
+3_str is 50 and 1
+4_str is 50 and 2
+5_str is 50 and 3
+6_str is 50 and 4
+7_str is 50 and 5
+8_str is 50 and 6
+9_str is 50 and 7
+
+// other characters that need to be printed
+esc is 20 and 7
+sb is 90 and 1
+m is 100 and 9
+sc is 50 and 9
+sp is 30 and 2
+nl is 10
+
+// some groups that are commonly used and good to define
+sequence_start is group
+sequence_start has esc and sb and 4_str and 8_str and sc and 5_str and sc
+sequence_end is group
+sequence_end has m and sp and sp
+format_clear is group
+format_clear has esc and sb and 0_str and m
+
+// some other numeric constants that will be needed
+15 is 10 and 5
+36 is 30 and 6
+41 is 40 and 1
+48 is 40 and 8
+77 is 70 and 7
+154 is 100 and 50 and 4
+
+// ord function  (number -> string)
+// adapted from the Fibonacci program, with indentation adjustments and with the N_str variables removed as they were already defined.
+ord is level and has input
+  // Boolean to determine whether we should strip zeros or print them
+  print_zero is you
+
+  // Ensure our input value is facing right (to make FACING conditionals work as we intend)
+  input is right
+  // Any amount of statements
+  // Match over the 100s digit
+  match_100s is tele
+    // input >= 200 => Print "2"
+    case_200 is tele
+      input facing 200 fear case_200
+      2_str is text
+      input is input and not 200
+      print_zero is move
+      input fear match_100s
+    case_200 is done
+    // input >= 100 => Print "1"
+    case_100 is tele
+      input facing 100 fear case_100
+      1_str is text
+      input is input and not 100
+      print_zero is move
+      input fear match_100s
+    case_100 is done
+    // Don't print anything
+    input fear match_100s
+  match_100s is done
+
+  // Match over the 10s digit
+  match_10s is tele
+    // input >= 90 => Print "9"
+    case_90 is tele
+      input facing 90 fear case_90
+      9_str is text
+      input is input and not 90
+      print_zero is move
+      input fear match_10s
+    case_90 is done
+    // input >= 80 => Print "8"
+    case_80 is tele
+      input facing 80 fear case_80
+      8_str is text
+      input is input and not 80
+      print_zero is move
+      input fear match_10s
+    case_80 is done
+    // input >= 70 => Print "7"
+    case_70 is tele
+      input facing 70 fear case_70
+      7_str is text
+      input is input and not 70
+      print_zero is move
+      input fear match_10s
+    case_70 is done
+    // input >= 60 => Print "6"
+    case_60 is tele
+      input facing 60 fear case_60
+      6_str is text
+      input is input and not 60
+      print_zero is move
+      input fear match_10s
+    case_60 is done
+    // input >= 50 => Print "5"
+    case_50 is tele
+      input facing 50 fear case_50
+      5_str is text
+      input is input and not 50
+      print_zero is move
+      input fear match_10s
+    case_50 is done
+    // input >= 40 => Print "4"
+    case_40 is tele
+      input facing 40 fear case_40
+      4_str is text
+      input is input and not 40
+      print_zero is move
+      input fear match_10s
+    case_40 is done
+    // input >= 30 => Print "3"
+    case_30 is tele
+      input facing 30 fear case_30
+      3_str is text
+      input is input and not 30
+      print_zero is move
+      input fear match_10s
+    case_30 is done
+    // input >= 20 => Print "2"
+    case_20 is tele
+      input facing 20 fear case_20
+      2_str is text
+      input is input and not 20
+      print_zero is move
+      input fear match_10s
+    case_20 is done
+    // input >= 10 => Print "1"
+    case_10 is tele
+      input facing 10 fear case_10
+      1_str is text
+      input is input and not 10
+      input fear match_10s
+    case_10 is done
+    // Print "0" if print_zero is set
+    lonely print_zero fear match_10s
+    0_str is text
+    input fear match_10s
+  match_10s is done
+
+  // Match over the 1s digit
+  match_1s is tele
+    // input >= 9 => Print "9"
+    case_9 is tele
+      input facing 9 fear case_9
+      9_str is text
+      input fear match_1s
+    case_9 is done
+    // input >= 8 => Print "8"
+    case_8 is tele
+      input facing 8 fear case_8
+      8_str is text
+      input fear match_1s
+    case_8 is done
+    // input >= 7 => Print "7"
+    case_7 is tele
+      input facing 7 fear case_7
+      7_str is text
+      input fear match_1s
+    case_7 is done
+    // input >= 6 => Print "6"
+    case_6 is tele
+      input facing 6 fear case_6
+      6_str is text
+      input fear match_1s
+    case_6 is done
+    // input >= 5 => Print "5"
+    case_5 is tele
+      input facing 5 fear case_5
+      5_str is text
+      input fear match_1s
+    case_5 is done
+    // input >= 4 => Print "4"
+    case_4 is tele
+      input facing 4 fear case_4
+      4_str is text
+      input fear match_1s
+    case_4 is done
+    // input >= 3 => Print "3"
+    case_3 is tele
+      input facing 3 fear case_3
+      3_str is text
+      input fear match_1s
+    case_3 is done
+    // input >= 2 => Print "2"
+    case_2 is tele
+      input facing 2 fear case_2
+      2_str is text
+      input fear match_1s
+    case_2 is done
+    // input >= 1 => Print "1"
+    case_1 is tele
+      input facing 1 fear case_1
+      1_str is text
+      input fear match_1s
+    case_1 is done
+    0_str is text
+    input fear match_1s
+  match_1s is done
+  // ord implicitly returns EMPTY
+ord is done
+
+nl is text
+// Print the first 16 colors - these vary by terminal configuration
+i is you
+i is left
+first_16 is tele
+  sequence_start is text
+  num is ord
+  num has i and is power
+  sequence_end is text
+  i is i and 1
+  i facing 15 fear first_16
+first_16 is done
+format_clear is text
+nl is text
+nl is text
+
+// Print the 6 sides of the color cube - these are more standardized
+// but the order is a bit odd, thus the need for this trickery
+i is 10 and 6
+color_cube_part_1 is tele
+  ii is 0
+  ii is left
+  row_a is tele
+    sequence_start is text
+    num is ord
+    sum is i and ii
+    num has sum and is power
+    sequence_end is text
+    ii is ii and 1
+    ii facing 5 fear row_a
+  row_a is done
+  format_clear is text
+  sp is text
+  sp is text
+  ii is 30 and 6
+  ii is left
+  row_b is tele
+    sequence_start is text
+    num is ord
+    sum is i and ii
+    num has sum and is power
+    sequence_end is text
+    ii is ii and 1
+    ii facing 41 fear row_b
+  row_b is done
+  format_clear is text
+  sp is text
+  sp is text
+  ii is 70 and 2
+  ii is left
+  row_c is tele
+    sequence_start is text
+    num is ord
+    sum is i and ii
+    num has sum and is power
+    sequence_end is text
+    ii is ii and 1
+    ii facing 77 fear row_c
+  row_c is done
+  format_clear is text
+  nl is text
+  i is i and 6
+  i facing 48 fear color_cube_part_1
+color_cube_part_1 is done
+nl is text
+i is 100 and 20 and 4
+color_cube_part_2 is tele
+  ii is 0
+  ii is left
+  row_a is tele
+    sequence_start is text
+    num is ord
+    sum is i and ii
+    num has sum and is power
+    sequence_end is text
+    ii is ii and 1
+    ii facing 5 fear row_a
+  row_a is done
+  format_clear is text
+  sp is text
+  sp is text
+  ii is 30 and 6
+  ii is left
+  row_b is tele
+    sequence_start is text
+    num is ord
+    sum is i and ii
+    num has sum and is power
+    sequence_end is text
+    ii is ii and 1
+    ii facing 41 fear row_b
+  row_b is done
+  format_clear is text
+  sp is text
+  sp is text
+  ii is 70 and 2
+  ii is left
+  row_c is tele
+    sequence_start is text
+    num is ord
+    sum is i and ii
+    num has sum and is power
+    sequence_end is text
+    ii is ii and 1
+    ii facing 77 fear row_c
+  row_c is done
+  format_clear is text
+  nl is text
+  i is i and 6
+  i facing 154 fear color_cube_part_2
+color_cube_part_2 is done
+nl is text
+
+// Finally, the 24 grays
+i is 200 and 30 and 2
+24_grays is tele
+  sequence_start is text
+  num is ord
+  num has i and is power
+  sequence_end is text
+  i is i and 1
+  // because it loops, use the following to test for the end condition
+  lonely i fear 24_grays
+24_grays is done
+format_clear is text
+nl is text
+nl is text
+// vi: sw=2:sts=2:ts=2:et:
