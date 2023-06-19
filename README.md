@@ -15,7 +15,7 @@ At the current moment, I've implemented it in the following languages:
 * C++
 * Cobol
 * Fender (a language created by 3 of my fellow Champlain College students in my senior year, available [here](https://github.com/FenderLang/Fender))
-* Fortran 95
+* Fortran
 * Go
 * Haskell
 * Java
