@@ -32,7 +32,7 @@ At the current moment, I've implemented it in the following languages:
 * Ruby
 * Rust
 * Scala
-* x86_64 assembly (NASM Intel-style syntax, 64-bit Linux System Calling convention)
+* x86_64 assembly (NASM Intel-style syntax, 64-bit Linux System calls)
 
 I am experienced with some of those languages, and others I learned barely enough to implement this program as I was working on them.
 
