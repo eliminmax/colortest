@@ -29,6 +29,7 @@ At the current moment, I've implemented it in the following languages:
 * PowerShell
 * Python
 * R
+* Rockstar
 * Ruby
 * Rust
 * Scala
