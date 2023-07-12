@@ -1,103 +1,103 @@
-My mind is 27
-Cast my mind
+varA is 27
+cast varA
 
-my secret is silence
+varB is ""
 
-the end is 27
-Cast the end
-Let the end be with "[0m"
+varC is ""
+let varC be with varA
+let varC be with "[0m"
 
-Everything takes your power
-Hope is silent
-Let Hope be with my mind
-Let Hope be with "[48;5;"
-Let Hope be with your power
-Let Hope be with "m  "
-Give back Hope
+funcA takes argA
+localA is ""
+let localA be with varA
+let localA be with "[48;5;"
+let localA be with argA
+let localA be with "m  "
+give back localA
 
-the wind is silent
+varD is ""
 
-i is 0
-while i is weaker than 16
-Put the wind with Everything taking i into the wind
-build i up
+varE is 0
+while varE is weaker than 16
+put varD with funcA taking varE into varD
+build varE up
 
-Put the wind with the end into the wind
-whisper my secret
-shout the wind
-whisper my secret
+put varD with varC into varD
+whisper varB
+shout varD
+whisper varB
 
-i is 16
-while i is weaker than 52
-the crowd is silent
-ii is 0
-while ii is weaker than 6
-Put i with ii into v
-put the crowd with Everything taking v into the crowd
-build ii up
+varE is 16
+while varE is weaker than 52
+varG is ""
+varF is 0
+while varF is weaker than 6
+put varE with varF into varH
+put varG with funcA taking varH into varG
+build varF up
 
-Let the crowd be with the end
-Let the crowd be with "  "
-ii is 36
-while ii is weaker than 42
-Put i with ii into v
-put the crowd with Everything taking v into the crowd
-build ii up
+let varG be with varC
+let varG be with "  "
+varF is 36
+while varF is weaker than 42
+put varE with varF into varH
+put varG with funcA taking varH into varG
+build varF up
 
-Let the crowd be with the end
-Let the crowd be with "  "
-ii is 72
-while ii is weaker than 78
-Put i with ii into v
-put the crowd with Everything taking v into the crowd
-build ii up
+let varG be with varC
+let varG be with "  "
+varF is 72
+while varF is weaker than 78
+put varE with varF into varH
+put varG with funcA taking varH into varG
+build varF up
 
-Let the crowd be with the end
-shout the crowd
-build i up
-build i up
-build i up, up, up, up
+let varG be with varC
+shout varG
+build varE up
+build varE up
+build varE up, up, up, up
 
-whisper my secret
+whisper varB
 
-i is 124
-while i is weaker than 160
-the crowd is silent
-ii is 0
-while ii is weaker than 6
-Put i with ii into v
-put the crowd with Everything taking v into the crowd
-build ii up
+varE is 124
+while varE is weaker than 160
+varG is ""
+varF is 0
+while varF is weaker than 6
+put varE with varF into varH
+put varG with funcA taking varH into varG
+build varF up
 
-Let the crowd be with the end
-Let the crowd be with "  "
-ii is 36
-while ii is weaker than 42
-Put i with ii into v
-put the crowd with Everything taking v into the crowd
-build ii up
+let varG be with varC
+let varG be with "  "
+varF is 36
+while varF is weaker than 42
+put varE with varF into varH
+put varG with funcA taking varH into varG
+build varF up
 
-Let the crowd be with the end
-Let the crowd be with "  "
-ii is 72
-while ii is weaker than 78
-Put i with ii into v
-put the crowd with Everything taking v into the crowd
-build ii up
+let varG be with varC
+let varG be with "  "
+varF is 72
+while varF is weaker than 78
+put varE with varF into varH
+put varG with funcA taking varH into varG
+build varF up
 
-Let the crowd be with the end
-shout the crowd
-build i up
-build i up
-build i up, up, up, up
+let varG be with varC
+shout varG
+build varE up
+build varE up
+build varE up, up, up, up
 
-the wind is silent
-i is 232
-while i is weaker than 256
-Put the wind with Everything taking i into the wind
-build i up
+varD is ""
+varE is 232
+while varE is weaker than 256
+put varD with funcA taking varE into varD
+build varE up
 
-Put the wind with the end into the wind
-whisper my secret
-shout the wind
-whisper my secret
+put varD with varC into varD
+whisper varB
+shout varD
+whisper varB
