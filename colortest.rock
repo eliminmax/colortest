@@ -1,103 +1,110 @@
-varA is 27
-cast varA
+(Note - this is "minimalist", rather than "idiomatic", Rockstar
+By default, running Satrani, the reference implementation of Rockstar
+, prints out "program returned no output" at the end of the execution.
+I am using Satrani as of Git commit #2f53845 of the repo git@github.com:RockstarLang/rockstar,
+with line 17 of satrani/rockstar.js commented out, so that that doesn't mess up the output of this
+program.)
 
-varB is ""
+Esc is 27
+Cast Esc
 
-varC is ""
-let varC be with varA
-let varC be with "[0m"
+ClearSequence is ""
+Let ClearSequence be with Esc
+Let ClearSequence be with "[0m"
 
-funcA takes argA
-localA is ""
-let localA be with varA
-let localA be with "[48;5;"
-let localA be with argA
-let localA be with "m  "
-give back localA
+CellMaker takes CellNumber
+CellString is ""
+Let CellString be with Esc
+Let CellString be with "[48;5;"
+Let CellString be with CellNumber
+Let CellString be with "m  "
+give back CellString
+(blank/comment only line ends the function block)
 
-varD is ""
+(Print the first 16 colors - these vary by terminal configuration)
+PrintBuffer is ""
+i is 0
+while i is weaker than 16
+put PrintBuffer with CellMaker taking i into PrintBuffer
+build i up
+(blank/comment only line ends the loop block)
+put PrintBuffer with ClearSequence into PrintBuffer
+say ""
+say PrintBuffer
+say ""
 
-varE is 0
-while varE is weaker than 16
-put varD with funcA taking varE into varD
-build varE up
 
-put varD with varC into varD
-whisper varB
-shout varD
-whisper varB
+( Print the 6 sides of the color cube - these are more standardized,
+but the order is a bit odd, thus the need for this trickery)
+i is 16
+while i is weaker than 52
+PrintBuffer is ""
+ii is 0
+while ii is weaker than 6
+put i with ii into iii
+put PrintBuffer with CellMaker taking iii into PrintBuffer
+build ii up
+(blank/comment only line ends the inner loop block)
+Let PrintBuffer be with ClearSequence
+Let PrintBuffer be with "  "
+ii is 36
+while ii is weaker than 42
+put i with ii into iii
+put PrintBuffer with CellMaker taking iii into PrintBuffer
+build ii up
+(blank/comment only line ends the inner loop block)
+Let PrintBuffer be with ClearSequence
+Let PrintBuffer be with "  "
+ii is 72
+while ii is weaker than 78
+put i with ii into iii
+put PrintBuffer with CellMaker taking iii into PrintBuffer
+build ii up
+(blank/comment only line ends the inner loop block)
+Let PrintBuffer be with ClearSequence
+say PrintBuffer
+build i up, up, up, up, up, up
+(blank/comment only line ends the outer loop block)
+say ""
 
-varE is 16
-while varE is weaker than 52
-varG is ""
-varF is 0
-while varF is weaker than 6
-put varE with varF into varH
-put varG with funcA taking varH into varG
-build varF up
+i is 124
+while i is weaker than 160
+PrintBuffer is ""
+ii is 0
+while ii is weaker than 6
+put i with ii into iii
+put PrintBuffer with CellMaker taking iii into PrintBuffer
+build ii up
+(blank/comment only line ends the inner loop block)
+Let PrintBuffer be with ClearSequence
+Let PrintBuffer be with "  "
+ii is 36
+while ii is weaker than 42
+put i with ii into iii
+put PrintBuffer with CellMaker taking iii into PrintBuffer
+build ii up
+(blank/comment only line ends the inner loop block)
+Let PrintBuffer be with ClearSequence
+Let PrintBuffer be with "  "
+ii is 72
+while ii is weaker than 78
+put i with ii into iii
+put PrintBuffer with CellMaker taking iii into PrintBuffer
+build ii up
+(blank/comment only line ends the inner loop block)
+Let PrintBuffer be with ClearSequence
+say PrintBuffer
+build i up, up, up, up, up, up
+(blank/comment only line ends the outer loop block)
 
-let varG be with varC
-let varG be with "  "
-varF is 36
-while varF is weaker than 42
-put varE with varF into varH
-put varG with funcA taking varH into varG
-build varF up
+( Finally, the 24 grays )
+PrintBuffer is ""
+i is 232
+while i is weaker than 256
+put PrintBuffer with CellMaker taking i into PrintBuffer
+build i up
 
-let varG be with varC
-let varG be with "  "
-varF is 72
-while varF is weaker than 78
-put varE with varF into varH
-put varG with funcA taking varH into varG
-build varF up
-
-let varG be with varC
-shout varG
-build varE up
-build varE up
-build varE up, up, up, up
-
-whisper varB
-
-varE is 124
-while varE is weaker than 160
-varG is ""
-varF is 0
-while varF is weaker than 6
-put varE with varF into varH
-put varG with funcA taking varH into varG
-build varF up
-
-let varG be with varC
-let varG be with "  "
-varF is 36
-while varF is weaker than 42
-put varE with varF into varH
-put varG with funcA taking varH into varG
-build varF up
-
-let varG be with varC
-let varG be with "  "
-varF is 72
-while varF is weaker than 78
-put varE with varF into varH
-put varG with funcA taking varH into varG
-build varF up
-
-let varG be with varC
-shout varG
-build varE up
-build varE up
-build varE up, up, up, up
-
-varD is ""
-varE is 232
-while varE is weaker than 256
-put varD with funcA taking varE into varD
-build varE up
-
-put varD with varC into varD
-whisper varB
-shout varD
-whisper varB
+put PrintBuffer with ClearSequence into PrintBuffer
+say ""
+say PrintBuffer
+say ""
