@@ -29,7 +29,7 @@ At the current moment, I've implemented it in the following languages:
 * PowerShell
 * Python
 * R
-* Rockstar
+* Rockstar (an esoteric programming language based on 80s metal and power ballads. Specification and reference implementation are [here](https://github.com/RockstarLang/rockstar))
 * Ruby
 * Rust
 * Scala
