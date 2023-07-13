@@ -3,6 +3,7 @@
 # Include README.md, this file, and the actual source files
 !README.md
 !colortest.*
+!colortest_output
 !.gitignore
 # Exclude these extensions (From built files)
 *.o
