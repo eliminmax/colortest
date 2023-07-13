@@ -1,0 +1,48 @@
+CHAR esc;
+esc := REPR 27;
+
+# Print the first 16 colors - these vary by terminal configuration #
+print(newline);
+FOR i FROM 0 TO 15 DO
+    print((esc, "[48;5;", whole(i, 0), "m  "))
+OD;
+print((esc, "[0m", newline, newline));
+
+# Print the 6 sides of the color cube - these are more standardized,
+but the order is a bit odd, thus the need for this trickery #
+FOR i FROM 16 BY 6 TO 46 DO
+    FOR ii FROM 0 TO 5 DO
+        print((esc, "[48;5;", whole((i + ii), 0), "m  "))
+    OD;
+    print((esc, "[0m  "));
+    FOR ii FROM 36 TO 41 DO
+        print((esc, "[48;5;", whole((i + ii), 0), "m  "))
+    OD;
+    print((esc, "[0m  "));
+    FOR ii FROM 72 TO 77 DO
+        print((esc, "[48;5;", whole((i + ii), 0), "m  "))
+    OD;
+    print((esc, "[0m", newline))
+OD;
+print(newline);
+FOR i FROM 124 BY 6 TO 154 DO
+    FOR ii FROM 0 TO 5 DO
+        print((esc, "[48;5;", whole((i + ii), 0), "m  "))
+    OD;
+    print((esc, "[0m  "));
+    FOR ii FROM 36 TO 41 DO
+        print((esc, "[48;5;", whole((i + ii), 0), "m  "))
+    OD;
+    print((esc, "[0m  "));
+    FOR ii FROM 72 TO 77 DO
+        print((esc, "[48;5;", whole((i + ii), 0), "m  "))
+    OD;
+    print((esc, "[0m", newline))
+OD;
+print(newline);
+
+# Finally, the 24 grays #
+FOR i FROM 232 TO 255 DO
+    print((esc, "[48;5;", whole(i, 0), "m  "))
+OD;
+print((esc, "[0m", newline, newline))

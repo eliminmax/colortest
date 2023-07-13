@@ -9,6 +9,7 @@ whitespace to create a 256-color test pattern, and generate it following a speci
 At the current moment, I've implemented it in the following languages:
 
 * AWK
+* Algol 68
 * Babalang (an esoteric programming language inspired by the puzzle game Baba is you. The specification is [here](https://esolangs.org/wiki/Babalang) and the official interpreter is available [here](https://github.com/RocketRace/babalang)
 * Brainfuck
 * C
