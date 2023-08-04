@@ -35,6 +35,7 @@ At the current moment, I've implemented it in the following languages:
 * Rust
 * Scala
 * x86_64 assembly (NASM Intel-style syntax, 64-bit Linux System calls)
+* Zig
 
 I am experienced with some of those languages, and others I learned barely enough to implement this program as I was working on them.
 
