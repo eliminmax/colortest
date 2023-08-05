@@ -24,6 +24,7 @@ At the current moment, I've implemented it in the following languages:
 * Java
 * Javascript (Node.js)
 * Kotlin
+* Nim
 * PHP
 * POSIX Shell
 * Perl
