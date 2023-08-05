@@ -25,6 +25,7 @@ for i in range(124, 160, 6):
     print(*[f'\x1b[48;5;{ii}m  ' for ii in row_b], sep='', end='\x1b[0m  ')
     print(*[f'\x1b[48;5;{ii}m  ' for ii in row_c], sep='', end='\x1b[0m\n')
 print()
+
 # Finally, the 24 grays
 print(*[f'\x1b[48;5;{i}m  ' for i in range(232, 256)], sep='', end='\x1b[0m\n')
 print()
