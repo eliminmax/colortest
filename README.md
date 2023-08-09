@@ -35,6 +35,7 @@ At the current moment, I've implemented it in the following languages:
 * Ruby
 * Rust
 * Scala
+* Vala
 * x86_64 assembly (NASM Intel-style syntax, 64-bit Linux System calls)
 * Zig
 
