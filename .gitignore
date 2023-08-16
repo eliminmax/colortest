@@ -4,6 +4,7 @@
 !README.md
 !colortest.*
 !colortest_output
+!colortest_output.png
 !.gitignore
 # Exclude these extensions (From built files)
 *.o
@@ -11,3 +12,5 @@
 *.class
 *.exe
 *.out
+*.cmi
+*.cmo
