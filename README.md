@@ -4,6 +4,8 @@ A series of tiny, non-interactive programs written in various languages that all
 output a specific, strictly-defined pattern of ANSI escape codes and
 whitespace to create a 256-color test pattern, and generate it following a specific procedure.
 
+Each program is entirely my original work unless otherwise noted. My understanding and comfort with the languages I've used varies greatly.
+
 ## Languages
 
 At the current moment, I've implemented it in the following languages:
@@ -50,12 +52,16 @@ Why not? It's what I find fun, and [it's not the first time](https://github.com/
 
 It also gives me a sense of how different languages are designed.
 
-## The pattern itself:
+## The details
 
-The following is the pattern itself, with the ANSI escape character
+The output of the program should look like this:
+![Screenshot of Colortest output](https://github.com/eliminmax/colortest/blob/main/colortest_output.png)
+
+The following is the pattern itself, with the ASCII escape character
 replaced by '␛':
 
 ```text
+
 ␛[48;5;0m  ␛[48;5;1m  ␛[48;5;2m  ␛[48;5;3m  ␛[48;5;4m  ␛[48;5;5m  ␛[48;5;6m  ␛[48;5;7m  ␛[48;5;8m  ␛[48;5;9m  ␛[48;5;10m  ␛[48;5;11m  ␛[48;5;12m  ␛[48;5;13m  ␛[48;5;14m  ␛[48;5;15m  ␛[0m
 
 ␛[48;5;16m  ␛[48;5;17m  ␛[48;5;18m  ␛[48;5;19m  ␛[48;5;20m  ␛[48;5;21m  ␛[0m  ␛[48;5;52m  ␛[48;5;53m  ␛[48;5;54m  ␛[48;5;55m  ␛[48;5;56m  ␛[48;5;57m  ␛[0m  ␛[48;5;88m  ␛[48;5;89m  ␛[48;5;90m  ␛[48;5;91m  ␛[48;5;92m  ␛[48;5;93m  ␛[0m
@@ -73,6 +79,78 @@ replaced by '␛':
 ␛[48;5;154m  ␛[48;5;155m  ␛[48;5;156m  ␛[48;5;157m  ␛[48;5;158m  ␛[48;5;159m  ␛[0m  ␛[48;5;190m  ␛[48;5;191m  ␛[48;5;192m  ␛[48;5;193m  ␛[48;5;194m  ␛[48;5;195m  ␛[0m  ␛[48;5;226m  ␛[48;5;227m  ␛[48;5;228m  ␛[48;5;229m  ␛[48;5;230m  ␛[48;5;231m  ␛[0m
 
 ␛[48;5;232m  ␛[48;5;233m  ␛[48;5;234m  ␛[48;5;235m  ␛[48;5;236m  ␛[48;5;237m  ␛[48;5;238m  ␛[48;5;239m  ␛[48;5;240m  ␛[48;5;241m  ␛[48;5;242m  ␛[48;5;243m  ␛[48;5;244m  ␛[48;5;245m  ␛[48;5;246m  ␛[48;5;247m  ␛[48;5;248m  ␛[48;5;249m  ␛[48;5;250m  ␛[48;5;251m  ␛[48;5;252m  ␛[48;5;253m  ␛[48;5;254m  ␛[48;5;255m  ␛[0m
+
 ```
 
 The MD5 checksum of the output should be `5ee6c8ad78719bc2a515fbee5957ba06`. *Note: I am aware that it is trivial to find MD5 hash collisions, and would not rely on MD5 for security under any circumstance. Given the assumption that it looks right, and I just want to validate that nothing is off about the whitespace, I think it should be fine.*
+
+Each implementation consists of 3 parts, each of which begins with a specific comment and follows the same general structure across implementations, though there is some flexibility depending on the specifics of the language.
+
+*Note that in the following pseudocode,* `print` *is assumed not to add a trailing newline,* `for` *loops work the way they do in C, and within strings,* `\e` *represents the ASCII escape character and* `\n` *represents the ASCII newline character.*
+
+Part 1 begins with the following comment:
+
+> Print the first 16 colors - these vary by terminal configuration
+
+The general structure of part 1 can be expressed with the following pseudocode:
+
+```
+print("\n")
+for (i=0; i < 16; i++) {
+  print("\e[48;5;{i}m  ")
+}
+print("\e[0m\n\n")
+```
+
+Part 2 begins with the following comment:
+
+> Print the 6 sides of the color cube - these are more standardized,
+> but the order is a bit odd, thus the need for this trickery
+
+The general structure of part 2 can be expressed with the following pseudocode:
+
+```
+for (i=16; i < 52; i+=6) {
+  for (ii=0; ii < 6; ii++) {
+    print("\e[48;5;{i+ii}m  ")
+  }
+  print("\e[0m  ")
+  for (ii=36; ii < 42; ii++) {
+    print("\e[48;5;{i+ii}m  ")
+  }
+  print("\e[0m  ")
+  for (ii=72; ii < 78; ii++) {
+    print("\e[48;5;{i+ii}m  ")
+  }
+  print("\e[0m\n")
+}
+print("\n")
+for (i=124; i < 160; i+=6) {
+  for (ii=0; ii < 6; ii++) {
+    print("\e[48;5;{i+ii}m  ")
+  }
+  print("\e[0m  ")
+  for (ii=36; ii < 42; ii++) {
+    print("\e[48;5;{i+ii}m  ")
+  }
+  print("\e[0m  ")
+  for (ii=72; ii < 78; ii++) {
+    print("\e[48;5;{i+ii}m  ")
+  }
+  print("\e[0m\n")
+}
+print("\n")
+```
+
+Part 3 begins with the following comment:
+
+> Finally, the 24 grays
+
+The general structure of part 3 can be expressed with the following pseudocode:
+
+```
+for (i=232; i < 256; i++) {
+  print("\e[48;5;{i}m  ")
+}
+print("\e[0m\n\n")
+```
