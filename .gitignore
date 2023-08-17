@@ -1,16 +1,14 @@
-# Exclude by default
+# Exclude everything by default
 *
-# Include README.md, this file, and the actual source files
-!README.md
+# include folders in the top level but not their contents, otherwise git won't search them even for included files
+!/*/
+# Include Markdown
+!*.md
+# Include colortest.* in subdirectories but not the root directory of the repository
 !colortest.*
+/colortest.*
+# Include the colortest output file and screenshot
 !colortest_output
 !colortest_output.png
+# Include gitignore files (including this one)
 !.gitignore
-# Exclude these extensions (From built files)
-*.o
-*.hi
-*.class
-*.exe
-*.out
-*.cmi
-*.cmo
