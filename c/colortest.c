@@ -40,7 +40,6 @@ int main(void)
     /* Finally, the 24 grays */
     for(int i = 232; i < 256; i++)
         printf("\x1b[48;5;%dm  ", i);
-
     printf("\x1b[0m\n\n");
     return 0;
 }
