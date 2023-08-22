@@ -1,14 +1,13 @@
-// at various points I use things that are adapted from the 99 bottles of beer
+// at various points I use constants that are adapted from the 99 bottles of beer
 // program by FLeckami#3853 and uploaded as a GitHub gist by the language
 // creator. I will mention those when they come up.
 // The gist url is as follows:
 // https://gist.github.com/RocketRace/9e090babcf04e44597ce2326536eaadf
 
-// Additionally, I adapted a function from the Fibonacci program made by the language creator
-// which can be found on a GitHub gist as well.
+// Additionally, I adapted a function from the Fibonacci program made by the
+// language creator herself which can be found on a GitHub gist as well.
 // The gist url is as follows:
 // https://gist.github.com/RocketRace/4124bd6aeea10a75706593e82d321ea7
-
 
 // numbers - adapted from the 99 bottles program, with the following changes:
 // 99 removed and 0, 100, and 200 added
@@ -369,4 +368,5 @@ i is 200 and 30 and 2
 format_clear is text
 nl is text
 nl is text
+baba is you and win
 // vi: sw=2:sts=2:ts=2:et:
