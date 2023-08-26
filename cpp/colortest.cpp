@@ -25,7 +25,7 @@ int main()
             cout << "\x1b[48;5;" << i + ii << "m  ";
         cout << "\x1b[0m\n";
     }
-    printf("\n");
+    cout << "\n";
     for(int i = 124; i < 160; i += 6)
     {
         for(int ii = 0; ii < 6; ii++)
@@ -38,7 +38,7 @@ int main()
             cout << "\x1b[48;5;" << i + ii << "m  ";
         cout << "\x1b[0m\n";
     }
-    printf("\n");
+    cout << "\n";
 
     // Finally, the 24 grays
     for(int i = 232; i < 256; i++)
