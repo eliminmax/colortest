@@ -34,17 +34,17 @@
 
            C-PARA.
            MOVE 0 TO II
-           PERFORM E-PARA WITH TEST BEFORE UNTIL II=6
+           PERFORM D-PARA WITH TEST BEFORE UNTIL II=6
            DISPLAY X'1b'"[0m  " WITH NO ADVANCING
            MOVE 36 TO II
-           PERFORM E-PARA WITH TEST BEFORE UNTIL II=42
+           PERFORM D-PARA WITH TEST BEFORE UNTIL II=42
            DISPLAY X'1b'"[0m  " WITH NO ADVANCING
            MOVE 72 TO II
-           PERFORM E-PARA WITH TEST BEFORE UNTIL II=78
+           PERFORM D-PARA WITH TEST BEFORE UNTIL II=78
            DISPLAY X'1b'"[0m"
            ADD 6 TO I.
 
-           E-PARA.
+           D-PARA.
            MOVE I TO TMP
            ADD II TO TMP
            MOVE TMP TO N
