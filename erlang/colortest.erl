@@ -1,7 +1,5 @@
 #!/usr/bin/env escript
 %%! -sname colortest -mnesia debug verbose
-% -module(colortest).
-% -export([main/1]).
 
 colorCell(N) -> io_lib:format("\x1b[48;5;~Bm  ", [N]).
 rowA(I) -> lists:concat([colorCell(I+II) || II <- lists:seq(0, 5)] ++ ["\x1b[0m  "]).
