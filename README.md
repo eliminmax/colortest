@@ -27,9 +27,10 @@ At the current moment, I've implemented it in the following languages:
 * Go
 * Haskell
 * Java
-* Javascript (Node.js)
+* JavaScript (via Node.js)
 * Kotlin
 * Nim
+* Objecive-C *(lightly tweaked C implementation)*
 * OCaml
 * PHP
 * POSIX Shell
@@ -41,6 +42,7 @@ At the current moment, I've implemented it in the following languages:
 * Ruby
 * Rust
 * Scala
+* TypeScript *(lightly tweaked JavaScript implementation)* (via ts-node)
 * Vala
 * x86_64 assembly (NASM Intel-style syntax, 64-bit Linux System calls)
 * Zig
