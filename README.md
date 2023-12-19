@@ -32,6 +32,7 @@ At the current moment, I've implemented it in the following languages:
 * Nim
 * Objecive-C *(lightly tweaked C implementation)*
 * OCaml
+* Octave (the GNU project's MATLAB-like analytical language)
 * PHP
 * POSIX Shell
 * Perl
