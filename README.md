@@ -18,7 +18,6 @@ At the current moment, I've implemented it in the following languages:
 * C#
 * C++
 * Cobol
-* Common Lisp
 * D
 * Erlang (via Escript)
 * Fender (a language created by 3 of my fellow Champlain College students in my senior year, available [here](https://github.com/FenderLang/Fender))
@@ -29,12 +28,13 @@ At the current moment, I've implemented it in the following languages:
 * Java
 * JavaScript (via Node.js)
 * Kotlin
+* Lisp (Common Lisp)
+* Lua
 * Nim
 * Objecive-C *(lightly tweaked C implementation)*
 * OCaml
 * Octave (the GNU project's MATLAB-like analytical language)
 * PHP
-* POSIX Shell
 * Perl
 * PowerShell
 * Python
@@ -43,6 +43,7 @@ At the current moment, I've implemented it in the following languages:
 * Ruby
 * Rust
 * Scala
+* Shell Script (should work in any POSIX shell)
 * TypeScript *(lightly tweaked JavaScript implementation)* (via ts-node)
 * Vala
 * x86_64 assembly (NASM Intel-style syntax, 64-bit Linux System calls)
