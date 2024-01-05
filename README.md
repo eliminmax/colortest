@@ -34,8 +34,9 @@ At the current moment, I've implemented it in the following languages:
 * Objecive-C *(lightly tweaked C implementation)*
 * OCaml
 * Octave (the GNU project's MATLAB-like analytical language)
-* PHP
+* Pascal (via FreePascal) ([in memory of Niklaus Wirth](https://www.theregister.com/2024/01/04/niklaus_wirth_obituary/))
 * Perl
+* PHP
 * PowerShell
 * Python
 * R
