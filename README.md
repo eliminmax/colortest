@@ -50,6 +50,8 @@ At the current moment, I've implemented it in the following languages:
 * x86_64 assembly (NASM Intel-style syntax, 64-bit Linux System calls)
 * Zig
 
+For instructions on how to run any specific implementation on Debian GNU/Linux 12 (Bookworm), see HOW_TO_RUN.md. All languages have been run in a Debian 12 Podman container with the instructions in that document.
+
 I am experienced with some of those languages, and others I learned barely enough to implement this program as I was working on them.
 
 ## Questions and Answers
