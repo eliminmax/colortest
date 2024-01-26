@@ -1,6 +1,17 @@
 # How to run each implementation
 
-Each one of these was tested on a fresh Debian GNU/Linux Bookworm podman container.
+Each one of these was tested on a fresh Debian GNU/Linux Bookworm podman container, made from the following Dockerfile:
+
+```dockerfile
+FROM debian:latest
+
+RUN apt-get update && \
+    apt-get install -y git && \
+    apt-get clean && \
+    git clone https://github.com/eliminmax/colortest.git /colortest
+
+ENTRYPOINT /bin/bash
+```
 
 <!-- vim-markdown-toc GFM -->
 
@@ -27,6 +38,7 @@ Each one of these was tested on a fresh Debian GNU/Linux Bookworm podman contain
 * [Lua](#lua)
 * [Nim](#nim)
 * [Objecive-C](#objecive-c)
+* [Odin](#odin)
 * [OCaml](#ocaml)
 * [Octave](#octave)
 * [Pascal](#pascal)
@@ -324,6 +336,27 @@ apt install -y gobjc
 cd /colortest/objective-c
 # compile the code
 gcc colortest.m -o colortest
+# run the code
+./colortest
+```
+
+## Odin
+
+```sh
+# install dependencies
+apt install -y wget llvm clang
+# download and extract Odin dev-2024-01
+cd $(mktemp -d)
+wget https://github.com/odin-lang/Odin/archive/refs/tags/dev-2024-01.tar.gz -O Odin-dev-2024-01.tgz
+tar xf Odin-dev-2024-01.tgz
+mv Odin-dev-2024-01 /opt/odin
+cd /opt/odin
+# build odin
+./build_odin.sh
+# switch to directory
+cd /colortest/odin
+# compile the code
+/opt/odin/odin build colortest.odin -file
 # run the code
 ./colortest
 ```
