@@ -483,7 +483,7 @@ scala colortest
 ## Shell Script
 
 ```sh
-# at least 2 different POSIX shells are  already installed
+# at least 2 different POSIX shells are already installed
 # switch to directory
 cd /colortest/sh
 # run the code
