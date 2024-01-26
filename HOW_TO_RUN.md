@@ -85,7 +85,7 @@ awk -f colortest.awk
 apt install -y curl gcc
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 source /root/.cargo/env
-cargo install --git https://github.com/RocketRace/babalang  
+cargo install --git https://github.com/RocketRace/babalang
 # switch to directory
 cd /colortest/babalang
 # run the code
@@ -186,7 +186,7 @@ escript colortest
 apt install -y curl gcc
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 source /root/.cargo/env
-cargo install --git https://github.com/FenderLang/Fender  
+cargo install --git https://github.com/FenderLang/Fender
 # switch to directory
 cd /colortest/fender
 # run the code
