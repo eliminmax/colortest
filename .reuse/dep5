@@ -1,0 +1,10 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: colortest
+Upstream-Contact: Eli Array Minkoff <eli@planetminkoff.com>
+Source: https://github.com/eliminmax/colortest
+
+# Sample paragraph, commented out:
+#
+# Files: src/*
+# Copyright: $YEAR $NAME <$CONTACT>
+# License: ...
