@@ -1,5 +1,8 @@
 # Exclude everything by default
 *
+# include contents of the LICENSES and .reuse directories needed for REUSE compliance
+!/LICENSES/*
+!/.reuse/*
 # include folders in the top level but not their contents, otherwise git won't search them even for included files
 !/*/
 # Include Markdown
