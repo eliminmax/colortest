@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2022-2024 Eli Array Minkoff
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
 # Colortest
 
 A series of tiny, non-interactive programs written in various languages that all

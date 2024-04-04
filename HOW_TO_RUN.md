@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
 # How to run each implementation
 
 Each one of these was tested on a fresh Debian GNU/Linux Bookworm podman container, made from the following Dockerfile:
