@@ -1,5 +1,7 @@
 #!/usr/bin/env escript
 %%! -sname colortest -mnesia debug verbose
+% SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+% SPDX-License-Identifier: GPL-3.0-only
 
 colorCell(N) -> io_lib:format("\x1b[48;5;~Bm  ", [N]).
 rowA(I) -> lists:concat([colorCell(I+II) || II <- lists:seq(0, 5)] ++ ["\x1b[0m  "]).

@@ -1,5 +1,7 @@
        IDENTIFICATION DIVISION.
        PROGRAM-ID. colortest.
+      * SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+      * SPDX-License-Identifier: GPL-3.0-only
        ENVIRONMENT DIVISION.
        DATA DIVISION.
        WORKING-STORAGE SECTION.

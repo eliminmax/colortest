@@ -1,3 +1,9 @@
+(*
+ * SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+ *
+ * SPDX-License-Identifier: GPL-3.0-only
+ *)
+
 (* Python-style range from StackOverflow user Anentropic
    https://stackoverflow.com/a/70613105 *)
 let range ?(from=0) until ?(step=1) =

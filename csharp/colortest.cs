@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022-2023 Eli Array Minkoff
+//
+// SPDX-License-Identifier: GPL-3.0-only
+
 using System;
 namespace colortest {
     class colortest {

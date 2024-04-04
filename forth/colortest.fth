@@ -1,3 +1,5 @@
+\ SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+\ SPDX-License-Identifier: GPL-3.0-only
 ( helper tool to print single-length unsigned integer without trailing space )
 : U.N 0 <# #S #> TYPE ;
 ( print the color cell )

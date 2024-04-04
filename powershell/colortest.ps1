@@ -1,4 +1,9 @@
 #!/usr/bin/env pwsh
+
+# SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 # Powershell is not my language of choice, and I'm essentially converting colortest.py, so it's a bit ugly
 
 $esc = [char]27

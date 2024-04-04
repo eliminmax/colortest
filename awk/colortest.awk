@@ -1,4 +1,9 @@
 #!/usr/bin/env -S awk -f
+
+# SPDX-FileCopyrightText: 2023-2024 Eli Array Minkoff
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 BEGIN {
 
     # Print the first 16 colors - these vary by terminal configuration

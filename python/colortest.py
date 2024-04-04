@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# SPDX-FileCopyrightText: 2022-2023 Eli Array Minkoff
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 # Print the first 16 colors - these vary by terminal configuration
 print()
 print(*[f"\x1b[48;5;{i}m  " for i in range(16)], sep="", end="\x1b[0m\n")

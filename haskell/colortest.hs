@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+--
+-- SPDX-License-Identifier: GPL-3.0-only
+
 colorCell i = concat ["\ESC[48;5;", (show i), "m  "]
 rowA i = concat ([colorCell (i + ii) | ii <- [0..5]] ++ ["\ESC[0m  "])
 rowB i = concat ([colorCell (i + ii) | ii <- [36..41]] ++ ["\ESC[0m  "])

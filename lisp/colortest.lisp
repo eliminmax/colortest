@@ -1,5 +1,9 @@
 #!/usr/bin/env -S clisp
 
+; SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+;
+; SPDX-License-Identifier: GPL-3.0-only
+
 ; these variables come in handy
 (defvar esc (list (code-char 27)))
 (defvar nl (list (code-char 10)))

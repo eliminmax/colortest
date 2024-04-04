@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+//
+// SPDX-License-Identifier: GPL-3.0-only
+
 const std = @import("std");
 pub fn main() anyerror!void {
     const stdout_writer = std.io.getStdOut().writer();

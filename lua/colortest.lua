@@ -1,4 +1,7 @@
 #!/usr/bin/env lua
+-- SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+--
+-- SPDX-License-Identifier: GPL-3.0-only
 
 -- using io.write instead of print to avoid automatic newlines
 esc = string.char(0x1b)

@@ -1,3 +1,7 @@
+; SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+;
+; SPDX-License-Identifier: GPL-3.0-only
+
 ; NASM 64-bit with Linux syscalls, no extern
 
 SECTION .data

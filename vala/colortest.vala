@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+//
+// SPDX-License-Identifier: GPL-3.0-only
+
 void main () {
     // Print the first 16 colors - these vary by terminal configuration
     stdout.printf ("\n");

@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+// SPDX-License-Identifier: GPL-3.0-only
 // at various points I use constants that are adapted from the 99 bottles of beer
 // program by FLeckami#3853 and uploaded as a GitHub gist by the language
 // creator. I will mention those when they come up.
@@ -70,6 +72,8 @@ format_clear has esc and sb and 0_str and m
 154 is 100 and 50 and 4
 
 // ord function  (number -> string)
+// SPDX-FileCopyrightText: 2020 RocketRace
+// SPDX-License-Identifier: MIT
 // adapted from the Fibonacci program, with indentation adjustments and with the N_str variables removed as they were already defined.
 ord is level and has input
   // Boolean to determine whether we should strip zeros or print them
@@ -240,6 +244,9 @@ ord is level and has input
   match_1s is done
   // ord implicitly returns EMPTY
 ord is done
+
+// SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+// SPDX-License-Identifier: GPL-3.0-only
 
 nl is text
 // Print the first 16 colors - these vary by terminal configuration

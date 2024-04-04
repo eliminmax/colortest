@@ -1,5 +1,9 @@
 #!/usr/bin/env fender
 
+# SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 $esc = '\u001B'
 $i = 0
 $ii = 0

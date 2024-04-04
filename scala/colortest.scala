@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+//
+// SPDX-License-Identifier: GPL-3.0-only
+
 object colortest {
   def main(args: Array[String]) = {
     // Print the first 16 colors - these vary by terminal configuration
