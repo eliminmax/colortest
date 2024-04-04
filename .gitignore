@@ -1,8 +1,14 @@
+# SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+#
+# SPDX-License-Identifier: CC0-1.0
+
 # Exclude everything by default
 *
 # include contents of the LICENSES and .reuse directories needed for REUSE compliance
 !/LICENSES/*
 !/.reuse/*
+# include .license files for REUSE compliance
+!*.license
 # include folders in the top level but not their contents, otherwise git won't search them even for included files
 !/*/
 # Include Markdown
