@@ -1,5 +1,4 @@
 #!/usr/bin/env php
-
 <?php
 
 /* SPDX-FileCopyrightText: 2023 Eli Array Minkoff
