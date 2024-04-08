@@ -72,6 +72,7 @@ It also gives me a sense of how different languages are designed.
 ## The details
 
 The output of the program should look like this:
+
 ![Screenshot of Colortest output](https://github.com/eliminmax/colortest/blob/main/colortest_output.png)
 
 The following is the pattern itself, with the ASCII escape character
