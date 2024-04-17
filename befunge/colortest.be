@@ -1,5 +1,5 @@
-v SPDX-FileCopyrightText: 2024 Eli Array Minkoff >                   88+10p v  print the color cube    
-  SPDX-License-Identifier: GPL-3.0-only                            >                                 v 
+v                                                >                   88+10p v  print the color cube    
+                                                                   >                                 v 
 >55+, v>52*:,,$             ">"7:8*\2*p          ^                  v*7+5601<      <            <      
  v:+88<^,,,<                 the above overwrites the cell          >    :v                            
 v_39*,"m0["^                 x=56,y=14 in the decimal print         v*89  <                            
