@@ -6,6 +6,10 @@ SPDX-License-Identifier: CC0-1.0
 
 # How to run each implementation
 
+These instructions assume that you are on an amd64 Debian 12 "Bookworm" system.
+
+They can be adapted to other systems and platforms if you know what you're doing.
+
 Each one of these was tested on a fresh Debian GNU/Linux Bookworm podman container, made from the following Dockerfile:
 
 ```dockerfile
@@ -69,65 +73,66 @@ ENTRYPOINT /bin/bash
 
 Before anything language-specific, install `git` and clone the repo, then `cd` into it:
 
-```sh
+```bash
 apt update
 apt install -y git
-git clone https://github.com/eliminmax/colortest.git /colortest
+git clone https://github.com/eliminmax/colortest.git
+cd colortest
 ```
 
 ## Algol 68
 
-```sh
+```bash
 # install dependencies
 apt install -y algol68g
 # switch to directory
-cd /colortest/algol68
+cd algol68
 # run the code
 a68g colortest.a68
 ```
 
 ## AWK
 
-```sh
+```bash
 # awk is already installed
 # switch to directory
-cd /colortest/awk
+cd awk
 # run the code
 awk -f colortest.awk
 ```
 
 ## Babalang
 
-```sh
+```bash
 # install dependencies
 apt install -y curl gcc
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-source /root/.cargo/env
+source "$HOME/.cargo/env"
 cargo install --git https://github.com/RocketRace/babalang
 # switch to directory
-cd /colortest/babalang
+cd babalang
 # run the code
 babalang colortest.baba
 ```
 
 ## Brainfuck
 
-```sh
+```bash
 # install dependencies
 apt install -y beef
 # switch to directory
-cd /colortest/bf
+cd bf
 # run the code
 beef colortest.bf
 ```
 
 ## C
 
-```sh
+```bash
 # install dependencies
 apt install -y gcc
 # switch to directory
-cd /colortest/c
+cd c
 # compile the code
 cc colortest.c -o colortest
 # run the code
@@ -136,11 +141,11 @@ cc colortest.c -o colortest
 
 ## C#
 
-```sh
+```bash
 # install dependencies
 apt install -y mono-mcs
 # switch to directory
-cd /colortest/csharp
+cd csharp
 # compile the code
 mcs colortest.cs
 # run the code
@@ -149,11 +154,11 @@ cli colortest.exe
 
 ## C++
 
-```sh
+```bash
 # install dependencies
 apt install -y g++
 # switch to directory
-cd /colortest/cpp
+cd cpp
 # compile the code
 g++ colortest.cpp -o colortest
 # run the code
@@ -162,11 +167,11 @@ g++ colortest.cpp -o colortest
 
 ## Cobol
 
-```sh
+```bash
 # install dependencies
 apt install -y gnucobol
 # switch to directory
-cd /colortest/cobol
+cd cobol
 # compile the code
 cobc -x colortest.cbl
 # run the code
@@ -175,11 +180,11 @@ cobc -x colortest.cbl
 
 ## D
 
-```sh
+```bash
 # install dependencies
 apt install -y ldc gcc
 # switch to directory
-cd /colortest/d
+cd d
 # compile the code
 ldc2 colortest.d
 # run the code
@@ -188,47 +193,47 @@ ldc2 colortest.d
 
 ## Erlang
 
-```sh
+```bash
 # install dependencies
 apt install -y erlang-base
 # switch to directory
-cd /colortest/erlang
+cd erlang
 # run the code
 escript colortest
 ```
 
 ## Fender
 
-```sh
+```bash
 # install dependencies
 apt install -y curl gcc
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-source /root/.cargo/env
+source "$HOME/.cargo/env"
 cargo install --git https://github.com/FenderLang/Fender
 # switch to directory
-cd /colortest/fender
+cd fender
 # run the code
 fender colortest.fndr
 ```
 
 ## Forth
 
-```sh
+```bash
 # install dependencies
 apt install -y gforth
 # switch to directory
-cd /colortest/forth
+cd forth
 # run the code
 gforth colortest.fth -e bye
 ```
 
 ## Fortran
 
-```sh
+```bash
 # install dependencies
 apt install -y gfortran
 # switch to directory
-cd /colortest/fortran
+cd fortran
 # compile the code
 gfortran colortest.f90 -o colortest
 # run the code
@@ -237,11 +242,11 @@ gfortran colortest.f90 -o colortest
 
 ## Go
 
-```sh
+```bash
 # install dependencies
 apt install -y gccgo
 # switch to directory
-cd /colortest/go
+cd go
 # compile the code
 gccgo colortest.go -o colortest
 # run the code
@@ -250,11 +255,11 @@ gccgo colortest.go -o colortest
 
 ## Haskell
 
-```sh
+```bash
 # install dependencies
 apt install -y ghc
 # switch to directory
-cd /colortest/haskell
+cd haskell
 # compile the code
 ghc colortest.hs
 # run the code
@@ -263,11 +268,11 @@ ghc colortest.hs
 
 ## Java
 
-```sh
+```bash
 # install dependencies
 apt install -y openjdk-17-jdk-headless
 # switch to directory
-cd /colortest/java
+cd java
 # compile the code
 javac colortest.java
 # run the code
@@ -276,57 +281,57 @@ java colortest
 
 ## JavaScript
 
-```sh
+```bash
 # install dependencies
 apt install -y nodejs
 # switch to directory
-cd /colortest/javascript
+cd javascript
 # run the code
 node colortest.js
 ```
 
 ## Kotlin
 
-```sh
+```bash
 # install dependencies
 apt install -y kotlin
 # switch to directory
-cd /colortest/kotlin
+cd kotlin
 # compile the code
-kotlinc colortest.kt
+kotlinc colortest.kt -include-runtime -d colortest.jar
 # run the code
-kotlin ColortestKt
+kotlin colortest.jar
 ```
 
 ## Lisp
 
-```sh
+```bash
 # install dependencies
 apt install -y clisp
 # switch to directory
-cd /colortest/lisp
+cd lisp
 # run the code
 clisp colortest.lisp
 ```
 
 ## Lua
 
-```sh
+```bash
 # install dependencies
 apt install -y lua5.2
 # switch to directory
-cd /colortest/lua
+cd lua
 # run the code
 lua colortest.lua
 ```
 
 ## Nim
 
-```sh
+```bash
 # install dependencies
 apt install -y nim
 # switch to directory
-cd /colortest/nim
+cd nim
 # compile the code
 nim c colortest.nim
 # run the code
@@ -335,11 +340,11 @@ nim c colortest.nim
 
 ## Objecive-C
 
-```sh
+```bash
 # install dependencies
 apt install -y gobjc
 # switch to directory
-cd /colortest/objective-c
+cd objective-c
 # compile the code
 gcc colortest.m -o colortest
 # run the code
@@ -348,7 +353,7 @@ gcc colortest.m -o colortest
 
 ## Odin
 
-```sh
+```bash
 # install dependencies
 apt install -y wget llvm clang
 # download and extract Odin dev-2024-01
@@ -360,7 +365,7 @@ cd /opt/odin
 # build odin
 ./build_odin.sh
 # switch to directory
-cd /colortest/odin
+cd odin
 # compile the code
 /opt/odin/odin build colortest.odin -file
 # run the code
@@ -369,11 +374,11 @@ cd /colortest/odin
 
 ## OCaml
 
-```sh
+```bash
 # install dependencies
 apt install -y ocaml
 # switch to directory
-cd /colortest/ocaml
+cd ocaml
 # compile the code
 ocamlc colortest.ml -o colortest
 # run the code
@@ -382,22 +387,22 @@ ocamlc colortest.ml -o colortest
 
 ## Octave
 
-```sh
+```bash
 # install dependencies
 apt install -y octave --no-install-recommends
 # switch to directory
-cd /colortest/octave
+cd octave
 # run the code
 octave colortest.m 2>/dev/null
 ```
 
 ## Pascal
 
-```sh
+```bash
 # install dependencies
 apt install -y fp-compiler-3.2.2
 # switch to directory
-cd /colortest/pascal
+cd pascal
 # compile the code
 fpc colortest.pas
 # run the code
@@ -406,28 +411,28 @@ fpc colortest.pas
 
 ## Perl
 
-```sh
+```bash
 # perl is already installed
 # switch to directory
-cd /colortest/perl
+cd perl
 # run the code
 perl colortest.pl
 ```
 
 ## PHP
 
-```sh
+```bash
 # install dependencies
 apt install -y php-cli
 # switch to directory
-cd /colortest/php
+cd php
 # run the code
 php colortest.php
 ```
 
 ## PowerShell
 
-```sh
+```bash
 # install dependencies
 apt install -y wget
 wget -q https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb
@@ -435,29 +440,29 @@ dpkg -i packages-microsoft-prod.deb
 apt update
 apt install powershell
 # switch to directory
-cd /colortest/powershell
+cd powershell
 # run the code
 pwsh colortest.ps1
 ```
 
 ## Python
 
-```sh
+```bash
 # install dependencies
 apt install -y python3
 # switch to directory
-cd /colortest/python
+cd python
 # run the code
 python3 colortest.py
 ```
 
 ## R
 
-```sh
+```bash
 # install dependencies
 apt install -y r-cran-littler
 # switch to directory
-cd /colortest/r
+cd r
 # run the code
 r colortest.r
 ```
@@ -466,7 +471,7 @@ r colortest.r
 
 *Note: this one's messy. Really messy.*
 
-```sh
+```bash
 # install dependencies
 apt install -y nodejs npm
 git clone https://github.com/RockstarLang/rockstar /rockstar
@@ -484,22 +489,22 @@ node rockstar /colortest/rockstar/colortest.rock
 
 ## Ruby
 
-```sh
+```bash
 # install dependencies
 apt install -y ruby
 # switch to directory
-cd /colortest/ruby
+cd ruby
 # run the code
 ruby colortest.rb
 ```
 
 ## Rust
 
-```sh
+```bash
 # install dependencies
 apt install -y rustc
 # switch to directory
-cd /colortest/rust
+cd rust
 # compile the code
 rustc colortest.rs
 # run the code
@@ -508,11 +513,11 @@ rustc colortest.rs
 
 ## Scala
 
-```sh
+```bash
 # install dependencies
 apt install -y scala
 # switch to directory
-cd /colortest/scala
+cd scala
 # compile the code
 scalac colortest.scala
 # run the code
@@ -521,63 +526,65 @@ scala colortest
 
 ## Shell Script
 
-```sh
+```bash
 # at least 2 different POSIX shells are already installed
 # switch to directory
-cd /colortest/sh
+cd sh
 # run the code
 sh colortest.sh
 ```
 
 ## TypeScript
 
-```sh
+```bash
 # install dependencies
 apt install -y ts-node
 # switch to directory
-cd /colortest/typescript
+cd typescript
 # run the code
 ts-node colortest.js
 ```
 
 ## Vala
 
-```sh
+```bash
 # install dependencies
 apt install -y valac
 # switch to directory
-cd /colortest/vala
+cd vala
 # compile the code
 valac colortest.vala
 # run the code
 colortest
 ```
+
 ## x86_64 assembly
 
-```sh
+```bash
 # install dependencies
 apt install -y binutils nasm
 # switch to directory
-cd /colortest/x86-64_linux_asm
+cd x86-64_linux_asm
 # compile the code
-nasm -felf64 colortest.scala
+nasm -felf64 colortest.asm
 # link the code
 ld colortest.o -o colortest
-# run the code
+# run the code on amd64 systems
 ./colortest
 ```
 
 ## Zig
 
-```sh
+```bash
 # install dependencies
 apt install -y xz-utils wget
-cd opt
+pushd /opt
 wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz
 tar xf zig-linux-x86_64-0
-PATH=$PATH:/opt/zig-linux-x86_64-0.11.0
+PATH="$PATH:/opt/zig-linux-x86_64-0.11.0"
 # switch to directory
-cd /colortest/zig
+popd
+cd zig
 # compile the code
 zig build-exe colortest.zig
 # run the code
