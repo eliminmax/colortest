@@ -29,6 +29,7 @@ ENTRYPOINT /bin/bash
 * [Algol 68](#algol-68)
 * [AWK](#awk)
 * [Babalang](#babalang)
+* [Befunge](#befunge)
 * [Brainfuck](#brainfuck)
 * [C](#c)
 * [C](#c-1)
@@ -113,6 +114,25 @@ cargo install --git https://github.com/RocketRace/babalang
 cd babalang
 # run the code
 babalang colortest.baba
+```
+
+## Befunge
+
+```sh
+apt install -y wget cmake
+dldir="$(mktemp -d)"
+pushd "$dldir"
+wget 'https://github.com/VorpalBlade/cfunge/archive/refs/tags/1,001.tar.gz'
+tar xzf '1,001.tar.gz'
+mkdir build
+cd build
+cmake ../cfunge-1-001/
+make
+make install
+popd
+rm -rf "$dldir"
+cd /colortest/befunge
+cfunge colortest.be
 ```
 
 ## Brainfuck
