@@ -12,19 +12,19 @@ v v*84,"m"<v,,,<                                                    >0v         
           ^                                             <           v!`*94 <:<   ,;    ^p01*4-1*48 <   
                                  >68*+,v >v                         >v       -   ,5^           p01<  # 
                                  /     # \`>>:52*/86*+,v            v_:10g+\1^   ,;      >:85+4*\`|10p%
-                                 ^*:*52:<*!      v%*52 <           ^>10g+005v   v<"      + 8>v     #  v
-                                       # 5>|                        >  v`\0:<   >#,              v>^  @
-           >                  >:52*:*\`!|2 >     >68*+, ^            v$_:10v      *      6 5*4         
-                                v%*:*25<:^                              v+g<      9      g >^>*^       
-                                >           ^                           >\1-^   v 3#    ,,,,,   <      
-                                        >^                           >          >:|      #             
-                                  the above cluster prints a                      >$v    0             
-                                  3-digit decimal integer without                 v <    1             
-                                  adding a trailing space                   v ,*39_39*," "" m0["^      
-                                                                     ^ ,,,"m "" "        #           < 
-                                                                            >"m0[",,,55+,^             
-                              ^                                                                  <     
-                                                                                                       
+                                 ^*:*52:<*!      v%*52 <           ^>10g+005v   v<"      + 8>v    $#  v
+                                       # 5>|              v"m "" "< >  v`\0:<   >#,              v>^  $
+           >                  >:52*:*\`!|2 >     >68*+, ^ >,,,v      v$_:10v      *      6 5*4        5
+                                v%*:*25<:^                    1         v+g<      9      g >^>*^      5
+                                >           ^                 -         >\1-^   v 3#    ,,,,,   <     +
+                                        >^                           >          >:|      #            ,
+                                  the above cluster prints a                      >$v    0            "
+                                  3-digit decimal integer w/o                     v <    1            v
+           ^ +*<                  adding a trailing space                   v ,*39_39*," "" m0["^     "
+  >:46*\-856*1-^                                                     ^ ,,,"m "" "        #           <5
+  ^,,,,,"48;5;"<                                                            >"m0[",,,55+,^            6
+               |,"[",*93<     ^                                                                  <    +
+  @,,:+55,,"0m"<        ^:                                    <                    *64p01*8-1*53p+77*6<
                                        after the first color cube                                      
                                        loop, set the following 4  124,y=0,x=1                          
                                        cell values to change the  ">",y=14,x=98                        
