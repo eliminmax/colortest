@@ -131,7 +131,7 @@ make
 make install
 popd
 rm -rf "$dldir"
-cd /colortest/befunge
+cd befunge
 cfunge colortest.be
 ```
 
