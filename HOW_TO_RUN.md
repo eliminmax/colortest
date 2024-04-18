@@ -127,7 +127,7 @@ make install
 popd
 rm -rf "$dldir"
 cd /colortest/befunge
-cfunge colortest.be
+cfunge colortest.befunge
 ```
 
 ## Brainfuck
