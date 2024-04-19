@@ -76,6 +76,7 @@ babalang_dependencies() {
     cargo_wrapper babalang --git https://github.com/RocketRace/babalang
 }
 fender_dependencies() {
+    apt_wrapper cc gcc
     cargo_wrapper fender --git https://github.com/FenderLang/Fender
 }
 
