@@ -8,13 +8,12 @@
 
 set -eo pipefail
 
-cd "$(dirname "$(realpath "$0")")"
+# go to the colortest directory
+cd "$(dirname "$(realpath "$0")")/.."
 
-# reuse the setup from install-deps.sh
-source ./install-deps.sh
+# load the common functions from install-deps.sh
+source RUNNERS/common.sh
 
-# go up to colortest directory
-cd ..
 
 # Utility function to compile an implementation if a colortest binary is not
 # present. It runs its arguments as a command if a file called `colortest`

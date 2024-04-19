@@ -9,22 +9,9 @@
 
 set -eo pipefail
 
-if [ "${#BASH_SOURCE[@]}" -gt 0 ]; then
-    was_sourced=true
-    filename="${BASH_SOURCE[0]}"
-    pushd "$(dirname "$(realpath "$filename")")" &>/dev/null
-else
-    filename="$0"
-    cd "$(dirname "$(realpath "$0")")"
-fi
+cd "$(dirname "$(realpath "$0")")"
 
-# bash array containing all implementations
-colortest_implementations=(
-    algol_68 awk babalang befunge bf c cobol cpp csharp d erlang fender forth
-    fortran go haskell java javascript kotlin lisp lua nim objective-c ocaml
-    octave odin pascal perl php powershell python r rockstar ruby rust scala sh
-    typescript vala x86-64_linux_asm zig
-)
+source common.sh
 
 # this script assumes the presence of GNU coreutils on a Debian-based distro
 if [[ "$(uname -mo)" != 'x86_64 GNU/Linux' || ! -e /etc/debian_version ]]; then
@@ -32,88 +19,9 @@ if [[ "$(uname -mo)" != 'x86_64 GNU/Linux' || ! -e /etc/debian_version ]]; then
     exit 1
 fi
 
-mkdir -p bin
-
-# takes a single 
-ensure_in_path() {
-    case ":$PATH:" in
-        *"$1"*) : ;;
-        *) PATH="$PATH:$1" ;;
-    esac
-}
-
-ensure_in_path "$PWD/bin"
-ensure_in_path "$PWD/cargo/bin"
-
-# if something is installed with cargo, install it here
-export CARGO_HOME="${CARGO_HOME-$PWD/cargo}"
-# if we run rustup, keep it local to this project
-export RUSTUP_HOME="${RUSTUP_HOME-$PWD/rustup}"
-
-# shorthand wrapper
-cmd_exists() {
-    command -v "$1" &>/dev/null
-}
-
-# create a wrapper function to use the best available "run as root" command
-# prefer sudo over doas, doas over pkexec, and pkexec over su
-if [ "$EUID" -eq 0 ]; then
-    as_root() {
-        # we're already root
-        "$@"
-    }
-elif cmd_exists sudo; then
-    as_root() {
-        sudo "$@"
-    }
-elif cmd_exists doas; then
-    as_root() {
-        doas "$@"
-    }
-elif cmd_exists pkexec; then
-    as_root() {
-        pkexec "$@"
-    }
-else
-    as_root() {
-        set +x
-        echo "$@" | su - -c sh
-        set -x
-    }
-fi
-
-# checks if command listed in first argument exists
-# if not, install the package specified in the second argument to install it
-apt_wrapper() {
-    if ! cmd_exists "$1"; then
-        as_root apt-get install -q "$2"
-    fi
-}
-
-rustup_install() {
-    apt_wrapper curl curl
-    if ! cmd_exists rustc; then
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    fi
-}
-
-# checks if command listed in first argument exists
-# if not, invoke cargo with the remaining arguments to install it
-cargo_wrapper() {
-    cmd="$1"
-    shift
-    if ! cmd_exists "$cmd"; then
-        if ! cmd_exists cargo; then
-            rustup_install
-        fi
-        cargo install "$@"
-    fi
-}
-
-
 # trivial cases - these can be handled with one apt_wrapper call on Debian 12
 algol_68_dependencies() { apt_wrapper a68g algol68g; }
-bf_dependencies(){ apt_wrapper beef beef; }
+bf_dependencies() { apt_wrapper beef beef; }
 c_dependencies() { apt_wrapper cc gcc; }
 cobol_dependencies() { apt_wrapper cobc gnucobol; }
 cpp_dependencies() { apt_wrapper c++ g++; }
@@ -328,13 +236,6 @@ resolve_all() {
         "${lang}_dependencies"
     done
 }
-
-# stop here if this was sourced from another script
-if [ -n "$was_sourced" ]; then
-    popd >/dev/null
-    unset was_sourced
-    return 0
-fi
 
 # if run directly without arguments, resolve all dependencies
 # if run directly with arguments, assume each argument is an implementation,
