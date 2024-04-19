@@ -25,7 +25,6 @@ bf_dependencies() { apt_wrapper beef beef; }
 c_dependencies() { apt_wrapper cc gcc; }
 cobol_dependencies() { apt_wrapper cobc gnucobol; }
 cpp_dependencies() { apt_wrapper c++ g++; }
-d_dependencies() { apt_wrapper ldc2 ldc; }
 erlang_dependencies() { apt_wrapper escript erlang-base; }
 forth_dependencies() { apt_wrapper gforth gforth; }
 fortran_dependencies() { apt_wrapper gfortran gfortran; }
@@ -53,10 +52,14 @@ vala_dependencies() { apt_wrapper valac valac;}
 awk_dependencies() { apt_wrapper awk mawk; }
 sh_dependencies() { apt_wrapper sh dash; }
 
-# a couple with more than 1 dependency, but still fairly trivial
+# a few with more than 1 dependency, but still fairly trivial
 csharp_dependencies() {
     apt_wrapper mcs mono-mcs
     apt_wrapper cli mono-runtime
+}
+d_dependencies() {
+    apt_wrapper ldc2 ldc
+    apt_wrapper cc gcc
 }
 x86-64_linux_asm_dependencies() {
     apt_wrapper ld binutils
