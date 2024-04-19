@@ -8,8 +8,10 @@ colortest_implementations=(
     typescript vala x86-64_linux_asm zig
 )
 
+basedir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
 # ensure the bin dir exists
-mkdir -p "$(dirname "$(realpath "${BASH_SOURCE[0]}")")/bin"
+mkdir -p "$basedir/bin"
 
 # if the argument isn't in the PATH, it's appended to it
 ensure_in_path() {
@@ -19,13 +21,13 @@ ensure_in_path() {
     esac
 }
 
-ensure_in_path "$PWD/bin"
-ensure_in_path "$PWD/cargo/bin"
+ensure_in_path "$basedir/bin"
+ensure_in_path "$basedir/cargo/bin"
 
 # if something is installed with cargo, install it here
-export CARGO_HOME="${CARGO_HOME-$PWD/cargo}"
+export CARGO_HOME="${CARGO_HOME-$basedir/cargo}"
 # if we run rustup, keep it local to this project
-export RUSTUP_HOME="${RUSTUP_HOME-$PWD/rustup}"
+export RUSTUP_HOME="${RUSTUP_HOME-$basedir/rustup}"
 
 # shorthand wrapper for command -v <some command> &>/dev/null
 cmd_exists() {
