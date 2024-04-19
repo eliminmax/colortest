@@ -20,6 +20,7 @@ fi
 fd --type file '^colortest\.' --exact-depth 2 -X \
     tar cf .files.tar ./colortest_output \
     ./RUNNERS/install-deps.sh \
+    ./RUNNERS/common.sh \
     ./RUNNERS/run-version.sh
 
 # now build the test
