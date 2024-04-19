@@ -1,19 +1,20 @@
-# SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2023-2024 Eli Array Minkoff
 #
 # SPDX-License-Identifier: CC0-1.0
 
 # Exclude everything by default
 *
-# include contents of the LICENSES and .reuse directories needed for REUSE compliance
+# include contents of the LICENSES and .reuse directories for REUSE compliance
 !/LICENSES/*
 !/.reuse/*
 # include .license files for REUSE compliance
 !*.license
-# include folders in the top level but not their contents, otherwise git won't search them even for included files
+# include folders in the top level but not their contents
+# without this, git won't search them even for included files
 !/*/
 # Include Markdown
 !*.md
-# Include colortest.* in subdirectories but not the root directory of the repository
+# Include colortest.* in subdirectories but not the root of the repo
 !colortest.*
 /colortest.*
 # Include the colortest output file and screenshot
@@ -21,3 +22,6 @@
 !colortest_output.png
 # Include gitignore files (including this one)
 !.gitignore
+# Include the Containerfile and .test_assets contents used for testing
+!Containerfile
+!.test_assets/*
