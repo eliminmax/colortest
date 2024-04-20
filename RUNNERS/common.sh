@@ -70,6 +70,7 @@ apt_wrapper() {
 }
 
 rustup_install() {
+    apt_wrapper cc gcc
     apt_wrapper curl curl
     if ! cmd_exists rustc; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh

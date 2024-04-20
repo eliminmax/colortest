@@ -72,11 +72,9 @@ x86-64_linux_asm_dependencies() {
 rust_dependencies() { rustup_install; }
 # a couple which need to be installed from git with cargo
 babalang_dependencies() {
-    apt_wrapper cc gcc
     cargo_wrapper babalang --git https://github.com/RocketRace/babalang
 }
 fender_dependencies() {
-    apt_wrapper cc gcc
     cargo_wrapper fender --git https://github.com/FenderLang/Fender
 }
 
