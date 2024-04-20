@@ -131,15 +131,13 @@ odin_dependencies() {
     ./build_odin.sh
     popd &>/dev/null
     # create the odin-wrapper script, if needed
-    if ! [ -f bin/odin-wrapper ]; then
-        cat >bin/odin-wrapper <<EOF
+    cat >bin/odin-wrapper <<EOF
 #!/bin/sh
 thisdir="\$(dirname "\$(realpath "\$0")")"
 odin_path="\$(realpath "\$thisdir/../odin/")"
 exec "\$odin_path/odin" "\$@"
 EOF
     chmod +x bin/odin-wrapper
-    fi
 }
 
 # the rockstar reference implementation, satriani, must be run with the cwd set
@@ -163,8 +161,7 @@ rockstar_dependencies() {
     yarnpkg pegjs
     popd &>/dev/null
     # create the satriani-wrapper script, if needed
-    if ! [ -f bin/satriani-wrapper ]; then
-        cat >bin/satriani-wrapper <<EOF
+    cat >bin/satriani-wrapper <<EOF
 #!/bin/sh
 # satriani must be run from within its directory, so the first step is to
 # save the absolute path of the command to a variable
@@ -179,8 +176,7 @@ shift
 
 exec node rockstar "\$program" "\$@"
 EOF
-        chmod +x bin/satriani-wrapper
-    fi
+    chmod +x bin/satriani-wrapper
 }
 
 # for the last couple, just download the pre-built executables and symlink them
