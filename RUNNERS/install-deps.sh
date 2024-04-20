@@ -85,7 +85,7 @@ fender_dependencies() {
 objective-c_dependencies() {
     apt_wrapper gcc gcc
     if ! printf 'int main(void){}' | gcc -xobjective-c -E - &>/dev/null; then
-        as_root apt-get install -q gobjc
+        as_root apt-get install -qy gobjc
     fi
 }
 
@@ -191,11 +191,11 @@ powershell_dependencies() {
     # PowerShell needs a bunch of libs, all but one of which start with "lib"
     for lib in c6 gcc-s1 gssapi-krb5-2 icu72 ssl3 stdc++6; do
         if ! dpkg --list "lib$lib" &>/dev/null; then
-            as_root apt-get install -q "lib$lib"
+            as_root apt-get install -qy "lib$lib"
         fi
     done
     if ! dpkg --list zlib1g &>/dev/null; then
-        as_root apt-get install -q zlib1g
+        as_root apt-get install -qy zlib1g
     fi
 
     if [ ! -f powershell/pwsh ]; then

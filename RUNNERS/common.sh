@@ -65,7 +65,7 @@ fi
 # if not, install the package specified in the second argument to install it
 apt_wrapper() {
     if ! cmd_exists "$1"; then
-        as_root apt-get install -q "$2"
+        as_root apt-get install -qy "$2"
     fi
 }
 
@@ -73,7 +73,9 @@ rustup_install() {
     apt_wrapper cc gcc
     apt_wrapper curl curl
     if ! cmd_exists rustc; then
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        # the rustup command from rustup.rs, with -s -- -y appended to make it
+        # non-interactive
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     fi
 }
 
