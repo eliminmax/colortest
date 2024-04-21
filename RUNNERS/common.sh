@@ -54,10 +54,11 @@ elif cmd_exists pkexec; then
         pkexec "$@"
     }
 else
+    # fail if attempting to run as root at this point.
     as_root() {
-        set +x
-        echo "$@" | su - -c sh
-        set -x
+        printf 'Not running as root, and none of sudo, doas, or pkexec ' >&2
+        printf 'could be found in PATH. Aborting!\n' >&2
+        exit 2
     }
 fi
 
