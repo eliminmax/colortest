@@ -108,8 +108,8 @@ befunge_dependencies() {
     apt_wrapper make make
     apt_wrapper cc gcc
     apt_wrapper wget wget
-    apt_wrapper tar tar
-    apt_wrapper gzip gzip
+    apt_wrapper tar tar # required in debian, check anyway just in case
+    apt_wrapper gzip gzip # required in debian, check anyway just in case
 
     # split the second half of the URL into a var to fit within 80 columns
     local asset_path
@@ -200,8 +200,8 @@ powershell_dependencies() {
     # do nothing if pwsh is already in PATH
     if cmd_exists pwsh; then return 0; fi
     # packages needed to download and extract PowerShell's archive
-    apt_wrapper gzip gzip
-    apt_wrapper tar tar
+    apt_wrapper gzip gzip # required in debian, check anyway just in case
+    apt_wrapper tar tar # required in debian, check anyway just in case
     apt_wrapper wget wget
     # PowerShell needs a bunch of libs, all but one of which start with "lib"
     for lib in c6 gcc-s1 gssapi-krb5-2 icu72 ssl3 stdc++6; do
@@ -232,7 +232,7 @@ zig_dependencies() {
     # do nothing if zig is already in PATH
     if cmd_exists zig; then return 0; fi
     # packages needed to download and extract Zig's archive
-    apt_wrapper tar tar
+    apt_wrapper tar tar # required in debian, check anyway just in case
     apt_wrapper wget wget
     apt_wrapper xz xz-utils
     mkdir -p zig
