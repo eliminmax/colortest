@@ -81,7 +81,17 @@ rustup_install() {
 
 # takes a url as an argument, and downloads it unless the output already exists
 wget_if() {
-    if ! [ -f "$(basename "$1")" ]; then
+    # substitute %NN with \xNN, then echo -e to process backslash escapes
+    # thanks to https://stackoverflow.com/a/6265305 for pointing me to that
+    local url_decoded
+    url_decoded="$(echo -e "${1//%/\\x}")"
+
+    # ${FOO##pattern}" greedily matches pattern at the start of FOO, removing
+    # the matching component.
+    # https://www.cyberciti.biz/tips/bash-shell-parameter-substitution-2.html
+    # This removes everything before the last slash in the url_decoded value
+    # and runs wget if it doesn't exist
+    if ! [ -f "${url_decoded##*/}" ]; then
         apt_wrapper wget wget
         wget "$1"
     fi
