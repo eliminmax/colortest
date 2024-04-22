@@ -9,4 +9,4 @@ RUN chown -R colortester:colortester /home/colortester
 
 USER colortester
 
-ENTRYPOINT /usr/bin/bash
+CMD /usr/bin/bash -li
