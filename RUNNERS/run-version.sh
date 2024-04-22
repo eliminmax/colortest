@@ -8,11 +8,15 @@
 
 set -eo pipefail
 
-# go to the colortest directory
-cd "$(dirname "$(realpath "$0")")/.."
 
-# load the common functions from install-deps.sh
-source RUNNERS/common.sh
+# the reason for the order of the below few commands is that shellcheck doesn't
+# understand that RUNNERS/common.sh sourced from the colortest directory and
+# common.sh sourced from the colortest/RUNNERS directory are one and the same.
+
+# cd to colortest/RUNNERS directory to source common.sh, then go to colortest
+cd "$(dirname "$(realpath "$0")")"
+source common.sh
+cd ..
 
 
 # Utility function to compile an implementation if a colortest binary is not
