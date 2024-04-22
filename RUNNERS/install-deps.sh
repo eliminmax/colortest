@@ -143,11 +143,10 @@ odin_dependencies() {
     apt_wrapper llvm-as llvm
     apt_wrapper clang clang
     # download and compile Odin version
-    wget_if "https://github.com/odin-lang/Odin/archive/refs/tags/$ODIN_V.tar.gz" \
-        -O "Odin-$ODIN_V.tar.gz"
+    wget_if "https://github.com/odin-lang/Odin/archive/refs/tags/$ODIN_V.tar.gz"
     mkdir -p odin
     pushd odin &>/dev/null
-    tar --strip-components=1 -xf "../Odin-$ODIN_V.tar.gz"
+    tar --strip-components=1 -xf "../$ODIN_V.tar.gz"
     ./build_odin.sh
     popd &>/dev/null
     ln -s ../odin/odin bin/odin
