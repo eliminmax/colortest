@@ -3,8 +3,7 @@
 cd "$(dirname "$(realpath "$0")")" || exit 4
 
 mkdir -p results
-
-set -x
+date +%s >results/start-time
 
 podman run --rm -a stdout -a stderr colortester:latest \
     sh -c 'RUNNERS/install-deps.sh && RUNNERS/run-version.sh -a' \
@@ -27,3 +26,4 @@ for i in $(list_colortest_implementations); do
 done
 
 wait
+date +%s >results/finish-time
