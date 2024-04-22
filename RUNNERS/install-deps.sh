@@ -70,10 +70,12 @@ x86-64_linux_asm_dependencies() {
 # newer version of it, so for the sake of consistency, install the latest
 # version of rustup for anything that uses rust
 rust_dependencies() { rustup_install; }
+
 # a couple which need to be installed from git with cargo
 babalang_dependencies() {
     cargo_wrapper babalang --git https://github.com/RocketRace/babalang
 }
+
 fender_dependencies() {
     cargo_wrapper fender --git https://github.com/FenderLang/Fender
 }
@@ -89,6 +91,15 @@ objective-c_dependencies() {
     fi
 }
 
+# for those with hard-coded versions to download, store them here to make it
+# easier to change in the future
+
+PWSH_V='7.4.2'
+ODIN_V='dev-2024-01'
+ROCKSTAR_COMMIT='c6c53db'
+ZIG_V='0.12.0'
+CFUNGE_V='1,001'
+
 # we need to pull the source for the interpreter and build it locally
 befunge_dependencies() {
     # do nothing if cfunge is already in PATH
@@ -99,17 +110,32 @@ befunge_dependencies() {
     apt_wrapper wget wget
     apt_wrapper tar tar
     apt_wrapper gzip gzip
-    pfx="$PWD"
-    mkdir -p .build/cfunge
-    pushd .build/cfunge &>/dev/null
-    wget https://github.com/VorpalBlade/cfunge/archive/refs/tags/1,001.tar.gz
-    tar xf 1,001.tar.gz
+
+    # split the second half of the URL into a var to fit within 80 columns
+    local asset_path
+    asset_path="archive/refs/tags/$CFUNGE_V.tar.gz"
+    wget "https://github.com/VorpalBlade/cfunge/$asset_path"
+    
+    # create local install prefix at colortest/RUNNERS/cfunge
+    local pfx
+    pfx="$PWD/cfunge"
+    mkdir -p cfunge
+
+    # extract source to cfunge_src directory
+    mkdir -p cfunge_src
+    pushd cfunge_src &>/dev/null
+    tar --strip-components=1 -xf "../$CFUNGE_V.tar.gz"
+
+    # install to the local install prefix
     mkdir -p build
     cd build
-    cmake ../cfunge-1-001 -DCMAKE_INSTALL_PREFIX="$pfx"
+    cmake ../ -DCMAKE_INSTALL_PREFIX="$pfx"
     make
     make install
     popd &>/dev/null
+
+    # link into colortest/RUNNERS/bin
+    ln -s ../cfunge/bin/cfunge bin/cfunge
 }
 
 # compile the odin compiler and symlink it into the PATH
@@ -118,15 +144,12 @@ odin_dependencies() {
     apt_wrapper wget wget
     apt_wrapper llvm-as llvm
     apt_wrapper clang clang
-    # Odin version string - keep script within 80 columns
-    local odin_v
     # download and compile Odin version
-    odin_v='dev-2024-01'
-    wget "https://github.com/odin-lang/Odin/archive/refs/tags/$odin_v.tar.gz" \
-        -O "Odin-$odin_v.tar.gz"
+    wget "https://github.com/odin-lang/Odin/archive/refs/tags/$ODIN_V.tar.gz" \
+        -O "Odin-$ODIN_V.tar.gz"
     mkdir -p odin
     pushd odin &>/dev/null
-    tar --strip-components=1 -xf "../Odin-$odin_v.tar.gz"
+    tar --strip-components=1 -xf "../Odin-$ODIN_V.tar.gz"
     ./build_odin.sh
     popd &>/dev/null
     ln -s ../odin/odin bin/odin
@@ -145,7 +168,7 @@ rockstar_dependencies() {
     git clone https://github.com/RockstarLang/rockstar
     pushd rockstar/satriani &>/dev/null
     # switch to a commit where the following sed command is known to work
-    git checkout 'c6c53db'
+    git checkout "$ROCKSTAR_COMMIT"
     # use this sed command to comment out the annoying line
     sed -i '/program returned no output/s#^#//#' rockstar.js
     # install dependencies and build the language grammer with pegjs
@@ -194,10 +217,10 @@ powershell_dependencies() {
         mkdir -p powershell
         pushd powershell &>/dev/null
         # split the second half of the URL into a var to fit within 80 columns
-        asset_path='download/v7.4.2/powershell-7.4.2-linux-x64.tar.gz'
+        local asset_path
+        asset_path="download/v$PWSH_V/powershell-$PWSH_V-linux-x64.tar.gz"
         wget "https://github.com/PowerShell/PowerShell/releases/$asset_path"
-        unset asset_path
-        tar -xzf powershell-7.4.2-linux-x64.tar.gz
+        tar -xzf "powershell-$PWSH_V-linux-x64.tar.gz"
         # link powershell within the bin directory
         cd ../bin
         ln -s ../powershell/pwsh pwsh
@@ -214,8 +237,8 @@ zig_dependencies() {
     apt_wrapper xz xz-utils
     mkdir -p zig
     pushd zig &>/dev/null
-    wget https://ziglang.org/download/0.12.0/zig-linux-x86_64-0.12.0.tar.xz
-    tar --strip-components=1 -xJf zig-linux-x86_64-0.12.0.tar.xz
+    wget "https://ziglang.org/download/$ZIG_V/zig-linux-x86_64-$ZIG_V.tar.xz"
+    tar --strip-components=1 -xJf "zig-linux-x86_64-$ZIG_V.tar.xz"
     cd ../bin
     ln -s ../zig/zig zig
     popd &>/dev/null
