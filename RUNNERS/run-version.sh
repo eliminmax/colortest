@@ -117,7 +117,7 @@ test_implementation() {
     fails=0
     tests=0
     for lang in "$@"; do
-        printf 'Testing \e[1;32m%s\e[m...\n' "$lang"
+        printf 'Testing \e[1;32m%s\e[m...\n' "$lang" >&2
         ((tests+=1))
         if ! { run_version "$lang" | diff --brief - colortest_output; }; then
             printf '\e[1;31m%s\e[m failed!\n' "$lang" >&2
@@ -158,7 +158,7 @@ else
         test_implementation "${filtered_args[@]}"
     else
         for lang in "${filtered_args[@]}"; do
-            printf '########### \e[1;32m%s\e[m ###########\n' "$lang"
+            printf '########### \e[1;32m%s\e[m ###########\n' >&2 "$lang"
             run_version "$lang"
         done
     fi
