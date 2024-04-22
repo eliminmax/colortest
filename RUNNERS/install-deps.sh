@@ -213,7 +213,6 @@ powershell_dependencies() {
     fi
 }
 
-# this downloads zig 0.11.0 and installes it into the PATH if needed
 zig_dependencies() {
     # do nothing if zig is already in PATH
     if cmd_exists zig; then return 0; fi
