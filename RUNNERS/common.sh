@@ -13,6 +13,7 @@
 # * They may try to download commands.
 
 # bash array containing all implementations
+# shellcheck disable=2034 # Shellcheck thinks that this is unused. It's not.
 colortest_implementations=(
     algol_68 awk babalang befunge bf c cobol cpp csharp d erlang fender forth
     fortran go haskell java javascript kotlin lisp lua nim objective-c ocaml
