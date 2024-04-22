@@ -223,8 +223,8 @@ zig_dependencies() {
     apt_wrapper xz xz-utils
     mkdir -p zig
     pushd zig &>/dev/null
-    wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz
-    tar --strip-components=1 -xJf zig-linux-x86_64-0.11.0.tar.xz
+    wget https://ziglang.org/download/0.12.0/zig-linux-x86_64-0.12.0.tar.xz
+    tar --strip-components=1 -xJf zig-linux-x86_64-0.12.0.tar.xz
     cd ../bin
     ln -s ../zig/zig zig
     popd &>/dev/null
