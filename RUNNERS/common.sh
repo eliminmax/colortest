@@ -69,10 +69,11 @@ apt_wrapper() {
     fi
 }
 
+# non-interactively install rust tooling using rustup if needed
 rustup_install() {
     apt_wrapper cc gcc
     apt_wrapper curl curl
-    if ! cmd_exists rustc; then
+    if ! cmd_exists rustup; then
         # the rustup command from rustup.rs, with -s -- -y appended to make it
         # non-interactive
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
