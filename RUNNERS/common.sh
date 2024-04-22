@@ -1,4 +1,16 @@
 #shellcheck shell=bash
+# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+# This is meant to be sourced by install-deps.sh and run-version.sh to ensure
+# that some common variables and functions are defined properly, and the
+# colortest/RUNNERS/bin directory exists.
+
+# THESE FUNCTIONS ARE NOT MEANT TO HANDLE UNTRUSTED PARAMETERS!
+# * They may pass along the parameters to executables to install software.
+# * They may attempt to run commands as root.
+# * They may try to download commands.
 
 # bash array containing all implementations
 colortest_implementations=(
