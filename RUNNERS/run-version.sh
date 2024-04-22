@@ -74,7 +74,7 @@ run_version() {
         'nim')          comp_check nim c colortest.nim                      ;;
         'objective-c')  comp_check gcc colortest.m -o colortest             ;;
         'ocaml')        comp_check ocamlc colortest.ml -o colortest         ;;
-        'odin')         comp_check odin-wrapper build colortest.odin -file  ;;
+        'odin')         comp_check odin build colortest.odin -file  ;;
         'pascal')       comp_check fpc colortest.pas                        ;;
         'rust')         comp_check rustc colortest.rs                       ;;
         'vala')         comp_check valac colortest.vala                     ;;
