@@ -79,6 +79,14 @@ rustup_install() {
     fi
 }
 
+# takes a url as an argument, and downloads it unless the output already exists
+wget_if() {
+    if ! [ -f "$(basename "$1")" ]; then
+        apt_wrapper wget wget
+        wget "$1"
+    fi
+}
+
 # checks if command listed in first argument exists
 # if not, invoke cargo with the remaining arguments to install it
 cargo_wrapper() {

@@ -107,14 +107,13 @@ befunge_dependencies() {
     apt_wrapper cmake cmake
     apt_wrapper make make
     apt_wrapper cc gcc
-    apt_wrapper wget wget
     apt_wrapper tar tar # required in debian, check anyway just in case
     apt_wrapper gzip gzip # required in debian, check anyway just in case
 
     # split the second half of the URL into a var to fit within 80 columns
     local asset_path
     asset_path="archive/refs/tags/$CFUNGE_V.tar.gz"
-    wget "https://github.com/VorpalBlade/cfunge/$asset_path"
+    wget_if "https://github.com/VorpalBlade/cfunge/$asset_path"
     
     # create local install prefix at colortest/RUNNERS/cfunge
     local pfx
@@ -141,11 +140,10 @@ befunge_dependencies() {
 # compile the odin compiler and symlink it into the PATH
 odin_dependencies() {
     if cmd_exists odin; then return 0; fi
-    apt_wrapper wget wget
     apt_wrapper llvm-as llvm
     apt_wrapper clang clang
     # download and compile Odin version
-    wget "https://github.com/odin-lang/Odin/archive/refs/tags/$ODIN_V.tar.gz" \
+    wget_if "https://github.com/odin-lang/Odin/archive/refs/tags/$ODIN_V.tar.gz" \
         -O "Odin-$ODIN_V.tar.gz"
     mkdir -p odin
     pushd odin &>/dev/null
@@ -202,7 +200,6 @@ powershell_dependencies() {
     # packages needed to download and extract PowerShell's archive
     apt_wrapper gzip gzip # required in debian, check anyway just in case
     apt_wrapper tar tar # required in debian, check anyway just in case
-    apt_wrapper wget wget
     # PowerShell needs a bunch of libs, all but one of which start with "lib"
     for lib in c6 gcc-s1 gssapi-krb5-2 icu72 ssl3 stdc++6; do
         if ! dpkg --list "lib$lib" &>/dev/null; then
@@ -219,7 +216,7 @@ powershell_dependencies() {
         # split the second half of the URL into a var to fit within 80 columns
         local asset_path
         asset_path="download/v$PWSH_V/powershell-$PWSH_V-linux-x64.tar.gz"
-        wget "https://github.com/PowerShell/PowerShell/releases/$asset_path"
+        wget_if "https://github.com/PowerShell/PowerShell/releases/$asset_path"
         tar -xzf "powershell-$PWSH_V-linux-x64.tar.gz"
         # link powershell within the bin directory
         cd ../bin
@@ -233,11 +230,10 @@ zig_dependencies() {
     if cmd_exists zig; then return 0; fi
     # packages needed to download and extract Zig's archive
     apt_wrapper tar tar # required in debian, check anyway just in case
-    apt_wrapper wget wget
     apt_wrapper xz xz-utils
     mkdir -p zig
     pushd zig &>/dev/null
-    wget "https://ziglang.org/download/$ZIG_V/zig-linux-x86_64-$ZIG_V.tar.xz"
+    wget_if "https://ziglang.org/download/$ZIG_V/zig-linux-x86_64-$ZIG_V.tar.xz"
     tar --strip-components=1 -xJf "zig-linux-x86_64-$ZIG_V.tar.xz"
     cd ../bin
     ln -s ../zig/zig zig
