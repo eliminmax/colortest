@@ -118,13 +118,15 @@ odin_dependencies() {
     apt_wrapper wget wget
     apt_wrapper llvm-as llvm
     apt_wrapper clang clang
-    mkdir -p .build/odin
-    # download and compile Odin
-    pushd .build/odin &>/dev/null
-    wget https://github.com/odin-lang/Odin/archive/refs/tags/dev-2024-01.tar.gz
-    tar xf dev-2024-01.tar.gz
-    mv Odin-dev-2024-01 ../../odin
-    cd ../../odin
+    # Odin version string - keep script within 80 columns
+    local odin_v
+    # download and compile Odin version
+    odin_v='dev-2024-01'
+    wget "https://github.com/odin-lang/Odin/archive/refs/tags/$odin_v.tar.gz" \
+        -O "Odin-$odin_v.tar.gz"
+    mkdir -p odin
+    pushd odin &>/dev/null
+    tar --strip-components=1 -xf "../Odin-$odin_v.tar.gz"
     ./build_odin.sh
     popd &>/dev/null
     ln -s ../odin/odin bin/odin
