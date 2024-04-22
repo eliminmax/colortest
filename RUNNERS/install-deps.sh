@@ -112,14 +112,11 @@ befunge_dependencies() {
     popd &>/dev/null
 }
 
-# compile the odin compiler
-# the odin compiler must be run with an absolute path, and must be located in
-# the odin directory, so also create a wrapper script to take care of that
-# if needed
+# compile the odin compiler and symlink it into the PATH
 odin_dependencies() {
-    if cmd_exists odin-wrapper; then return 0; fi
+    if cmd_exists odin; then return 0; fi
     apt_wrapper wget wget
-    apt_wrapper llvm llvm
+    apt_wrapper llvm-as llvm
     apt_wrapper clang clang
     mkdir -p .build/odin
     # download and compile Odin
@@ -130,14 +127,7 @@ odin_dependencies() {
     cd ../../odin
     ./build_odin.sh
     popd &>/dev/null
-    # create the odin-wrapper script, if needed
-    cat >bin/odin-wrapper <<EOF
-#!/bin/sh
-thisdir="\$(dirname "\$(realpath "\$0")")"
-odin_path="\$(realpath "\$thisdir/../odin/")"
-exec "\$odin_path/odin" "\$@"
-EOF
-    chmod +x bin/odin-wrapper
+    ln -s ../odin/odin bin/odin
 }
 
 # the rockstar reference implementation, satriani, must be run with the cwd set
