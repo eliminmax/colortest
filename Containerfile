@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+#
+# SPDX-License-Identifier: CC0-1.0
+
 FROM debian:latest
 WORKDIR /home/colortester/colortest
 

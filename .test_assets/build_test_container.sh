@@ -1,4 +1,9 @@
 #!/bin/sh
+
+# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+#
+# SPDX-License-Identifier: CC0-1.0
+
 set -e
 cd "$(dirname "$(realpath "$0")")/.."
 

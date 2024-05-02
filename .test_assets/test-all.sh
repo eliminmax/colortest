@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+#
+# SPDX-License-Identifier: CC0-1.0
+
 cd "$(dirname "$(realpath "$0")")" || exit 4
 
 mkdir -p results
