@@ -24,12 +24,12 @@ print_newline:
     RET
 
 print_cell:
-    ; print a cell with the value in eax
+    ; print a cell with the value in rax
     PUSH rax
     MOV eax, 1
     MOV edi, 1
     MOV esi, sequence_start
-    MOV edx, 7 ; lenght of sequence_start
+    MOV edx, 7 ; length of sequence_start
     SYSCALL
     POP rax
     CALL uint8_to_ascii_str
@@ -73,13 +73,13 @@ three_digit:
     CMP eax, 200
     JGE hund200
     ; already know that it is greater than 100, so no need to check
-    MOV r9b, 0x31 ; ASCII value of '1'
+    MOV r9b, '1' ; the ASCII code for the character
     MOV [edi], r9b ; save it to numbuf
     INC edi
     SUB eax, 100
     JMP tens_place
 hund200:
-    MOV r9b, 0x32 ; ASCII value of '2'
+    MOV r9b, '2' ; the ASCII code for the character
     MOV [edi], r9b
     INC edi
     SUB eax, 200
@@ -88,17 +88,16 @@ two_digit:
     MOV r12d, 2
 tens_place:
 ; the DIV operation writes the quotient to eax and the remainder to edx.
-; To convert a base-10 int that is less than 10 to its ASCII symbol, add 0x30 to its value
     XOR edx, edx
     DIV ebx
-    ADD eax, 0x30
+    ADD eax, '0' ; add the ASCII '0' character to the value to turn it into a digit
     MOV [edi], al
     INC edi
     ; move the remainder into eax for the ones place
     MOV eax, edx
 ones_place:
     ; this point should only be reached if the value is 9 or less
-    ADD eax, 0x30
+    ADD eax, '0' ; add the ASCII '0' character to the value to turn it into a digit
     MOV [edi], al
 ; print numbuf to stdout
     MOV eax, 1 ; syscall number for the write syscall
@@ -107,9 +106,9 @@ ones_place:
     SUB esi, r12d ; subtract the number of characters to print
     MOV edx, r12d ; load the number of characters to print into the register
     SYSCALL ; will print the buffer contents without leading zeroes
-    ; reset edi
+    ; reset numbuf to "000"
     MOV edi, numbuf
-    MOV eax, 0x30
+    MOV eax, '0' ; the ASCII code for the character
     MOV [edi], al
     INC edi
     MOV [edi], al
@@ -244,8 +243,7 @@ final24_loop_start:
     CALL print_newline
     CALL print_newline
 
-
 ; exit syscall
-    MOV eax, 60
-    MOV edi, 0
+    MOV eax, 60 ; the EXIT system call number
+    XOR edi, edi ; sets edi to 0 more efficiently than MOV
     SYSCALL
