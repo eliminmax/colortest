@@ -17,8 +17,8 @@
 colortest_implementations=(
     algol_68 awk babalang befunge bf c cobol cpp csharp d erlang fender forth
     fortran go haskell java javascript kotlin lisp lua nim objective-c ocaml
-    octave odin pascal perl php powershell python r rockstar ruby rust scala sh
-    typescript vala x86-64_linux_asm zig
+    octave odin pascal perl php powershell python r rockstar ruby rust scala
+    scheme sh typescript vala x86-64_linux_asm zig
 )
 
 basedir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"

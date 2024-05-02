@@ -45,6 +45,7 @@ python_dependencies() { apt_wrapper python3 python3; }
 r_dependencies() { apt_wrapper r r-cran-littler; }
 ruby_dependencies() { apt_wrapper ruby ruby; }
 scala_dependencies() { apt_wrapper scalac scala; }
+scheme_dependencies() { apt_wrapper csi chicken-bin; }
 typescript_dependencies() { apt_wrapper ts-node ts-node; }
 vala_dependencies() { apt_wrapper valac valac;}
 

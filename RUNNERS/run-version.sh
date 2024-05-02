@@ -50,6 +50,7 @@ run_version() {
         'r')          r colortest.r                   ;;
         'rockstar')   satriani-wrapper colortest.rock ;;
         'ruby')       ruby colortest.rb               ;;
+        'scheme')     csi -script colortest.sld       ;;
         'sh')         sh colortest.sh                 ;;
         'typescript') ts-node colortest.ts            ;;
         # GNU Octave throws an error on exit if XDG_DATA_HOME is missing

@@ -52,6 +52,7 @@ At the current moment, I've implemented it in the following languages:
 * Ruby
 * Rust
 * Scala
+* Scheme
 * Shell Script (should work in any POSIX shell)
 * TypeScript *(lightly tweaked JavaScript implementation)* (via ts-node)
 * Vala
