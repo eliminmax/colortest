@@ -37,6 +37,7 @@ run_version() {
         'babalang')   babalang colortest.baba         ;;
         'befunge')    cfunge colortest.befunge        ;;
         'bf')         beef colortest.bf               ;;
+        'elixir')     elixir colortest.exs            ;;
         'erlang')     escript colortest.erl           ;;
         'fender')     fender colortest.fndr           ;;
         'forth')      gforth colortest.fth -e bye     ;;

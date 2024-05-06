@@ -25,6 +25,7 @@ bf_dependencies() { apt_wrapper beef beef; }
 c_dependencies() { apt_wrapper cc gcc; }
 cobol_dependencies() { apt_wrapper cobc gnucobol; }
 cpp_dependencies() { apt_wrapper c++ g++; }
+elixir_dependencies() { apt_wrapper elixir elixir; }
 erlang_dependencies() { apt_wrapper escript erlang-base; }
 forth_dependencies() { apt_wrapper gforth gforth; }
 fortran_dependencies() { apt_wrapper gfortran gfortran; }

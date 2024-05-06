@@ -26,6 +26,7 @@ At the current moment, I've implemented it in the following languages:
 * C++
 * Cobol
 * D
+* Elixir
 * Erlang (via Escript)
 * Fender (a language created by 3 of my fellow Champlain College students in my senior year, available [here](https://github.com/FenderLang/Fender))
 * Forth
