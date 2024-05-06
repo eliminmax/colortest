@@ -3,7 +3,7 @@
 In these comments cells are zero indexed and cell values are hex unless specified otherwise
 This program is not particularly optimized
 
-I used two snippets from the Esolang wiki:
+I used two snippets from the following Esolang wiki pages:
 https://esolangs(dot)org/wiki/Brainfuck_algorithms
 https://esolangs(dot)org/wiki/Brainfuck_constants
 I will credit it wherever it is used with the comment ({algorithm|constant} {name} from esolang wiki)
@@ -33,7 +33,6 @@ initialize cell to the sequence |00|00|00|0a|1b|5b|34|38|3b|35|20|6d|…
 ]
 
 @ STEP 0:2 finish setting values
-
 ++++++++++    > 0a
 +++++++++++   > 1b
 +++++++++++   > 5b
@@ -120,9 +119,9 @@ each row has 3 segments of 6 colors each
 going to be a bit of a verbose pseudocode to avoid characters with meaning in brainfuck
 (all numbers in decimal here)
 with a staring number i we want:
-     i plus x for x in 0 through 6 followed by
-     i plus x for x in 36 through 42 followed by
-     i plus x for x in 72 through 78
+     i plus ii for ii in 0 until 6
+     i plus ii for ii in 36 until 42
+     i plus ii for ii in 72 until 78
 
   0  1  2  3  4  5  6  7  8  9  a  b  c …
 |00|00|00|0a|1b|5b|34|38|3b|35|20|6d|10|…
@@ -174,8 +173,8 @@ at cell 3
           blank column then go to cell 1
           .>.>----.++++>>>>>.<..<<<<<<<<<
      ]
-     final sextuple ends with newline rather than space so it's not in the middle loop above
- > to cell 2
+     final six cells end with a newline rather than 2 spaces so it's not in the middle loop above
+> to cell 2
      [ inner loop starts at cell 2
           go to cell 4
           >>
@@ -200,7 +199,7 @@ at cell 3
      ]
      reset counter
      ++++++
-     clear ANSI formatting
+     print sequence to clear ANSI formatting
      >>.>.>----.++++>>>>>.
      subtract 0x48 from cell c
      >------------------------------------------------------------------------
@@ -258,7 +257,7 @@ Set up counter
           blank column then go to cell 1
           .>.>----.++++>>>>>.<..<<<<<<<<<
      ]
-     final sextuple ends with newline rather than space so it's not in the middle loop above
+     final six cells end with a newline rather than 2 spaces so it's not in the middle loop above
  > to cell 2
      [ inner loop starts at cell 2
           go to cell 4
