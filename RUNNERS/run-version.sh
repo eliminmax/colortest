@@ -35,7 +35,7 @@ run_version() {
         'algol_68')   a68g colortest.a68              ;;
         'awk')        awk -f colortest.awk            ;;
         'babalang')   babalang colortest.baba         ;;
-        'befunge')    cfunge colortest.befunge        ;;
+        'befunge')    cfunge colortest.bf             ;;
         'bf')         beef colortest.bf               ;;
         'elixir')     elixir colortest.exs            ;;
         'erlang')     escript colortest.erl           ;;
