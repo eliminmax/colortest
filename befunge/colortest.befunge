@@ -13,18 +13,18 @@ v_39*,"m0["^       the color cube instead of the         v*89  <
   print the first     >"0"+,v >v>:52*/"0"v               >v       -   ,5^           p01<   
   16 colors           /     # \`^<v%*52,+<               v_:10g+\1^   ,;      >:85+4*\`|   
                       ^*:*52:<*!                        ^>10g+005v   v<"      + 8>v    $ v 
-                            # 5>| >"0"+,  ^    v"m "" "<    v`\0:<   >#,              v>^  
-           >       >:52*:*\`!|2 > ^            >,,,v      v$_:10v      *      6 5*4        
-                     v%*:*25<:                     1         v+g<      9      g >^>*^      
-                     >           ^                 -         >\1-^   v 3#    ,,,,,   <     
+                            # 5>| >"0"+,  ^        v   <    v`\0:<   >#,              v>^  
+           >       >:52*:*\`!|2 > ^                       v$_:10v      *      6 5*4        
+                     v%*:*25<:                               v+g<      9      g >^>*^      
+                     >           ^                           >\1-^   v 3#    ,,,,,   <     
                              >^                           >          >:|      #            
                        the above cluster prints a                      >$v    0            
                        3-digit decimal integer w/o                     v <    1            
            ^ +*<       adding a trailing space                   v ,*39_39*," "" m0["^     
   >:46*\-856*1-^   ^       <                              ^ ,,,"m "" "        #           <
-  ^,,,,,"48;5;"<                                                 >"m0[",,,55+,^            
+  ^,,,,,"48;5;"<            v-1,,,"m "" "          <             >"m0[",,,55+,^            
                |,"[",*93<  ^                                                          <    
-  @,,:+55,,"0m"<        ^:                         <       *64p01*8-1*53p+77*5+56"v",+55$< 
+  @,,:+55,,"0m"<        ^:  <                              *64p01*8-1*53p+77*5+56"v",+55$< 
    finally, the 24 grays    after the first color cube                  replace the cell   
                             loop, set the following 4  124,y=0,x=1      west of the one    
                             cell values to change the  ">",y=14,x=87    changed after the  
