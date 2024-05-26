@@ -20,6 +20,7 @@ list_colortest_implementations () {
         --strip-cwd-prefix \
         --exclude '*.license' \
         -x dirname | sort
+    # shellcheck disable=2164
     cd "$old_pwd"
 }
 
