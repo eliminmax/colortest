@@ -29,4 +29,5 @@ fd --type file '^colortest\.' --exact-depth 2 -X \
     ./RUNNERS/run-version.sh
 
 # now build the test
+podman pull docker.io/library/debian:latest
 podman build --tag=colortester -f Containerfile .
