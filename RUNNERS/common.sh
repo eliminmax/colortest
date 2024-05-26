@@ -15,10 +15,10 @@
 # bash array containing all implementations
 # shellcheck disable=2034 # Shellcheck thinks that this is unused. It's not.
 colortest_implementations=(
-    algol_68 awk babalang befunge bf c cobol cpp csharp d elixir erlang fender
-    forth fortran go haskell java javascript kotlin lisp lua nim objective-c
-    ocaml octave odin pascal perl php powershell python r rockstar ruby rust
-    scala scheme sh typescript vala x86-64_linux_asm zig
+    algol_68 awk babalang befunge bf c cobol cpp csharp d dc elixir erlang
+    fender forth fortran go haskell java javascript kotlin lisp lua nim
+    objective-c ocaml octave odin pascal perl php powershell python r rockstar
+    ruby rust scala scheme sh typescript vala x86-64_linux_asm zig
 )
 
 basedir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"

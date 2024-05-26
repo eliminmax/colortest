@@ -18,16 +18,6 @@ cd "$(dirname "$(realpath "$0")")"
 source common.sh
 cd ..
 
-
-# Utility function to compile an implementation if a colortest binary is not
-# present. It runs its arguments as a command if a file called `colortest`
-# with no extension is not present, supressing compiler output to stdout.
-# either way, it then runs it
-comp_check() {
-    if [ ! -e colortest ]; then "$@" >/dev/null; fi
-    ./colortest
-}
-
 run_version() {
     pushd "$1" &>/dev/null
     case "$1" in
@@ -37,6 +27,7 @@ run_version() {
         'babalang')   babalang colortest.baba         ;;
         'befunge')    cfunge colortest.bf             ;;
         'bf')         beef colortest.bf               ;;
+        'dc')         dc colortest.dc                 ;;
         'elixir')     elixir colortest.exs            ;;
         'erlang')     escript colortest.erl           ;;
         'fender')     fender colortest.fndr           ;;
@@ -61,51 +52,87 @@ run_version() {
             octave -q colortest.m
         ;;
 
-        # for the remaining ones, first check if they've been compiled.
-        # if not, compile them, then either way, run them.
-        # for most of them, the comp_check function does that automatically
-        # for the rest (mainly the CLR and JVM languages), they are handled
-        # manually at the end
-        'c')            comp_check cc colortest.c -o colortest              ;;
-        'cobol')        comp_check cobc -x colortest.cbl                    ;;
-        'cpp')          comp_check c++ colortest.cpp -o colortest           ;;
-        'd')            comp_check ldc2 colortest.d                         ;;
-        'fortran')      comp_check gfortran colortest.f90 -o colortest      ;;
-        'go')           comp_check gccgo colortest.go -o colortest          ;;
-        'haskell')      comp_check ghc colortest.hs                         ;;
-        'nim')          comp_check nim c colortest.nim                      ;;
-        'objective-c')  comp_check gcc colortest.m -o colortest             ;;
-        'ocaml')        comp_check ocamlc colortest.ml -o colortest         ;;
-        'odin')         comp_check odin build colortest.odin -file  ;;
-        'pascal')       comp_check fpc colortest.pas                        ;;
-        'rust')         comp_check rustc colortest.rs                       ;;
-        'vala')         comp_check valac colortest.vala                     ;;
-        'zig')          comp_check zig build-exe colortest.zig              ;;
-        # the remaining are different enough not to be able to use comp_check
-        'csharp')
-            if ! [ -f colortest.exe ]; then mcs colortest.cs; fi
-            cli ./colortest.exe
+        # for the remaining ones, first compile them silently, then run them
+        'c')
+            cc colortest.c -o colortest >/dev/null 2>&1
+            ./colortest
         ;;
-        'java') 
-            if ! [ -e colortest.class ]; then javac colortest.java; fi
-            java colortest
+        'cobol')
+            cobc -x colortest.cbl >/dev/null 2>&1
+            ./colortest
+        ;;
+        'cpp')
+            c++ colortest.cpp -o colortest >/dev/null 2>&1
+            ./colortest
+        ;;
+        'csharp')
+            mcs colortest.cs >/dev/null 2>&1
+            cli colortest.exe 
+        ;;
+        'd')
+            ldc2 colortest.d >/dev/null 2>&1
+            ./colortest 
+        ;;
+        'fortran')
+            gfortran colortest.f90 -o colortest >/dev/null 2>&1
+            ./colortest 
+        ;;
+        'go')
+            gccgo colortest.go -o colortest >/dev/null 2>&1
+            ./colortest 
+        ;;
+        'haskell')
+            ghc colortest.hs >/dev/null 2>&1
+            ./colortest 
+        ;;
+        'java')
+            javac colortest.java >/dev/null 2>&1
+            java colortest 
         ;;
         'kotlin')
-            if ! [ -e ColortestKt.class ]; then kotlinc colortest.kt; fi
-            kotlin ColortestKt
+            kotlinc colortest.kt >/dev/null 2>&1
+            kotlin ColortestKt 
         ;;
-        'scala') 
-            if ! [ -e colortest.class ]; then scalac colortest.scala; fi
-            scala colortest
+        'nim')
+            nim c colortest.nim >/dev/null 2>&1
+            ./colortest 
         ;;
-        # this one could technically use comp_check with eval, but this is a
-        # cleaner approach in my opinion.
+        'objective-c')
+            gcc colortest.m -o colortest >/dev/null 2>&1
+            ./colortest 
+        ;;
+        'ocaml')
+            ocamlc colortest.ml -o colortest >/dev/null 2>&1
+            ./colortest 
+        ;;
+        'odin')
+            odin build colortest.odin -file >/dev/null 2>&1
+            ./colortest 
+        ;;
+        'pascal')
+            fpc colortest.pas >/dev/null 2>&1
+            ./colortest 
+        ;;
+        'rust')
+            rustc colortest.rs >/dev/null 2>&1
+            ./colortest 
+        ;;
+        'scala')
+            scalac colortest.scala >/dev/null 2>&1
+            scala colortest 
+        ;;
+        'vala')
+            valac colortest.vala >/dev/null 2>&1
+            ./colortest 
+        ;;
         'x86-64_linux_asm')
-            if ! [ -e colortest ]; then
-                nasm -f elf64 -o colortest.o colortest.asm
-                ld colortest.o -o colortest
-            fi
+			nasm -f elf64 -o colortest.o colortest.asm
+			ld colortest.o -o colortest
             ./colortest
+        ;;
+        'zig')
+            zig build-exe colortest.zig >/dev/null 2>&1
+            ./colortest 
         ;;
         *) printf "Unrecognized implementation: '%s'.\n" "$1" >&2; return 1 ;;
     esac

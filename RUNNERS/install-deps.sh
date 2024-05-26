@@ -23,6 +23,7 @@ fi
 algol_68_dependencies() { apt_wrapper a68g algol68g; }
 bf_dependencies() { apt_wrapper beef beef; }
 c_dependencies() { apt_wrapper cc gcc; }
+dc_dependencies() { apt_wrapper dc dc; }
 cobol_dependencies() { apt_wrapper cobc gnucobol; }
 cpp_dependencies() { apt_wrapper c++ g++; }
 elixir_dependencies() { apt_wrapper elixir elixir; }

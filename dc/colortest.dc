@@ -1,0 +1,50 @@
+# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+# store macro to print the escape character in register a
+[27an]sa
+# store macro to print '[' in register b
+[91an]sb
+# store macro to print the newline character in register c
+[10an]sc
+# store colorcell macro in register d
+[lax lbx [48;5;]n n [m  ]n]sd
+# store clear formatting macro in register e
+[lax lbx [0m]n]se
+
+# Print the first 16 colors - these vary by terminal configuration
+# print leading newlines
+lcx
+# push 0 onto the stack
+0
+# print the cells using a macro that reinvokes itself, stored in register f
+[d ldx 1+ d 16 >f]dsfx
+# cleanup - clear formatting and print 2 newlines
+lexlcdxx
+# that leaves 16 at the top of the stack, which is perfect for the second part
+
+# Print the 6 sides of the color cube - these are more standardized,
+# but the order is a bit odd, thus the need for this trickery
+# store the macros for each third of a row in registers g, h, and i
+# they store their `ii` value in register j
+[d lj+ ldx lj1+dsj 6 >g]sg
+[d lj+ ldx lj1+dsj 42 >h]sh
+[d lj+ ldx lj1+dsj 78 >i]si
+# replace register f with self-reinvoking macro for each half of part 2
+# the macro reads the ending value from register z
+[0sj lgx lex [  ]n 36sj lhx lex [  ]n 72sj lix lex lcx 6+ d lz >f]sf
+# invoke the above macro with an ending value of 52, then print a newline
+52sz lfx lcx
+# this leaves 52 on the stack. We want 124 on the stack, so add 72
+72+
+# invoke the part 2 half macro again, with an ending value of 160
+160sz lfx lcx
+# that leaves 160 at the top of the stack. We want 232, so add 72.
+72+
+
+# Finally, the 24 grays
+# a very similar macro to the first 16 colors
+[d ldx 1+ d 256 >f]dsfx
+# cleanup - clear formatting and print 2 newlines
+lexlcdxx

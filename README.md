@@ -26,6 +26,7 @@ At the current moment, I've implemented it in the following languages:
 * C++
 * Cobol
 * D
+* DC (*desk calculator* - a very early UNIX stack-based RPN calculator that predates C. Works in the GNU implementation, but not portable to some other implementations. Described by the [Esolangs wiki](https://esolangs.org/wiki/Dc) as "the esoteric language that 'made it big'", presumably due to its obscure syntax.)
 * Elixir
 * Erlang (via Escript)
 * Fender (a language created by 3 of my fellow Champlain College students in my senior year, available [here](https://github.com/FenderLang/Fender))
