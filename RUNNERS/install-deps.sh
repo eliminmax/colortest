@@ -171,7 +171,7 @@ rockstar_dependencies() {
     git checkout "$ROCKSTAR_COMMIT"
     # use this sed command to comment out the annoying line
     sed -i '/program returned no output/s#^#//#' rockstar.js
-    # install dependencies and build the language grammer with pegjs
+    # install dependencies and build the language grammar with pegjs
     yarnpkg install
     yarnpkg pegjs
     popd &>/dev/null

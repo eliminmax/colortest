@@ -7,7 +7,7 @@ I used two snippets from the following Esolang wiki pages:
 https://esolangs(dot)org/wiki/Brainfuck_algorithms
 https://esolangs(dot)org/wiki/Brainfuck_constants
 I will credit it wherever it is used with the comment ({algorithm|constant} {name} from esolang wiki)
-If the algorithm name has characters with meaning in brainfuck then I will substitue or delete those characters
+If the algorithm name has characters with meaning in brainfuck then I will substitute or delete those characters
 
 @@@@ STEP 0 @@@@
 

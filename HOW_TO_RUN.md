@@ -8,12 +8,12 @@ SPDX-License-Identifier: CC0-1.0
 
 In the `RUNNERS` directory, there are 2 executable bash scripts -
 `install-deps.sh` and `run-version.sh`. Both of them can take any number of
-colortest implementations as arguments. (The name used for each implentation is
-the name of its directory). If not running as root, they may try to run
+colortest implementations as arguments. (The name used for each implementation
+is the name of its directory). If not running as root, they may try to run
 `apt-get` using one of `sudo`, `doas`, or `pkexec`, or quick.
 
 If `run-version.sh` is passed the `-t` or `--test` flag, it will `diff` the
-output of each implementation runned against the `colortest_output` file, and
+output of each implementation ran against the `colortest_output` file, and
 print status message to `stderr`, exiting with exit code 1 if any tests fail.
 If passed the `-a` or `--test-all` flag, it ignores any other arguments, and
 acts as though it had been provided all implementations, once each, as well as
