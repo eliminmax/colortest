@@ -100,7 +100,7 @@ objective-c_dependencies() {
 PWSH_V='7.4.2'
 ODIN_V='dev-2024-01'
 ROCKSTAR_COMMIT='c6c53db'
-ZIG_V='0.12.0'
+ZIG_V='0.13.0'
 CFUNGE_V='1,001'
 
 # we need to pull the source for the interpreter and build it locally
