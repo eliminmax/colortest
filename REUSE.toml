@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+#
+# SPDX-License-Identifier: 0BSD
+
+version = 1
+SPDX-PackageName = "colortest"
+SPDX-PackageSupplier = "Eli Array Minkoff <eli@planetminkoff.com>"
+SPDX-PackageDownloadLocation = "https://github.com/eliminmax/colortest"
+annotations = []

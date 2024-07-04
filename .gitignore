@@ -4,9 +4,9 @@
 
 # Exclude everything by default
 *
-# include contents of the LICENSES and .reuse directories for REUSE compliance
+# include contents of the LICENSES  directory and REUSE.toml file for REUSE compliance
 !/LICENSES/*
-!/.reuse/*
+!REUSE.toml
 # include .license files for REUSE compliance
 !*.license
 # include folders in the top level but not their contents
