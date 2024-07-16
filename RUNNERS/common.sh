@@ -26,6 +26,11 @@ basedir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 # ensure the bin dir exists
 mkdir -p "$basedir/bin"
 
+# shorthand wrapper for command -v <some command> &>/dev/null
+cmd_exists() {
+    command -v "$1" &>/dev/null
+}
+
 # if the argument isn't in the PATH, it's appended to it
 ensure_in_path() {
     case ":$PATH:" in
@@ -34,18 +39,16 @@ ensure_in_path() {
     esac
 }
 
-ensure_in_path "$basedir/bin"
-ensure_in_path "$basedir/cargo/bin"
-
 # if something is installed with cargo, install it here
 export CARGO_HOME="${CARGO_HOME-$basedir/cargo}"
-# if we run rustup, keep it local to this project
-export RUSTUP_HOME="${RUSTUP_HOME-$basedir/rustup}"
 
-# shorthand wrapper for command -v <some command> &>/dev/null
-cmd_exists() {
-    command -v "$1" &>/dev/null
-}
+if ! { cmd_exists rustup && cmd_exists rustc ; }; then 
+    # if we install rust with rustup, keep it local to this project.
+    export RUSTUP_HOME="${RUSTUP_HOME-$basedir/rustup}"
+fi
+
+ensure_in_path "$basedir/bin"
+ensure_in_path "$basedir/cargo/bin"
 
 # create a wrapper function to use the best available "run as root" command
 # prefer sudo over doas, doas over pkexec, and pkexec over piping to su
