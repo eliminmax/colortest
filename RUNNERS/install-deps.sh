@@ -167,9 +167,10 @@ rockstar_dependencies() {
     apt_wrapper git git
     # clone the official rockstar repo
     git clone https://github.com/RockstarLang/rockstar
-    pushd rockstar/satriani &>/dev/null
+    pushd rockstar/ &>/dev/null
     # switch to a commit where the following sed command is known to work
     git checkout "$ROCKSTAR_COMMIT"
+    cd satriani
     # use this sed command to comment out the annoying line
     sed -i '/program returned no output/s#^#//#' rockstar.js
     # install dependencies and build the language grammar with pegjs
