@@ -32,6 +32,7 @@ run_version() {
         'erlang')     escript colortest.erl           ;;
         'fender')     fender colortest.fndr           ;;
         'forth')      gforth colortest.fth -e bye     ;;
+        'jq')         jq -njf colortest.jq            ;;
         'javascript') node colortest.js               ;;
         'lisp')       clisp colortest.lisp            ;;
         'lua')        lua colortest.lua               ;;

@@ -36,6 +36,7 @@ At the current moment, I've implemented it in the following languages:
 * Haskell
 * Java
 * JavaScript (via Node.js)
+* jq (a domain-specific language for dealing with JSON data)
 * Kotlin
 * Lisp (Common Lisp)
 * Lua

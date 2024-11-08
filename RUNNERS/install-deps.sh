@@ -33,6 +33,7 @@ fortran_dependencies() { apt_wrapper gfortran gfortran; }
 go_dependencies() { apt_wrapper gccgo gccgo; }
 haskell_dependencies() { apt_wrapper ghc ghc; }
 java_dependencies() { apt_wrapper javac default-jdk-headless; }
+jq_dependencies() { apt_wrapper jq jq; }
 javascript_dependencies() { apt_wrapper node nodejs; }
 kotlin_dependencies() { apt_wrapper kotlinc kotlin; }
 lisp_dependencies() { apt_wrapper clisp clisp; }
