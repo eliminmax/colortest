@@ -4,10 +4,12 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 colorcell = fn n -> IO.write "\x1b[48;5;" <> (Integer.to_string n) <> "m  "  end
-row_part_a = fn n -> Enum.map(n..(n+5), colorcell); IO.write "\x1b[0m  " end
-row_part_b = fn n -> Enum.map((n+36)..(n+41), colorcell); IO.write "\x1b[0m  " end
-row_part_c = fn n -> Enum.map((n+72)..(n+77), colorcell); IO.write "\x1b[0m\n" end
-cube_row = fn n -> row_part_a.(n); row_part_b.(n); row_part_c.(n) end
+cube_row_part = fn n -> Enum.map(n..(n+5), colorcell); IO.write "\x1b[0m" end
+cube_row = fn n ->
+  cube_row_part.(n); IO.write("  ")
+  cube_row_part.(n+36); IO.write("  ")
+  cube_row_part.(n+72); IO.write("\n")
+end
 
 # Print the first 16 colors - these vary by terminal configuration
 IO.write "\n"
