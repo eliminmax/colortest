@@ -2,11 +2,9 @@
 --
 -- SPDX-License-Identifier: GPL-3.0-only
 
-colorCell i = concat ["\ESC[48;5;", (show i), "m  "]
-rowA i = concat ([colorCell (i + ii) | ii <- [0..5]] ++ ["\ESC[0m  "])
-rowB i = concat ([colorCell (i + ii) | ii <- [36..41]] ++ ["\ESC[0m  "])
-rowC i = concat ([colorCell (i + ii) | ii <- [72..77]] ++ ["\ESC[0m\n"])
-cubeRow i = concat [rowA i, rowB i, rowC i]
+colorCell n = concat ["\ESC[48;5;", (show n), "m  "]
+cubeRowPart n = concat ([colorCell(i) | i <- [n..n+5]] ++ ["\ESC[0m"])
+cubeRow n = concat ([cubeRowPart n, "  ", cubeRowPart (n + 36), "  ", cubeRowPart (n + 72), "\n"])
 
 main :: IO ()
 main = do
