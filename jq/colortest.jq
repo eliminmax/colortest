@@ -3,10 +3,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-# if run with -n, it expects no input
-# if run with -j, it outputs everything as raw data (no trailing "\n")
-# if run with -f, it reads code from a file rather than the command line
-
 # jq outputs whatever's left at the end, and defaults to doing it as JSON
 # because it's called with -j, however, it outputs the string that's
 # constructed, but only once it's done constructing it.
