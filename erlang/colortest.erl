@@ -4,10 +4,13 @@
 % SPDX-License-Identifier: GPL-3.0-only
 
 colorCell(N) -> io_lib:format("\x1b[48;5;~Bm  ", [N]).
-rowA(I) -> lists:concat([colorCell(I+II) || II <- lists:seq(0, 5)] ++ ["\x1b[0m  "]).
-rowB(I) -> lists:concat([colorCell(I+II) || II <- lists:seq(36, 41)] ++ ["\x1b[0m  "]).
-rowC(I) -> lists:concat([colorCell(I+II) || II <- lists:seq(72, 77)] ++ ["\x1b[0m\n"]).
-cubeRow(I) -> lists:concat([rowA(I), rowB(I), rowC(I)]).
+cubeRowPart(N) -> lists:concat([colorCell(I) || I <- lists:seq(N, N+5)] ++ ["\x1b[0m"]).
+cubeRow(N) -> lists:concat(
+                [cubeRowPart(N), ["  "],
+                 cubeRowPart(N+36), ["  "],
+                 cubeRowPart(N+72), ["\n"]
+                ]).
+
 main(_) ->
     % Print the first 16 colors - these vary by terminal configuration
     io:format("\n"),
