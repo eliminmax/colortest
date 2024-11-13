@@ -149,7 +149,7 @@ test_implementation() {
     for lang in "$@"; do
         printf 'Testing \e[1;32m%s\e[m...\n' "$lang" >&2
         ((tests+=1))
-        if ! { run_version "$lang" | diff --brief - colortest_output; }; then
+        run_version "$lang" | if ! diff --brief - colortest_output; then
             printf '\e[1;31m%s\e[m failed!\n' "$lang" >&2
             ((fails+=1))
         fi
