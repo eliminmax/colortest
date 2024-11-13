@@ -3,17 +3,16 @@
  * SPDX-License-Identifier: GPL-3.0-only */
 
 #include <stdio.h>
-#define ESC "\x1b"
 typedef unsigned char uchar;
 
 static void color_cell(uchar n) {
-    printf(ESC "[48;5;%hhum  ", n);
+    printf("\x1b[48;5;%hhum  ", n);
 }
 
 static void cube_row_part(uchar n) {
     for(uchar i = n; i < n + 6; i++) color_cell(i);
     /* use fputs instead of puts as it doesn't append a newline */
-    fputs(ESC "[0m", stdout);
+    fputs("\x1b[0m", stdout);
 }
 
 static void cube_row(uchar n) {
@@ -30,7 +29,7 @@ int main(void) {
     putchar('\n');
     for(uchar i = 0; i < 16; i++) color_cell(i);
     /* puts appends a newline - this is desired behavior here */
-    puts(ESC "[0m\n");
+    puts("\x1b[0m\n");
 
     /* Print the 6 sides of the color cube - these are more standardized,
      * but the order is a bit odd, thus the need for the above trickery */
@@ -44,6 +43,6 @@ int main(void) {
      * (unsigned overflow is defined behavior) */
     for(uchar i = 232; i; i++) color_cell(i);
     /* once again, an extra new line should be appended here */
-    puts(ESC "[0m\n");
+    puts("\x1b[0m\n");
     return 0;
 }
