@@ -86,12 +86,12 @@ fender_dependencies() {
 
 # the remaining ones have more complexity for various reasons
 
-# gcc is used to compile Objective-C as well, but needs an extra package to be
+# gcc is used to compile Objective-C as well, but needs extra packages to be
 # able to do that. Try to parse in objective-c mode to see if it's supported
 objective-c_dependencies() {
     apt_wrapper gcc gcc
     if ! printf 'int main(void){}' | gcc -xobjective-c -E - &>/dev/null; then
-        as_root apt-get install -qy gobjc
+        as_root apt-get install -qy gobjc gnustep-make make libgnustep-base-dev
     fi
 }
 

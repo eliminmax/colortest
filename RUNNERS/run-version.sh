@@ -99,7 +99,10 @@ run_version() {
             ./colortest 
         ;;
         'objective-c')
-            gcc colortest.m -o colortest >/dev/null 2>&1
+            # shellcheck disable=2046 # Word splitting is required here
+            gcc $(gnustep-config --objc-flags) \
+                colortest.m -o colortest       \
+                $(gnustep-config --base-libs) >/dev/null 2>&1
             ./colortest 
         ;;
         'ocaml')
