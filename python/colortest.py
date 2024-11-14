@@ -4,30 +4,41 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
+
+def color_cell(n: int):
+    print(f"\x1b[48;5;{n}m  ", end="")
+
+
+def cube_row_part(n: int):
+    for i in range(n, n+6):
+        color_cell(i)
+
+
+def cube_row(n: int):
+    cube_row_part(n)
+    print("\x1b[0m  ", end="")
+    cube_row_part(n + 36)
+    print("\x1b[0m  ", end="")
+    cube_row_part(n + 72)
+    print("\x1b[0m")
+
+
 # Print the first 16 colors - these vary by terminal configuration
 print()
-print(*[f"\x1b[48;5;{i}m  " for i in range(16)], sep="", end="\x1b[0m\n")
-print()
+for i in range(16):
+    color_cell(i)
+print("\x1b[0m\n")
 
 # Print the 6 sides of the color cube - these are more standardized
-# but the order is a bit odd, thus the need for this trickery
+# but the order is a bit odd, thus the need for the above trickery
 for i in range(16, 52, 6):
-    row_a = [i + ii for ii in range(6)]
-    row_b = [i + ii for ii in range(36, 42)]
-    row_c = [i + ii for ii in range(72, 78)]
-    print(*[f"\x1b[48;5;{ii}m  " for ii in row_a], sep="", end="\x1b[0m  ")
-    print(*[f"\x1b[48;5;{ii}m  " for ii in row_b], sep="", end="\x1b[0m  ")
-    print(*[f"\x1b[48;5;{ii}m  " for ii in row_c], sep="", end="\x1b[0m\n")
+    cube_row(i)
 print()
 for i in range(124, 160, 6):
-    row_a = [i + ii for ii in range(6)]
-    row_b = [i + ii for ii in range(36, 42)]
-    row_c = [i + ii for ii in range(72, 78)]
-    print(*[f"\x1b[48;5;{ii}m  " for ii in row_a], sep="", end="\x1b[0m  ")
-    print(*[f"\x1b[48;5;{ii}m  " for ii in row_b], sep="", end="\x1b[0m  ")
-    print(*[f"\x1b[48;5;{ii}m  " for ii in row_c], sep="", end="\x1b[0m\n")
+    cube_row(i)
 print()
 
 # Finally, the 24 grays
-print(*[f"\x1b[48;5;{i}m  " for i in range(232, 256)], sep="", end="\x1b[0m\n")
-print()
+for i in range(232, 256):
+    color_cell(i)
+print("\x1b[0m\n")
