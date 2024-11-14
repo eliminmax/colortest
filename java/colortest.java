@@ -14,7 +14,7 @@ public class colortest {
         System.out.print("\033[0m  ");
         // need to cast because adding a literal to a short creates an int
         cubeRowPart((short)(n + 36));
-        System.out.print("\033[0m");
+        System.out.print("\033[0m  ");
         cubeRowPart((short)(n + 72));
         System.out.println("\033[0m");
     }
