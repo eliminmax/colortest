@@ -98,8 +98,8 @@ objective-c_dependencies() {
 # for those with hard-coded versions to download, store them here to make it
 # easier to change in the future
 
-PWSH_V='7.4.2'
-ODIN_V='dev-2024-01'
+PWSH_V='7.4.6'
+ODIN_V='dev-2024-11'
 ROCKSTAR_COMMIT='c6c53db'
 ZIG_V='0.13.0'
 CFUNGE_V='1,001'
