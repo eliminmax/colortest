@@ -222,6 +222,8 @@ powershell_dependencies() {
         asset_path="download/v$PWSH_V/powershell-$PWSH_V-linux-x64.tar.gz"
         wget_if "https://github.com/PowerShell/PowerShell/releases/$asset_path"
         tar -xzf "powershell-$PWSH_V-linux-x64.tar.gz"
+        # mark powershell as executable (it's not already in 7.4.6 tarball)
+        chmod +x powershell/pwsh
         # link powershell within the bin directory
         cd ../bin
         ln -s ../powershell/pwsh pwsh
