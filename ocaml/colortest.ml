@@ -16,17 +16,15 @@ let rec range lo hi step =
 
 let color_cell = fun n -> print_string ("\x1b[48;5;" ^ (string_of_int n) ^ "m  ") ;;
 
-let cube_row_part = fun n ->
-    (List.iter color_cell (range (n) (n + 6) 1));
-    print_string("\x1b[0m") ;;
+let cube_row_part = fun n -> (List.iter color_cell (range (n) (n + 6) 1));;
 
 let cube_row = fun n ->
     cube_row_part n ;
-    print_string "  " ;
+    print_string "\x1b[0m  " ;
     cube_row_part (n + 36) ;
-    print_string "  " ;
+    print_string "\x1b[0m  " ;
     cube_row_part (n + 72) ;
-    print_string "\n" ;;
+    print_string "\x1b[0m\n" ;;
 
 (* Print the first 16 colors - these vary by terminal configuration *)
 print_string "\n";;

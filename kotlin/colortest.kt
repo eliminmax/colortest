@@ -8,16 +8,15 @@ fun color_cell(n: Int) {
 
 fun cube_row_part(n: Int) {
     for (i in n..(n+5)) color_cell(i)
-    print("\u001b[0m")
 }
 
 fun cube_row(n: Int) {
     cube_row_part(n)
-    print("  ")
+    print("\u001b[0m  ")
     cube_row_part(n + 36)
-    print("  ")
+    print("\u001b[0m  ")
     cube_row_part(n + 72)
-    println()
+    println("\u001b[0m")
 }
 
 fun main() {

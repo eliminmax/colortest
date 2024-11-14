@@ -10,21 +10,20 @@ void color_cell(ubyte n) {
 
 void cube_row_part(ubyte n) {
     for(ubyte i = n; i < n + 6; i++) color_cell(i);
-    write("\x1b[0m");
 }
 
 void cube_row(ubyte n) {
     cube_row_part(n);
-    write("  ");
+    write("\x1b[0m  ");
     // Calling cube_row_part(n + 36) fails because n is implicitly cast to int
     // Adding to n in a separate line does not implicitly cast.
     n += 36;
     cube_row_part(n);
-    write("  ");
+    write("\x1b[0m  ");
     // Now add 36 again (normally would call cube_row_part(n + 72))
     n += 36;
     cube_row_part(n);
-    write("\n");
+    write("\x1b[0m\n");
 }
 
 void main() {

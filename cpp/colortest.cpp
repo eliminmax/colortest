@@ -13,16 +13,15 @@ static void color_cell(uchar n) {
 
 static void cube_row_part(uchar n) {
     for(uchar i = n; i < n + 6; i++) color_cell(i);
-    cout << "\x1b[0m";
 }
 
 static void cube_row(uchar n) {
     cube_row_part(n);
-    cout << "  ";
+    cout << "\x1b[0m  ";
     cube_row_part(n + 36);
-    cout << "  ";
+    cout << "\x1b[0m  ";
     cube_row_part(n + 72);
-    cout << endl;
+    cout << "\x1b[0m" << endl;
 }
 
 int main() {

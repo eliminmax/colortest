@@ -37,17 +37,15 @@ static void colorCell(unsigned short n) {
 static void cubeRowPart(unsigned short n) {
     unsigned short i;
     for(i = n; i < n + 6; i++) colorCell(i);
-    /* use fputs instead of puts as it doesn't append a newline */
-    [writer writeToStdout:@"\x1b[0m"];
 }
 
 static void cubeRow(unsigned short n) {
     cubeRowPart(n);
-    [writer writeToStdout:@"  "];
+    [writer writeToStdout:@"\x1b[0m  "];
     cubeRowPart(n + 36);
-    [writer writeToStdout:@"  "];
+    [writer writeToStdout:@"\x1b[0m  "];
     cubeRowPart(n + 72);
-    [writer writeToStdout:@"\n"];
+    [writer writeToStdout:@"\x1b[0m\n"];
 }
 
 int main(void) {

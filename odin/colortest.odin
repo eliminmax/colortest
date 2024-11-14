@@ -14,16 +14,15 @@ cube_row_part :: proc(n: int) {
     for i in n..<(n+6) {
         color_cell(i)
     }
-    fmt.print("\e[0m")
 }
 
 cube_row :: proc(n: int) {
     cube_row_part(n)
-    fmt.print("  ")
+    fmt.print("\e[0m  ")
     cube_row_part(n + 36)
-    fmt.print("  ")
+    fmt.print("\e[0m  ")
     cube_row_part(n + 72)
-    fmt.print("\n")
+    fmt.print("\e[0m\n")
 }
 
 main :: proc() {

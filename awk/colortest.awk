@@ -9,15 +9,14 @@
 function color_cell(ccn) { printf "\033[48;5;%dm  ", ccn }
 function cube_row_part(crpn) {
     for(crpi = crpn; crpi < (crpn + 6); crpi++) color_cell(crpi)
-    printf("\033[0m")
 }
 function cube_row(crn) {
     cube_row_part(crn)
-    printf("  ")
+    printf("\033[0m  ")
     cube_row_part(crn + 36)
-    printf("  ")
+    printf("\033[0m  ")
     cube_row_part(crn + 72)
-    print
+    print "\033[0m"
 }
 
 BEGIN {

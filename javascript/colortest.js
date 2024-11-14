@@ -14,16 +14,15 @@ function color_cell(n) {
 
 function cube_row_part(n) {
     for (var i = n; i < n + 6; i++) color_cell(i)
-    process.stdout.write("\u001b[0m")
 }
 
 function cube_row(n) {
     cube_row_part(n)
-    process.stdout.write("  ")
+    process.stdout.write("\u001b[0m  ")
     cube_row_part(n + 36)
-    process.stdout.write("  ")
+    process.stdout.write("\u001b[0m  ")
     cube_row_part(n + 72)
-    process.stdout.write("\n")
+    process.stdout.write("\u001b[0m\n")
 }
 
 // Print the first 16 colors - these vary by terminal configuration

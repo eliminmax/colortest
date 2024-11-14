@@ -199,16 +199,15 @@ fn cube_row_part(n) {
   for (i=n; i < n+6; i++) {
     color_cell(i)
   }
-  print(ESC + "0m  ")
 }
 
 fn cube_row(n) {
   cube_row_part(n)
-  print("  ")
+  print(ESC + "0m    ")
   cube_row_part(n+36)
-  print("  ")
+  print(ESC + "0m    ")
   cube_row_part(n+72)
-  print("\n")
+  print(ESC + "0m  \n")
 }
 
 # Print the first 16 colors - these vary by terminal configuration

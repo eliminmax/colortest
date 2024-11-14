@@ -12,17 +12,17 @@ static void color_cell(uchar n) {
 
 static void cube_row_part(uchar n) {
     for(uchar i = n; i < n + 6; i++) color_cell(i);
-    /* use fputs instead of puts as it doesn't append a newline */
-    fputs("\x1b[0m", stdout);
 }
 
 static void cube_row(uchar n) {
     cube_row_part(n);
-    fputs("  ", stdout);
+    /* use fputs instead of puts as it doesn't append a newline */
+    fputs("\x1b[0m  ", stdout);
     cube_row_part(n + 36);
-    fputs("  ", stdout);
+    fputs("\x1b[0m  ", stdout);
     cube_row_part(n + 72);
-    putchar('\n');
+    /* this time, a newline is desired */
+    puts("\x1b[0m");
 }
 
 int main(void) {

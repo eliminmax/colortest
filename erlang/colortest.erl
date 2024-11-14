@@ -4,11 +4,11 @@
 % SPDX-License-Identifier: GPL-3.0-only
 
 colorCell(N) -> io_lib:format("\x1b[48;5;~Bm  ", [N]).
-cubeRowPart(N) -> lists:concat([colorCell(I) || I <- lists:seq(N, N+5)] ++ ["\x1b[0m"]).
+cubeRowPart(N) -> lists:concat([colorCell(I) || I <- lists:seq(N, N+5)]).
 cubeRow(N) -> lists:concat(
-                [cubeRowPart(N), ["  "],
-                 cubeRowPart(N+36), ["  "],
-                 cubeRowPart(N+72), ["\n"]
+                [cubeRowPart(N), ["\x1b[0m  "],
+                 cubeRowPart(N+36), ["\x1b[0m  "],
+                 cubeRowPart(N+72), ["\x1b[0m\n"]
                 ]).
 
 main(_) ->

@@ -12,16 +12,15 @@ function cube_row_part (n)
     for i = n:(n+5)
         color_cell(i);
     end
-    printf("\x1b[0m")
 end
 
 function cube_row (n)
     cube_row_part(n)
-    printf("  ")
+    printf("\x1b[0m  ")
     cube_row_part(n + 36)
-    printf("  ")
+    printf("\x1b[0m  ")
     cube_row_part(n + 72)
-    printf("\n")
+    printf("\x1b[0m\n")
 end
 
 % Print the first 16 colors - these vary by terminal configuration

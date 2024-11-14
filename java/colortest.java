@@ -8,15 +8,15 @@ public class colortest {
     }
     private static void cubeRowPart(short n) {
         for (short i = n; i < n + 6; i++) colorCell(i);
-        System.out.print("\033[0m");
     }
     private static void cubeRow(short n) {
         cubeRowPart(n);
-        System.out.print("  ");
+        System.out.print("\033[0m  ");
+        // need to cast because adding a literal to a short creates an int
         cubeRowPart((short)(n + 36));
-        System.out.print("  ");
+        System.out.print("\033[0m");
         cubeRowPart((short)(n + 72));
-        System.out.println();
+        System.out.println("\033[0m");
     }
     public static void main(String[] args) {
         // Print the first 16 colors - these vary by terminal configuration

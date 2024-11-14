@@ -16,16 +16,15 @@ function cube_row_part (n)
     do
         color_cell(i)
     end
-    io.write(esc .. '[0m')
 end
 
 function cube_row (n)
     cube_row_part(n)
-    io.write('  ')
+    io.write(esc .. '[0m  ')
     cube_row_part(n + 36)
-    io.write('  ')
+    io.write(esc .. '[0m  ')
     cube_row_part(n + 72)
-    io.write('\n')
+    io.write(esc .. '[0m\n')
 end
 
 -- Print the first 16 colors - these vary by terminal configuration

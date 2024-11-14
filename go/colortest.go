@@ -19,11 +19,11 @@ func cubeRowPart(n uint8) {
 
 func cubeRow(n uint8) {
 	cubeRowPart(n)
-	fmt.Print("  ")
+	fmt.Print("\x1b[0m  ")
 	cubeRowPart(n + 36)
-	fmt.Print("  ")
+	fmt.Print("\x1b[0m  ")
 	cubeRowPart(n + 72)
-	fmt.Println()
+	fmt.Println("\x1b[0m")
 }
 
 func main() {
