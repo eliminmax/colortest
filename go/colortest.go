@@ -14,7 +14,6 @@ func cubeRowPart(n uint8) {
 	for i := n; i < n + 6; i++ {
 		colorCell(i)
 	}
-	fmt.Print("\x1b[0m")
 }
 
 func cubeRow(n uint8) {
