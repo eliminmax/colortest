@@ -9,9 +9,15 @@
 # store macro to print the newline character in register c
 [10an]sc
 # store colorcell macro in register d
+# macro consumes top of stack
 [lax lbx [48;5;]n n [m  ]n]sd
 # store clear formatting macro in register e
 [lax lbx [0m]n]se
+
+# store the macro for a third of a row in register g
+# it reads its ending value from register h
+# it stores its inner iterator value in register j
+[d lj+ ldx lj1+dsj lh >g]sg
 
 # Print the first 16 colors - these vary by terminal configuration
 # print leading newlines
@@ -27,14 +33,9 @@ lcdxx
 
 # Print the 6 sides of the color cube - these are more standardized,
 # but the order is a bit odd, thus the need for this trickery
-# store the macros for each third of a row in registers g, h, and i
-# they store their inner iterator value in register j
-[d lj+ ldx lj1+dsj 6 >g]sg
-[d lj+ ldx lj1+dsj 42 >h]sh
-[d lj+ ldx lj1+dsj 78 >i]si
 # replace register f with self-reinvoking macro for each half of part 2
 # the macro reads the ending value from register z
-[0sj lgx lex [  ]n 36sj lhx lex [  ]n 72sj lix lex lcx 6+ d lz >f]sf
+[0sj6sh lgx lex [  ]n 36sj42sh lgx lex [  ]n 72sj78sh lgx lex lcx 6+ d lz >f]sf
 # invoke the above macro with an ending value of 52, then print a newline
 52sz lfx lcx
 # this leaves 52 on the stack. We want 124 on the stack, so add 72
