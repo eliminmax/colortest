@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-const util = require('util');
+const util = require('util')
 
 function color_cell(n) {
     // process.stdout.write(util.format()) is basically console.log without 
