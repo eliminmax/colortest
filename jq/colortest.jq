@@ -7,14 +7,15 @@
 # because it's called with -j, however, it outputs the string that's
 # constructed, but only once it's done constructing it.
 
-def colorCell: "\u001b[48;5;" + (.|tostring) + "m  ";
+def colorCells:
+    ([.[] | "\u001b[48;5;" + (. | tostring) + "m  " ] | add) + "\u001b[0m"
+;
 
-def cubeRowPart: ([range(.; .+6)] | map(colorCell) | join("")) + "\u001b[0m";
-def cubeRow: ([., .+36, .+72] | map(cubeRowPart) | join("  "));
+def cubeRow: [., .+36, .+72] | map([range(.; .+6)] | colorCells) | join("  ");
 
 
 # the first 16 colors - these vary by terminal configuration
-"\n" + ([range(16)] | map(colorCell) | join("")) + "\u001b[0m\n\n" +
+"\n" + ([range(16)] | colorCells) + "\n\n" +
 
 # the 6 sides of the color cube - these are more standardized,
 # but the order is a bit odd, thus the need for this trickery
@@ -22,4 +23,4 @@ def cubeRow: ([., .+36, .+72] | map(cubeRowPart) | join("  "));
 ([range(124; 160; 6)] | map(cubeRow) | join("\n")) + "\n\n" +
 
 # finally, the 24 grays
-([range(232;256)] | map(colorCell) | join("")) + "\u001b[0m\n\n"
+([range(232;256)] | colorCells) + "\n\n"
