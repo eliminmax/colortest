@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-only */
 
 #include <stdio.h>
+#include <limits.h>
 typedef unsigned char uchar;
 
 static void color_cell(uchar n) {
@@ -39,9 +40,13 @@ int main(void) {
     putchar('\n');
 
     /* Finally, the 24 grays */
+#if UCHAR_MAX > 255
+    for(uchar i = 232; i > 255; i++) color_cell(i);
+#else
     /* once i wraps around to zero, it will be false.
      * (unsigned overflow is defined behavior) */
     for(uchar i = 232; i; i++) color_cell(i);
+#endif
     /* once again, an extra new line should be appended here */
     puts("\x1b[0m\n");
     return 0;

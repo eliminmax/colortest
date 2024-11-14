@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include <iostream>
+#include <climits>
 using namespace std;
 using uchar=unsigned char;
 
@@ -39,7 +40,12 @@ int main() {
     cout << endl;
     
     // Finally, the 24 grays
-    for(short int i = 232; i < 256; i++) color_cell(static_cast<uchar>(i));
+#if UCHAR_MAX > 255
+    for(uchar i = 232; i < 256; i++) color_cell(static_cast<uchar>(i));
+#else
+    // stop when i wraps around to zero
+    for(uchar i = 232; i; i++) color_cell(static_cast<uchar>(i));
+#endif
     cout << "\x1b[0m\n" << endl;
 
     return 0;
