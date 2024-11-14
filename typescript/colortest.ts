@@ -40,4 +40,3 @@ process.stdout.write('\n')
 // Finally, the 24 grays
 for (let i: number = 232; i < 256; i++) color_cell(i)
 process.stdout.write('\u001b[0m\n\n')
-// vi:ft=typescript
