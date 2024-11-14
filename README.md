@@ -41,7 +41,7 @@ At the current moment, I've implemented it in the following languages:
 * Lisp (Common Lisp)
 * Lua
 * Nim
-* Objecive-C *(lightly tweaked C implementation)*
+* Objecive-C
 * Odin
 * OCaml
 * Octave (the GNU project's MATLAB-like analytical language)
