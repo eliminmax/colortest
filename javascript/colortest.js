@@ -27,7 +27,7 @@ function cube_row(n) {
 
 // Print the first 16 colors - these vary by terminal configuration
 process.stdout.write('\n')
-for(var i = 0; i < 16; i++) color_cell(i)
+for (var i = 0; i < 16; i++) color_cell(i)
 process.stdout.write('\u001b[0m\n\n')
 
 // Print the 6 sides of the color cube - these are more standardized
@@ -38,5 +38,5 @@ for (var i = 124; i < 160; i+=6) cube_row(i)
 process.stdout.write('\n')
 
 // Finally, the 24 grays
-for(var i = 232; i < 256; i++) color_cell(i)
+for (var i = 232; i < 256; i++) color_cell(i)
 process.stdout.write('\u001b[0m\n\n')
