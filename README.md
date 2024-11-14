@@ -51,13 +51,13 @@ At the current moment, I've implemented it in the following languages:
 * PowerShell
 * Python
 * R
-* Rockstar (an esoteric programming language based on 80s metal and power ballads. Specification and reference implementation are [here](https://github.com/RockstarLang/rockstar))
+* Rockstar (*Version 1, via satriani* - an esoteric programming language based on 80s metal and power ballads. Specification and reference implementation are [here](https://github.com/RockstarLang/rockstar), but you'll need to check out an older commit for version 1)
 * Ruby
 * Rust
 * Scala
 * Scheme
 * Shell Script (should work in any POSIX shell)
-* TypeScript *(lightly tweaked JavaScript implementation)* (via ts-node)
+* TypeScript *(just the JavaScript implementation with type annotations and `let` instead of `var`)* (via ts-node)
 * Vala
 * x86_64 assembly (NASM Intel-style syntax, 64-bit Linux System calls)
 * Zig
