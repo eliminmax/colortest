@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# SPDX-FileCopyrightText: 2022-2023 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2022-2024 Eli Array Minkoff
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
