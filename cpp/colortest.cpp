@@ -1,53 +1,51 @@
-// SPDX-FileCopyrightText: 2022-2023 Eli Array Minkoff
+// SPDX-FileCopyrightText: 2022-2024 Eli Array Minkoff
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include <stdio.h>
 #include <iostream>
+#include <climits>
 using namespace std;
+using uchar=unsigned char;
 
+static void color_cell(uchar n) {
+    cout << "\x1b[48;5;" << +n << "m  ";
+}
 
-int main()
-{
+static void cube_row_part(uchar n) {
+    for(uchar i = n; i < n + 6; i++) color_cell(i);
+}
+
+static void cube_row(uchar n) {
+    cube_row_part(n);
+    cout << "\x1b[0m  ";
+    cube_row_part(n + 36);
+    cout << "\x1b[0m  ";
+    cube_row_part(n + 72);
+    cout << "\x1b[0m" << endl;
+}
+
+int main() {
     // Print the first 16 colors - these vary by terminal configuration
     cout << endl;
-    for(int i = 0; i < 16; i++)
-        cout << "\x1b[48;5;" << i << "m  ";
-    cout << "\x1b[0m\n\n";
+    for(uchar i = 0; i < 16; i++) color_cell(i);
+    // use one literal '\n' and one endl to only flush output once
+    cout << "\x1b[0m\n" << endl;
 
     // Print the 6 sides of the color cube - these are more standardized
-    // but the order is a bit odd, thus the need for this trickery
-    for(int i = 16; i < 52; i += 6)
-    {
-        for(int ii = 0; ii < 6; ii++)
-            cout << "\x1b[48;5;" << i + ii << "m  ";
-        cout << "\x1b[0m  ";
-        for(int ii = 36; ii < 42; ii++)
-            cout << "\x1b[48;5;" << i + ii << "m  ";
-        cout << "\x1b[0m  ";
-        for(int ii = 72; ii < 78; ii++)
-            cout << "\x1b[48;5;" << i + ii << "m  ";
-        cout << "\x1b[0m\n";
-    }
-    cout << "\n";
-    for(int i = 124; i < 160; i += 6)
-    {
-        for(int ii = 0; ii < 6; ii++)
-            cout << "\x1b[48;5;" << i + ii << "m  ";
-        cout << "\x1b[0m  ";
-        for(int ii = 36; ii < 42; ii++)
-            cout << "\x1b[48;5;" << i + ii << "m  ";
-        cout << "\x1b[0m  ";
-        for(int ii = 72; ii < 78; ii++)
-            cout << "\x1b[48;5;" << i + ii << "m  ";
-        cout << "\x1b[0m\n";
-    }
-    cout << "\n";
-
+    // but the order is a bit odd, thus the need for the above trickery
+    for(uchar i = 16; i < 52; i += 6) cube_row(i);
+    cout << endl;
+    for(uchar i = 124; i < 160; i += 6) cube_row(i);
+    cout << endl;
+    
     // Finally, the 24 grays
-    for(int i = 232; i < 256; i++)
-        cout << "\x1b[48;5;" << i << "m  ";
-    cout << "\x1b[0m\n\n";
+#if UCHAR_MAX > 255
+    for(uchar i = 232; i < 256; i++) color_cell(static_cast<uchar>(i));
+#else
+    // stop when i wraps around to zero
+    for(uchar i = 232; i; i++) color_cell(static_cast<uchar>(i));
+#endif
+    cout << "\x1b[0m\n" << endl;
 
     return 0;
 }

@@ -86,20 +86,20 @@ fender_dependencies() {
 
 # the remaining ones have more complexity for various reasons
 
-# gcc is used to compile Objective-C as well, but needs an extra package to be
+# gcc is used to compile Objective-C as well, but needs extra packages to be
 # able to do that. Try to parse in objective-c mode to see if it's supported
 objective-c_dependencies() {
     apt_wrapper gcc gcc
     if ! printf 'int main(void){}' | gcc -xobjective-c -E - &>/dev/null; then
-        as_root apt-get install -qy gobjc
+        as_root apt-get install -qy gobjc gnustep-make make libgnustep-base-dev
     fi
 }
 
 # for those with hard-coded versions to download, store them here to make it
 # easier to change in the future
 
-PWSH_V='7.4.2'
-ODIN_V='dev-2024-01'
+PWSH_V='7.4.6'
+ODIN_V='dev-2024-11'
 ROCKSTAR_COMMIT='c6c53db'
 ZIG_V='0.13.0'
 CFUNGE_V='1,001'
@@ -222,6 +222,8 @@ powershell_dependencies() {
         asset_path="download/v$PWSH_V/powershell-$PWSH_V-linux-x64.tar.gz"
         wget_if "https://github.com/PowerShell/PowerShell/releases/$asset_path"
         tar -xzf "powershell-$PWSH_V-linux-x64.tar.gz"
+        # mark powershell as executable (it's not already in 7.4.6 tarball)
+        chmod +x powershell/pwsh
         # link powershell within the bin directory
         cd ../bin
         ln -s ../powershell/pwsh pwsh

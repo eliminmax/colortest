@@ -1,65 +1,56 @@
 #!/usr/bin/env fender
 
-# SPDX-FileCopyrightText: 2023 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2023-2024 Eli Array Minkoff
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
 $esc = '\u001B'
+$colorCell = (n) {
+    print(esc, "[48;5;", n, "m  ")
+}
+
+$cubeRowPart = (n) {
+    $i = n; while({i < n+6}, {
+        colorCell(i)
+        i = i + 1
+    })
+    print(esc, "[0m")
+}
+
+$cubeRow = (n) {
+    cubeRowPart(n)
+    print("  ")
+    cubeRowPart(n + 36)
+    print("  ")
+    cubeRowPart(n + 72)
+    print("\n")
+}
+
 $i = 0
-$ii = 0
 # Print the first 16 colors - these vary by terminal configuration
 println("")
 while({i < 16}, {
-        print(esc, "[48;5;", i, "m  ")
-        i = i + 1
-    }
-)
+    i.colorCell()
+    i = i + 1
+})
 println(esc, "[0m\n")
 
 # Print the 6 sides of the color cube - these are more standardized
-# but the order is a bit odd, thus the need for this trickery
+# but the order is a bit odd, thus the need for the above trickery
 i = 16; while({i < 52}, {
-    ii = 0; while({ii < 6}, {
-        print(esc, "[48;5;", i+ii, "m  ")
-        ii = ii + 1
-    })
-    print(esc, "[0m  ")
-    ii = 36; while({ii < 42}, {
-        print(esc, "[48;5;", i+ii, "m  ")
-        ii = ii + 1
-    })
-    print(esc, "[0m  ")
-    ii = 72; while({ii < 78}, {
-        print(esc, "[48;5;", i+ii, "m  ")
-        ii = ii + 1
-    })
-    println(esc, "[0m")
+    i.cubeRow()
     i = i + 6
 })
 println("")
 i = 124; while({i < 160}, {
-    ii = 0; while({ii < 6}, {
-        print(esc, "[48;5;", i+ii, "m  ")
-        ii = ii + 1
-    })
-    print(esc, "[0m  ")
-    ii = 36; while({ii < 42}, {
-        print(esc, "[48;5;", i+ii, "m  ")
-        ii = ii + 1
-    })
-    print(esc, "[0m  ")
-    ii = 72; while({ii < 78}, {
-        print(esc, "[48;5;", i+ii, "m  ")
-        ii = ii + 1
-    })
-    println(esc, "[0m")
+    i.cubeRow()
     i = i + 6
 })
 println("")
 
 # Finally, the 24 grays
 i = 232; while({i < 256}, {
-        print(esc, "[48;5;", i, "m  ")
+    i.colorCell()
     i = i + 1
 })
 println(esc, "[0m\n")

@@ -55,75 +55,78 @@ run_version() {
 
         # for the remaining ones, first compile them silently, then run them
         'c')
-            cc colortest.c -o colortest >/dev/null 2>&1
+            cc colortest.c -o colortest &>/dev/null && \
             ./colortest
         ;;
         'cobol')
-            cobc -x colortest.cbl >/dev/null 2>&1
+            cobc -x colortest.cbl &>/dev/null && \
             ./colortest
         ;;
         'cpp')
-            c++ colortest.cpp -o colortest >/dev/null 2>&1
+            c++ colortest.cpp -o colortest &>/dev/null && \
             ./colortest
         ;;
         'csharp')
-            mcs colortest.cs >/dev/null 2>&1
+            mcs colortest.cs &>/dev/null && \
             cli colortest.exe 
         ;;
         'd')
-            ldc2 colortest.d >/dev/null 2>&1
+            ldc2 colortest.d &>/dev/null && \
             ./colortest 
         ;;
         'fortran')
-            gfortran colortest.f90 -o colortest >/dev/null 2>&1
+            gfortran colortest.f90 -o colortest &>/dev/null && \
             ./colortest 
         ;;
         'go')
-            gccgo colortest.go -o colortest >/dev/null 2>&1
+            gccgo colortest.go -o colortest &>/dev/null && \
             ./colortest 
         ;;
         'haskell')
-            ghc colortest.hs >/dev/null 2>&1
+            ghc colortest.hs &>/dev/null && \
             ./colortest 
         ;;
         'java')
-            javac colortest.java >/dev/null 2>&1
+            javac colortest.java &>/dev/null && \
             java colortest 
         ;;
         'kotlin')
-            kotlinc colortest.kt >/dev/null 2>&1
+            kotlinc colortest.kt &>/dev/null && \
             kotlin ColortestKt 
         ;;
         'nim')
-            nim c colortest.nim >/dev/null 2>&1
+            nim c colortest.nim &>/dev/null && \
             ./colortest 
         ;;
         'objective-c')
-            gcc colortest.m -o colortest >/dev/null 2>&1
+            # shellcheck disable=2046 # Word splitting is required here
+            gcc $(gnustep-config --objc-flags) \
+                colortest.m -o colortest       \
+                $(gnustep-config --base-libs) &>/dev/null && \
             ./colortest 
         ;;
         'ocaml')
-            ocamlc colortest.ml -o colortest >/dev/null 2>&1
+            ocamlc colortest.ml -o colortest &>/dev/null && \
             ./colortest 
         ;;
         'odin')
-            odin build colortest.odin -file >/dev/null 2>&1
+            odin build colortest.odin -file &>/dev/null && \
             ./colortest 
         ;;
         'pascal')
-            fpc colortest.pas >/dev/null 2>&1
+            fpc colortest.pas &>/dev/null && \
             ./colortest 
         ;;
         'rust')
-            rustc colortest.rs >/dev/null 2>&1
+            rustc colortest.rs &>/dev/null && \
             ./colortest 
         ;;
         'scala')
-            scalac colortest.scala >/dev/null 2>&1
+            scalac colortest.scala &>/dev/null && \
             scala colortest 
         ;;
         'vala')
-            valac colortest.vala >/dev/null 2>&1
+            valac colortest.vala &>/dev/null && \
             ./colortest 
         ;;
         'x86-64_linux_asm')
@@ -132,7 +135,7 @@ run_version() {
             ./colortest
         ;;
         'zig')
-            zig build-exe colortest.zig >/dev/null 2>&1
+            zig build-exe colortest.zig &>/dev/null && \
             ./colortest 
         ;;
         *) printf "Unrecognized implementation: '%s'.\n" "$1" >&2; return 1 ;;
@@ -149,7 +152,7 @@ test_implementation() {
     for lang in "$@"; do
         printf 'Testing \e[1;32m%s\e[m...\n' "$lang" >&2
         ((tests+=1))
-        if ! { run_version "$lang" | diff --brief - colortest_output; }; then
+        if ! { run_version "$lang" |  diff --brief - colortest_output; }; then
             printf '\e[1;31m%s\e[m failed!\n' "$lang" >&2
             ((fails+=1))
         fi

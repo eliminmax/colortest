@@ -41,7 +41,7 @@ At the current moment, I've implemented it in the following languages:
 * Lisp (Common Lisp)
 * Lua
 * Nim
-* Objecive-C *(lightly tweaked C implementation)*
+* Objecive-C
 * Odin
 * OCaml
 * Octave (the GNU project's MATLAB-like analytical language)
@@ -51,13 +51,13 @@ At the current moment, I've implemented it in the following languages:
 * PowerShell
 * Python
 * R
-* Rockstar (an esoteric programming language based on 80s metal and power ballads. Specification and reference implementation are [here](https://github.com/RockstarLang/rockstar))
+* Rockstar (*Version 1, via satriani* - an esoteric programming language based on 80s metal and power ballads. Specification and reference implementation are [here](https://github.com/RockstarLang/rockstar), but you'll need to check out an older commit for version 1)
 * Ruby
 * Rust
 * Scala
 * Scheme
 * Shell Script (should work in any POSIX shell)
-* TypeScript *(lightly tweaked JavaScript implementation)* (via ts-node)
+* TypeScript *(just the JavaScript implementation with type annotations and `let` instead of `var`)* (via ts-node)
 * Vala
 * x86_64 assembly (NASM Intel-style syntax, 64-bit Linux System calls)
 * Zig
@@ -107,11 +107,13 @@ replaced by '␛':
 
 The MD5 checksum of the output should be `5ee6c8ad78719bc2a515fbee5957ba06`. *Note: I am aware that it is trivial to find MD5 hash collisions, and would not rely on MD5 for security under any circumstance. Given the assumption that it looks right, and I just want to validate that nothing is off about the whitespace, I think it should be fine.*
 
+### General program structure
+
 Each implementation consists of 3 parts, each of which begins with a specific comment and follows the same general structure across implementations, though there is some flexibility depending on the specifics of the language.
 
-*Note that in the following pseudocode,* `print` *is assumed not to add a trailing newline,* `for` *loops work the way they do in C, and within strings,* `\e` *represents the ASCII escape character and* `\n` *represents the ASCII newline character.*
+*Note that in the following pseudocode, `print` is assumed not to add a trailing newline, `for` loops work the way they do in C, and within strings, `\e` represents the ASCII escape character and `\n` represents the ASCII newline character.*
 
-Part 1 begins with the following comment:
+Part 1 begins with something like the following comment:
 
 > Print the first 16 colors - these vary by terminal configuration
 
@@ -125,7 +127,7 @@ for (i=0; i < 16; i++) {
 print("\e[0m\n\n")
 ```
 
-Part 2 begins with the following comment:
+Part 2 begins with something like the following comment:
 
 > Print the 6 sides of the color cube - these are more standardized,
 > but the order is a bit odd, thus the need for this trickery
@@ -165,7 +167,7 @@ for (i=124; i < 160; i+=6) {
 print("\n")
 ```
 
-Part 3 begins with the following comment:
+Part 3 begins with something like the following comment:
 
 > Finally, the 24 grays
 
@@ -177,3 +179,57 @@ for (i=232; i < 256; i++) {
 }
 print("\e[0m\n\n")
 ```
+
+#### Common Implementation Variations
+
+Due to the repetition of `print("\e[48;5;{n}m  ")` for a value `n`, it may make sense to create a `color_cell` function for that, though as it's a one-line function, it may not be. Additionally, if it makes for cleaner or more idiomatic code in a given language, `cube_row` and/or `cube_row_part` functions may be defined for use in the second part. I first used that approach for some of the functional programming languages, but later used it more broadly, and have adjusted some of the implementations that predate my use of that approach to use it.
+
+Depending on how simple and/or readable it is to represent an escape character within the source code, I might store it within an alias, macro, or global constant called `ESC` and use that. 
+
+An implementation that has such variations, using the same pseudocode "language" as before, would be as follows:
+
+```
+const ESC = "\e";
+
+fn color_cell(n) {
+  print(ESC + "[48;5;{n}m  ")
+}
+
+fn cube_row_part(n) {
+  for (i=n; i < n+6; i++) {
+    color_cell(i)
+  }
+}
+
+fn cube_row(n) {
+  cube_row_part(n)
+  print(ESC + "0m    ")
+  cube_row_part(n+36)
+  print(ESC + "0m    ")
+  cube_row_part(n+72)
+  print(ESC + "0m  \n")
+}
+
+# Print the first 16 colors - these vary by terminal configuration
+print("\n")
+for (i=0; i < 16; i++) {
+  color_cell(i)
+}
+print(ESC + "[0m\n\n")
+
+# Print the 6 sides of the color cube - these are more standardized,
+# but the order is a bit odd, thus the need for the above trickery
+for (i=16; i < 52; i+=6) {
+  cube_row(i)
+}
+print("\n")
+for (i=124; i < 160; i+=6) {
+  cube_row(i)
+}
+print("\n")
+
+# Finally, the 24 grays
+for (i=232; i < 256; i++) {
+  color_cell(i)
+}
+print(ESC + "[0m\n\n")
