@@ -4,13 +4,11 @@
 
 ; NASM 64-bit with Linux syscalls, no extern
 
-SECTION .rodata
+SECTION .data
     newline db 0x0a
     clearfmt db 0x1b,"[0m"
     sequence_start db 0x1b,"[48;5;"
     sequence_end db "m  "
-
-SECTION .data
     numbuf db "000"
 
 SECTION .text
@@ -24,7 +22,7 @@ print_newline:
     SYSCALL
     RET
 
-print_cell:
+color_cell:
     ; print a cell with the value in rax
     PUSH rax
     MOV eax, 1
@@ -39,6 +37,38 @@ print_cell:
     MOV esi, sequence_end
     MOV edx, 3
     SYSCALL
+    RET
+
+cube_row_part:
+    PUSH rbx
+    PUSH rbp
+    MOV ebp, eax
+    MOV ebx, eax
+    ADD ebx, 6
+    .cube_row_part_loop:
+    MOV eax, ebp
+    CALL color_cell
+    INC ebp
+    CMP ebp, ebx
+    JL .cube_row_part_loop
+    POP rbp
+    POP rbx
+    RET
+
+cube_row:
+    PUSH rax
+    CALL cube_row_part
+    CALL print_blank_cell
+    POP rax
+    ADD eax, 36
+    PUSH rax
+    CALL cube_row_part
+    CALL print_blank_cell
+    POP rax
+    ADD eax, 36
+    CALL cube_row_part
+    CALL print_clearfmt
+    CALL print_newline
     RET
 
 print_clearfmt:
@@ -59,6 +89,8 @@ print_blank_cell:
     RET
 
 uint8_to_ascii_str:
+    PUSH r12
+    PUSH rbx
     MOV edi, numbuf
     CMP eax, 100
     JGE .three_digit
@@ -88,7 +120,10 @@ uint8_to_ascii_str:
 .two_digit:
     MOV r12d, 2
 .tens_place:
-; the DIV operation writes the quotient to eax and the remainder to edx.
+    ; the DIV operation writes the quotient to eax and the remainder to edx.
+    ; edx is used as the upper half of the dividend when calling it, so must be
+    ; zeroed out.
+    MOV ebx, 10
     XOR edx, edx
     DIV ebx
     ADD eax, '0' ; add the ASCII '0' character to the value to turn it into a digit
@@ -115,21 +150,19 @@ uint8_to_ascii_str:
     MOV [edi], al
     INC edi
     MOV [edi], al
+    POP rbx
+    POP r12
     RET
 
 _start:
-    MOV ebx, 10 ; used for DIV operation
-
 ; Print the first 16 colors - these vary by terminal configuration
     CALL print_newline
-    MOV ecx, 0
-.first16_loop_start:
-    PUSH rcx
-    MOV eax, ecx
-    CALL print_cell
-    POP rcx
-    INC ecx
-    CMP ecx, 16
+    XOR ebx, ebx
+    .first16_loop_start:
+    MOV eax, ebx
+    CALL color_cell
+    INC ebx
+    CMP ebx, 16
     JL .first16_loop_start
     CALL print_clearfmt
     CALL print_newline
@@ -137,108 +170,30 @@ _start:
 
 ; Print the 6 sides of the color cube - these are more standardized,
 ; but the order is a bit odd, thus the need for this trickery
-    MOV ecx, 16
-.colorcube_upper_start:
-    XOR r8, r8 ; sets r8 to 0 more efficiently than MOV
-    .colorcube_upper_row_a_start:
-        MOV eax, ecx
-        ADD eax, r8d
-        PUSH rcx
-        CALL print_cell
-        POP rcx
-        INC r8
-        CMP r8, 6
-        JL .colorcube_upper_row_a_start
-    PUSH rcx
-    CALL print_blank_cell
-    POP rcx
-    MOV r8d, 36
-    .colorcube_upper_row_b_start:
-        MOV eax, ecx
-        ADD eax, r8d
-        PUSH rcx
-        CALL print_cell
-        POP rcx
-        INC r8
-        CMP r8, 42
-        JL .colorcube_upper_row_b_start
-    PUSH rcx
-    CALL print_blank_cell
-    POP rcx
-    MOV r8d, 72
-    .colorcube_upper_row_c_start:
-        MOV eax, ecx
-        ADD eax, r8d
-        PUSH rcx
-        CALL print_cell
-        POP rcx
-        INC r8
-        CMP r8, 78
-        JL .colorcube_upper_row_c_start
-    PUSH rcx
-    CALL print_clearfmt
-    CALL print_newline
-    POP rcx
-    ADD rcx, 6
-    CMP rcx, 52
+    MOV ebx, 16
+    .colorcube_upper_start:
+        MOV eax, ebx
+        CALL cube_row
+        ADD ebx, 6
+        CMP ebx, 52
     JL .colorcube_upper_start
     CALL print_newline
-    MOV ecx, 124
-.colorcube_lower_start:
-    XOR r8, r8 ; sets r8 to 0 more efficiently than MOV
-    .colorcube_lower_row_a_start:
-        MOV eax, ecx
-        ADD eax, r8d
-        PUSH rcx
-        CALL print_cell
-        POP rcx
-        INC r8
-        CMP r8, 6
-        JL .colorcube_lower_row_a_start
-    PUSH rcx
-    CALL print_blank_cell
-    POP rcx
-    MOV r8d, 36
-    .colorcube_lower_row_b_start:
-        MOV eax, ecx
-        ADD eax, r8d
-        PUSH rcx
-        CALL print_cell
-        POP rcx
-        INC r8
-        CMP r8, 42
-        JL .colorcube_lower_row_b_start
-    PUSH rcx
-    CALL print_blank_cell
-    POP rcx
-    MOV r8d, 72
-    .colorcube_lower_row_c_start:
-        MOV eax, ecx
-        ADD eax, r8d
-        PUSH rcx
-        CALL print_cell
-        POP rcx
-        INC r8
-        CMP r8, 78
-        JL .colorcube_lower_row_c_start
-    PUSH rcx
-    CALL print_clearfmt
-    CALL print_newline
-    POP rcx
-    ADD rcx, 6
-    CMP rcx, 160
+    MOV ebx, 124
+    .colorcube_lower_start:
+        MOV eax, ebx
+        CALL cube_row
+        ADD ebx, 6
+        CMP ebx, 160
     JL .colorcube_lower_start
     CALL print_newline
 
 ; Finally, the 24 grays
-MOV ecx, 232
+MOV ebx, 232
 .final24_loop_start:
-    PUSH rcx
-    MOV eax, ecx
-    CALL print_cell
-    POP rcx
-    INC ecx
-    CMP ecx, 256
+    MOV eax, ebx
+    CALL color_cell
+    INC ebx
+    CMP ebx, 256
     JL .final24_loop_start
     CALL print_clearfmt
     CALL print_newline
