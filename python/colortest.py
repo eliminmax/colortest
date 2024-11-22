@@ -8,13 +8,13 @@ from collections.abc import Iterable
 
 
 def color_cells(nums: Iterable[int]) -> str:
-    return ''.join(f"\x1b[48;5;{i}m  " for i in nums) + "\x1b[0m"
+    return "".join(f"\x1b[48;5;{i}m  " for i in nums) + "\x1b[0m"
 
 
 def cube_row(n: int):
-    print(color_cells(range(n, n+6)), end="  ")
-    print(color_cells(range(n+36, n+42)), end="  ")
-    print(color_cells(range(n+72, n+78)))
+    print(color_cells(range(n, n + 6)), end="  ")
+    print(color_cells(range(n + 36, n + 42)), end="  ")
+    print(color_cells(range(n + 72, n + 78)))
 
 
 # Print the first 16 colors - these vary by terminal configuration
