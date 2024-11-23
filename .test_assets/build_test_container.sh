@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # SPDX-FileCopyrightText: 2024 Eli Array Minkoff
 #
@@ -16,17 +16,25 @@ elif ! command -v podman >/dev/null; then
     printf 'Missing dependency: podman (https://podman.io/)\n'
 fi
 
+tar_flags=(
+    --numeric-owner --owner=1000 --group=1000 # set owner to colortester
+    --mtime=@1645900384 # don't care about mtime, set to time of first commit
+    --sort=name # keeps the order consistent
+    --no-acls --no-xattrs --no-selinux # keep extra info out.
+)
+
 # The following command will generate a tarball called .files.tar
 # with colortest_output, RUNNERS/install-deps.sh, RUNNERS/run-version.sh,
 # and all colortest source files. The reason I'm using fd instead of find is
 # that fd defaults to excluding files specified in .gitignore, so it will omit
 # compiled executables and any intermidiate compiler artifacts, as long as the
 # gitignore is properly set up.
-fd --type file '^colortest\.' --exact-depth 2 -X \
-    tar cf .files.tar ./colortest_output \
-    ./RUNNERS/install-deps.sh \
-    ./RUNNERS/common.sh \
-    ./RUNNERS/run-version.sh
+fd --type file '^colortest\.' --exact-depth 2 --print0 |\
+    xargs -0 tar "${tar_flags[@]}" -cf .files.tar \
+        ./colortest_output \
+        ./RUNNERS/install-deps.sh \
+        ./RUNNERS/common.sh \
+        ./RUNNERS/run-version.sh
 
 # now build the test
 podman pull docker.io/library/debian:latest
