@@ -8,12 +8,19 @@ cd "$(dirname "$(realpath "$0")")" || exit 4
 
 podman_img=localhost/colortester:latest
 if podman image exists "$podman_img"; then
+    # if container is older than most recently changed file, rebuild it
     container_time="$(podman image list $podman_img --format {{.CreatedAt}})"
     # date doesn't understand the format output, and messing with LC_ALL
     # doesn't seem to change it. Cut off the time zone field, and it will work.
     container_ts="$(date -d"${container_time% UTC}" +%s)"
-    # if container is older than latest commit, rebuild it
-    if [ "$container_ts" -lt "$(git log -1 --format=%at)" ]; then
+    
+    # stat -c%W prints only UNIX timestamp, sort -un sorts numerically,
+    # removing duplicates, and tail -n1 grabs the last line
+    latest_ts="$(
+        fd --exclude=.gitignore --exclude=.test_assets\
+            --type file . .. -X stat -c%W | sort -un | tail -n1
+    )"
+    if [ "$container_ts" -lt "$latest_ts" ]; then
         ./build_test_container.sh
     fi
 else
