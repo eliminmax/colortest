@@ -44,7 +44,9 @@ list_colortest_implementations () (
 )
 
 if [ "$#" -gt 0 ]; then
-    for i in "$@"; do test_single "$i"; done
+    if ! { [ "$#" -eq 1 ] && [ "$1" = "FULL_RUN" ]; }; then
+        for i in "$@"; do test_single "$i"; done
+    fi
 else
     for i in $(list_colortest_implementations); do test_single "$i"; done
 fi
