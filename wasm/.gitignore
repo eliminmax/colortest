@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2024 NONE
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# wasmtime can run wat files directly, but in case another tool is used, still
+# should ignore it
+colortest.wasm
+
+# wasmtime can compile wasm to cwasm files ahead of time, so ignore those too
+colortest.cwasm

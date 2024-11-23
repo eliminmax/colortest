@@ -46,6 +46,7 @@ run_version() {
         'scheme')     csi -script colortest.sld       ;;
         'sh')         sh colortest.sh                 ;;
         'typescript') ts-node colortest.ts            ;;
+        'wasm')       wasmtime colortest.wat          ;;
         # GNU Octave throws an error on exit if XDG_DATA_HOME is missing
         # without -q, it throws a warning if the DISPLAY variable is unset
         'octave')

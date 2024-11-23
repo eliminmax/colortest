@@ -59,6 +59,7 @@ At the current moment, I've implemented it in the following languages:
 * Shell Script (should work in any POSIX shell)
 * TypeScript *(just the JavaScript implementation with type annotations and `let` instead of `var`)* (via ts-node)
 * Vala
+* WebAssembly *(with WASI Preview 1)* (tested and run with wasmtime v27.0.0)
 * x86_64 assembly (NASM Intel-style syntax, 64-bit Linux System calls)
 * Zig
 

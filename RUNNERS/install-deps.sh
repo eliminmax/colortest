@@ -102,6 +102,7 @@ PWSH_V='7.4.6'
 ODIN_V='dev-2024-11'
 ROCKSTAR_COMMIT='c6c53db'
 ZIG_V='0.13.0'
+WASMTIME_V='27.0.0'
 CFUNGE_V='1,001'
 
 # we need to pull the source for the interpreter and build it locally
@@ -229,6 +230,26 @@ powershell_dependencies() {
         ln -s ../powershell/pwsh pwsh
         popd &>/dev/null
     fi
+}
+
+wasm_dependencies() {
+    # do nothing if wasmtime is already in path
+    if cmd_exists wasmtime; then return 0; fi
+    apt_wrapper tar tar # required in debian, check anyway just in case
+    apt_wrapper xz xz-utils
+    mkdir -p wasmtime
+    pushd wasmtime &>/dev/null
+    local repo
+    repo='bytecodealliance/wasmtime'
+    local filename
+    filename="wasmtime-v$WASMTIME_V-x86_64-linux.tar.xz"
+    local url_path
+    url_path="$repo/releases/download/v$WASMTIME_V/$filename"
+    wget_if "https://github.com/$url_path"
+    tar --strip-components=1 -xJf "$filename"
+    cd ../bin
+    ln -s ../wasmtime/wasmtime wasmtime
+    popd &>/dev/null
 }
 
 zig_dependencies() {
