@@ -4,47 +4,77 @@
 
 ; NASM 64-bit with Linux syscalls, no extern
 
-; different snippets of text memory needed (index; length):
-; "\x1b[0m": (0; 4)
-; "\x1b[0m  ": (0; 6)
-; "m  ": (3; 3)
-; "  ": (4; 2)
-; "\x1b[48;5;" (6; 7)
-; "\n" (19, 1)
 SECTION .data
-    clearfmt db 0x1b,"[0m  "
-    sequence_start db 0x1b,"[48;5;"
-    numbuf times 3 db '0'
     newline db 0x0a
-    sequence_end equ clearfmt + 3
+    clearfmt db 0x1b,"[0m  "
+    ; numbuf is the part of color_cell_text that contains the ASCII
+    ; representation of the cell number, followed by "m  ".
+    color_cell_text db 0x1b,"[48;5;"
+    numbuf times 6 db 0
 
 SECTION .text
 global _start
 
 print_newline:
+    MOV edx, 1
     MOV eax, 1
     MOV edi, 1
     MOV esi, newline
-    MOV edx, 1
     SYSCALL
     RET
 
+    ; set numbuf to the ASCII representation of EAX followed by "m  ", then
+    ; call the "write" syscall on color_cell_text, with a length long enough
+    ; to print the 
 color_cell:
-    ; print a cell with the value in rax
-    PUSH rax
-    MOV eax, 1
-    MOV edi, 1
-    MOV esi, sequence_start
-    MOV edx, 7 ; length of sequence_start
-    SYSCALL
-    POP rax
-    CALL uint8_to_ascii_str
-    MOV eax, 1
-    MOV edi, 1
-    MOV esi, sequence_end
-    MOV edx, 3
+    MOV edi, numbuf
+    CMP eax, 100
+    JGE .three_digit
+    CMP eax, 10
+    JGE .two_digit
+    MOV edx, 11; length of a color cell with 1-digit number
+.ones_place:
+    ADD al, '0'
+    MOV [edi], al
+    ; set the 3 bytes after the number text to "m  "
+    MOV BYTE [edi+1], 'm'
+    MOV BYTE [edi+2], 0x20; ASCII space
+    MOV BYTE [edi+3], 0x20
+    MOV eax, 1 ; the WRITE system call number
+    MOV edi, 1 ; file descriptor #1 (stdout)
+    MOV esi, color_cell_text
+    ; edx is already set to the number of bytes to print.
     SYSCALL
     RET
+.three_digit:
+    MOV edx, 13; length of a color cell with 3-digit number
+    MOV BYTE [edi], '1'
+    INC edi
+    SUB eax, 100 ; first subtract 100
+    CMP eax, 100 ; if still above 100, then the leading digit should be 2
+    JGE .hund200
+    JMP .tens_place
+.hund200:
+    INC BYTE [edi-1] ; increment the '1' character so that it becomes '2'
+    SUB eax, 100; subtract another 100 to make it a 2 digit number
+    JMP .tens_place
+.two_digit:
+    MOV edx, 12; length of a color cell with 1-digit number
+.tens_place:
+    ; the DIV operation writes the quotient to eax and the remainder to edx.
+    ; edx is used as the upper half of the dividend when calling it, so must be
+    ; zeroed out.
+    MOV ecx, 10
+    PUSH rdx ; push the lenth set at the start of the function
+    XOR edx, edx
+    DIV ecx
+    ADD eax, '0' ; add the ASCII '0' character to the value to turn it into a digit
+    MOV [edi], al
+    INC edi
+    ; move the remainder into eax for the ones place
+    MOV eax, edx
+    POP rdx ; restore the length
+    JMP .ones_place
 
 cube_row_part:
     PUSH rbx
@@ -87,76 +117,11 @@ print_clearfmt:
     RET
 
 print_blank_cell:
-    CALL print_clearfmt
     MOV eax, 1
     MOV edi, 1
-    MOV esi, sequence_end+1; sequence_end is "m  ", so 1 byte in is "  "
-    MOV edx, 2
+    MOV esi, clearfmt
+    MOV edx, 6; 2 spaces are right after the end of the sequence
     SYSCALL
-    RET
-
-uint8_to_ascii_str:
-    PUSH rbx
-    MOV edi, numbuf
-    CMP eax, 100
-    JGE .three_digit
-    INC edi ; skip the hundreds place
-    CMP eax, 10
-    JGE .two_digit
-    INC edi ; skip the tens place
-    MOV rcx, 1 ; it's a 1 digit number if we reach this point
-    JMP .ones_place
-.three_digit:
-    MOV ecx, 3 ; 3 digit number
-    ; because it's an u8int, we can be more efficient by only checking against 200 or 100
-    CMP eax, 200
-    JGE .hund200
-    ; already know that it is greater than 100, so no need to check
-    MOV dl, '1' ; the ASCII code for the character
-    MOV [edi], dl ; save it to numbuf
-    INC edi
-    SUB eax, 100
-    JMP .tens_place
-.hund200:
-    MOV dl, '2' ; the ASCII code for the character
-    MOV [edi], dl
-    INC edi
-    SUB eax, 200
-    JMP .tens_place
-.two_digit:
-    MOV ecx, 2
-.tens_place:
-    ; the DIV operation writes the quotient to eax and the remainder to edx.
-    ; edx is used as the upper half of the dividend when calling it, so must be
-    ; zeroed out.
-    MOV ebx, 10
-    XOR edx, edx
-    DIV ebx
-    ADD eax, '0' ; add the ASCII '0' character to the value to turn it into a digit
-    MOV [edi], al
-    INC edi
-    ; move the remainder into eax for the ones place
-    MOV eax, edx
-.ones_place:
-    ; this point should only be reached if the value is 9 or less
-    ADD eax, '0' ; add the ASCII '0' character to the value to turn it into a digit
-    MOV [edi], al
-; print numbuf to stdout
-    MOV eax, 1 ; syscall number for the write syscall
-    MOV edi, 1 ; file descriptor for STDOUT
-    MOV esi, numbuf+3 ; start right after the end of numbuf
-    SUB esi, ecx ; subtract the number of characters to print
-    MOV edx, ecx ; load the number of characters to print into the register
-    SYSCALL ; will print the buffer contents without leading zeroes
-    ; reset numbuf to "000"
-    MOV edi, numbuf
-    MOV eax, '0' ; the ASCII code for the character
-    MOV [edi], al
-    INC edi
-    MOV [edi], al
-    INC edi
-    MOV [edi], al
-    POP rbx
     RET
 
 _start:
@@ -174,7 +139,7 @@ _start:
     CALL print_newline
 
 ; Print the 6 sides of the color cube - these are more standardized,
-; but the order is a bit odd, thus the need for this trickery
+; but the order is a bit odd, thus the need for the above trickery
     MOV ebx, 16
     .colorcube_upper_start:
         MOV eax, ebx
