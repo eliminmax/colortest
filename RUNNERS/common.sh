@@ -111,7 +111,7 @@ wget_if() {
     # This removes everything before the last slash in the url_decoded value
     # and runs wget if it doesn't exist
     if ! [ -f "${url_decoded##*/}" ]; then
-        apt_wrapper wget wget
+        apt_wrapper wget wget ca-certificates
         wget "$1"
     fi
 }
