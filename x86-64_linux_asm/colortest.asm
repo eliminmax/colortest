@@ -96,7 +96,6 @@ print_blank_cell:
     RET
 
 uint8_to_ascii_str:
-    PUSH r12
     PUSH rbx
     MOV edi, numbuf
     CMP eax, 100
@@ -105,27 +104,27 @@ uint8_to_ascii_str:
     CMP eax, 10
     JGE .two_digit
     INC edi ; skip the tens place
-    MOV r12d, 1 ; it's a 1 digit number if we reach this point
+    MOV rcx, 1 ; it's a 1 digit number if we reach this point
     JMP .ones_place
 .three_digit:
-    MOV r12d, 3 ; 3 digit number
+    MOV ecx, 3 ; 3 digit number
     ; because it's an u8int, we can be more efficient by only checking against 200 or 100
     CMP eax, 200
     JGE .hund200
     ; already know that it is greater than 100, so no need to check
-    MOV r9b, '1' ; the ASCII code for the character
-    MOV [edi], r9b ; save it to numbuf
+    MOV dl, '1' ; the ASCII code for the character
+    MOV [edi], dl ; save it to numbuf
     INC edi
     SUB eax, 100
     JMP .tens_place
 .hund200:
-    MOV r9b, '2' ; the ASCII code for the character
-    MOV [edi], r9b
+    MOV dl, '2' ; the ASCII code for the character
+    MOV [edi], dl
     INC edi
     SUB eax, 200
     JMP .tens_place
 .two_digit:
-    MOV r12d, 2
+    MOV ecx, 2
 .tens_place:
     ; the DIV operation writes the quotient to eax and the remainder to edx.
     ; edx is used as the upper half of the dividend when calling it, so must be
@@ -146,8 +145,8 @@ uint8_to_ascii_str:
     MOV eax, 1 ; syscall number for the write syscall
     MOV edi, 1 ; file descriptor for STDOUT
     MOV esi, numbuf+3 ; start right after the end of numbuf
-    SUB esi, r12d ; subtract the number of characters to print
-    MOV edx, r12d ; load the number of characters to print into the register
+    SUB esi, ecx ; subtract the number of characters to print
+    MOV edx, ecx ; load the number of characters to print into the register
     SYSCALL ; will print the buffer contents without leading zeroes
     ; reset numbuf to "000"
     MOV edi, numbuf
@@ -158,7 +157,6 @@ uint8_to_ascii_str:
     INC edi
     MOV [edi], al
     POP rbx
-    POP r12
     RET
 
 _start:
