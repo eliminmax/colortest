@@ -32,12 +32,14 @@ fi
 mkdir -p results
 date +%s >results/start-time
 
-podman run --rm -a stdout -a stderr "$podman_img" \
+podman run --name 'colortester_FULL_RUN' \
+    --rm -a stdout -a stderr "$podman_img" \
     sh -c 'RUNNERS/install-deps.sh && RUNNERS/run-version.sh -a' \
     >results/FULL_RUN.stdout 2>results/FULL_RUN.stderr &
 
 test_single () {
-    podman run --rm -a stdout -a stderr "$podman_img" \
+    podman run --name "colortester_$1" \
+        --rm -a stdout -a stderr "$podman_img" \
         sh -c "RUNNERS/install-deps.sh $1 && RUNNERS/run-version.sh -t $1" \
         >"results/$1.stdout" 2>"results/$1.stderr" &
 }
