@@ -81,8 +81,9 @@ fi
 # checks if command listed in first argument exists
 # if not, install the package specified in the second argument to install it
 apt_wrapper() {
-    if ! cmd_exists "$1"; then
-        as_root apt-get install -qy "$2"
+    cmd="$1"; pkg="$2"; shift; shift
+    if ! cmd_exists "$cmd"; then
+        as_root apt-get install -qy "$pkg" "$@"
     fi
 }
 
