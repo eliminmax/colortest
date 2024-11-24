@@ -9,7 +9,8 @@ cd "$(dirname "$(realpath "$0")")" || exit 4
 podman_img=localhost/colortester:latest
 if podman image exists "$podman_img"; then
     # if container is older than most recently changed file, rebuild it
-    container_time="$(podman image list $podman_img --format {{.CreatedAt}})"
+    # shellcheck disable=1083 # curly braces are intentionally literal
+    container_time="$(podman image list "$podman_img" --format {{.CreatedAt}})"
     # date doesn't understand the format output, and messing with LC_ALL
     # doesn't seem to change it. Cut off the time zone field, and it will work.
     container_ts="$(date -d"${container_time% UTC}" +%s)"
