@@ -8,7 +8,6 @@
 
 set -eo pipefail
 
-
 # the reason for the order of the below few commands is that shellcheck doesn't
 # understand that RUNNERS/common.sh sourced from the colortest directory and
 # common.sh sourced from the colortest/RUNNERS directory are one and the same.
@@ -54,80 +53,33 @@ run_version() {
             octave -q colortest.m
         ;;
 
-        # for the remaining ones, first compile them silently, then run them
-        'c')
-            cc colortest.c -o colortest &>/dev/null && \
-            ./colortest
-        ;;
-        'cobol')
-            cobc -x colortest.cbl &>/dev/null && \
-            ./colortest
-        ;;
-        'cpp')
-            c++ colortest.cpp -o colortest &>/dev/null && \
-            ./colortest
-        ;;
-        'csharp')
-            mcs colortest.cs &>/dev/null && \
-            cli colortest.exe 
-        ;;
-        'd')
-            ldc2 colortest.d &>/dev/null && \
-            ./colortest 
-        ;;
-        'fortran')
-            gfortran colortest.f90 -o colortest &>/dev/null && \
-            ./colortest 
-        ;;
-        'go')
-            gccgo colortest.go -o colortest &>/dev/null && \
-            ./colortest 
-        ;;
-        'haskell')
-            ghc colortest.hs &>/dev/null && \
-            ./colortest 
-        ;;
-        'java')
-            javac colortest.java &>/dev/null && \
-            java colortest 
-        ;;
-        'kotlin')
-            kotlinc colortest.kt &>/dev/null && \
-            kotlin ColortestKt 
-        ;;
-        'nim')
-            nim c colortest.nim &>/dev/null && \
-            ./colortest 
-        ;;
+        # for the remaining ones, first compile them, then run them
+        # compiler output must be sent to stderr to avoid polluting test output
+        'c')       cc colortest.c -o colortest >&2 && ./colortest         ;;
+        'cobol')   cobc -x colortest.cbl >&2 && ./colortest               ;;
+        'cpp')     c++ colortest.cpp -o colortest >&2 && ./colortest      ;;
+        'csharp')  mcs colortest.cs >&2 && cli colortest.exe              ;;
+        'd')       ldc2 colortest.d >&2 && ./colortest                    ;;
+        'fortran') gfortran colortest.f90 -o colortest >&2 && ./colortest ;;
+        'go')      gccgo colortest.go -o colortest >&2 && ./colortest     ;;
+        'haskell') ghc colortest.hs >&2 && ./colortest                    ;;
+        'java')    javac colortest.java >&2 && java colortest             ;;
+        'kotlin')  kotlinc colortest.kt >&2 && kotlin ColortestKt         ;;
+        'nim')     nim c colortest.nim >&2 && ./colortest                 ;;
+        'ocaml')   ocamlc colortest.ml -o colortest >&2 && ./colortest    ;;
+        'odin')    odin build colortest.odin -file >&2 && ./colortest     ;;
+        'pascal')  fpc colortest.pas >&2 && ./colortest                   ;;
+        'rust')    rustc colortest.rs >&2 && ./colortest                  ;;
+        'scala')   scalac colortest.scala >&2 && scala colortest          ;;
+        'vala')    valac colortest.vala >&2 && ./colortest                ;;
+        'zig')     zig build-exe colortest.zig >&2 && ./colortest         ;;
+
+        # some that have a bit of a more complex compilation process
         'objective-c')
             # shellcheck disable=2046 # Word splitting is required here
             gcc $(gnustep-config --objc-flags) \
                 colortest.m -o colortest       \
-                $(gnustep-config --base-libs) &>/dev/null && \
-            ./colortest 
-        ;;
-        'ocaml')
-            ocamlc colortest.ml -o colortest &>/dev/null && \
-            ./colortest 
-        ;;
-        'odin')
-            odin build colortest.odin -file &>/dev/null && \
-            ./colortest 
-        ;;
-        'pascal')
-            fpc colortest.pas &>/dev/null && \
-            ./colortest 
-        ;;
-        'rust')
-            rustc colortest.rs &>/dev/null && \
-            ./colortest 
-        ;;
-        'scala')
-            scalac colortest.scala &>/dev/null && \
-            scala colortest 
-        ;;
-        'vala')
-            valac colortest.vala &>/dev/null && \
+                $(gnustep-config --base-libs) >&2 && \
             ./colortest 
         ;;
         'x86-64_linux_asm')
@@ -135,17 +87,16 @@ run_version() {
 			ld colortest.o -o colortest
             ./colortest
         ;;
-        'zig')
-            zig build-exe colortest.zig &>/dev/null && \
-            ./colortest 
-        ;;
         *) printf "Unrecognized implementation: '%s'.\n" "$1" >&2; return 1 ;;
     esac
     popd &>/dev/null
 }
 
 test_implementation() {
-    apt_wrapper diff diffutils
+    if ! cmd_exists diff; then
+        printf 'Can'\''t test without diff installed!\n' >&2
+        exit 1
+    fi
     local fails
     local tests
     fails=0

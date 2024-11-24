@@ -13,67 +13,171 @@ cd "$(dirname "$(realpath "$0")")"
 
 source common.sh
 
+# ensure the bin dir exists
+mkdir -p "$basedir/bin"
+
+# create a wrapper function to use the best available "run as root" command
+# prefer sudo over doas, doas over pkexec, and pkexec over crashing
+if [ "$EUID" -eq 0 ]; then
+    # we're already root
+    as_root() { "$@"; }
+elif cmd_exists sudo; then
+    as_root() { sudo "$@"; }
+elif cmd_exists doas; then
+    as_root() { doas "$@"; }
+elif cmd_exists pkexec; then
+    as_root() { pkexec "$@"; }
+else
+    # fail if attempting to run as root at this point.
+    as_root() {
+        printf 'Not running as root, and none of sudo, doas, or pkexec ' >&2
+        printf 'could be found in PATH. Aborting!\n' >&2
+        exit 2
+    }
+fi
+
+is_installed () {
+    [ "$(
+        dpkg-query -W -f '${db:Status-Status}' "$1" 2>/dev/null
+    )" = 'installed' ]
+}
+
+
+# install listed packages if not already installed
+apt_wrapper() {
+    declare -a to_install
+    for pkg in "$@"; do
+        # `|| :` ensures that it won't exit on failure here
+        is_installed "$pkg" || to_install+=("$pkg");
+    done
+    if [ "${#to_install}" -gt 0 ]; then
+        as_root apt-get install -qy "${to_install[@]}"
+    fi
+}
+
+# First argument is a command. If that command is not found, the rest of
+# the arguments are passed to apt_wrapper. As a special case, if only one arg 
+# was passed, it's assumed to be both the command and the package name.
+apt_if() {
+    cmd="$1"
+    if [ "$#" -gt 1 ]; then shift; fi
+    if ! cmd_exists "$cmd"; then apt_wrapper "$@"; fi
+}
+
+# non-interactively install rust tooling using rustup if needed
+rustup_if() {
+    if ! cmd_exists rustup; then
+        apt_wrapper gcc curl ca-certificates libc6-dev
+        # the rustup command from rustup.rs, with -s -- -y appended to make it
+        # non-interactive
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs |\
+            sh -s -- -y --profile=minimal
+    fi
+}
+
+# takes a url as an argument, and downloads it unless the output already exists
+wget_if() {
+    # substitute %NN with \xNN, then echo -e to process backslash escapes
+    # thanks to https://stackoverflow.com/a/6265305 for pointing me to that
+    local url_decoded
+    url_decoded="$(echo -e "${1//%/\\x}")"
+
+    # ${FOO##pattern}" greedily matches pattern at the start of FOO, removing
+    # the matching component.
+    # https://www.cyberciti.biz/tips/bash-shell-parameter-substitution-2.html
+    # This removes everything before the last slash in the url_decoded value
+    # and runs wget if it doesn't exist
+    if ! [ -f "${url_decoded##*/}" ]; then
+        apt_if wget
+        apt_wrapper ca-certificates
+        wget -nv "$1"
+    fi
+}
+
+# checks if command listed in first argument exists
+# if not, invoke cargo with the remaining arguments to install it
+cargo_wrapper() {
+    cmd="$1"
+    shift
+    if ! cmd_exists "$cmd"; then
+        if ! cmd_exists cargo; then rustup_if; fi
+        cargo install "$@"
+    fi
+}
+
 # this script assumes the presence of GNU coreutils on a Debian-based distro
 if [[ "$(uname -mo)" != 'x86_64 GNU/Linux' || ! -e /etc/debian_version ]]; then
     printf 'Unsupported system!\n' >&2
     exit 1
 fi
 
-# trivial cases - these can be handled with one apt_wrapper call on Debian 12
-algol_68_dependencies() { apt_wrapper a68g algol68g; }
-bf_dependencies() { apt_wrapper beef beef; }
-c_dependencies() { apt_wrapper cc gcc libc6-dev; }
-dc_dependencies() { apt_wrapper dc dc; }
-cobol_dependencies() { apt_wrapper cobc gnucobol; }
-cpp_dependencies() { apt_wrapper c++ g++; }
-elixir_dependencies() { apt_wrapper elixir elixir; }
-erlang_dependencies() { apt_wrapper escript erlang-base; }
-forth_dependencies() { apt_wrapper gforth gforth; }
-fortran_dependencies() { apt_wrapper gfortran gfortran; }
-go_dependencies() { apt_wrapper gccgo gccgo; }
-haskell_dependencies() { apt_wrapper ghc ghc; }
-java_dependencies() { apt_wrapper javac default-jdk-headless; }
-jq_dependencies() { apt_wrapper jq jq; }
-javascript_dependencies() { apt_wrapper node nodejs; }
-kotlin_dependencies() { apt_wrapper kotlinc kotlin; }
-lisp_dependencies() { apt_wrapper clisp clisp; }
-lua_dependencies() { apt_wrapper lua lua5.2; }
-nim_dependencies() { apt_wrapper nim nim; }
-ocaml_dependencies() { apt_wrapper ocamlc ocaml; }
-octave_dependencies() { apt_wrapper octave octave; }
-pascal_dependencies() { apt_wrapper fpc fp-compiler; }
-perl_dependencies() { apt_wrapper perl perl; }
-php_dependencies() { apt_wrapper php php-cli; }
-python_dependencies() { apt_wrapper python3 python3; }
-r_dependencies() { apt_wrapper r r-cran-littler; }
-ruby_dependencies() { apt_wrapper ruby ruby; }
-scala_dependencies() { apt_wrapper scalac scala; }
-scheme_dependencies() { apt_wrapper csi chicken-bin; }
-typescript_dependencies() { apt_wrapper ts-node ts-node; }
-vala_dependencies() { apt_wrapper valac valac;}
+# sh is always available, or else we're doomed.
+sh_dependencies() { cmd_exists sh; }
 
-# these 2 are required parts of Debian as of version 12, but check just in case
-awk_dependencies() { apt_wrapper awk mawk; }
-sh_dependencies() { apt_wrapper sh dash; }
+# trivial cases - if command does not exist, install it as an apt package
+bf_dependencies() { apt_if beef; }
+dc_dependencies() { apt_if dc; }
+elixir_dependencies() { apt_if elixir; }
+forth_dependencies() { apt_if gforth; }
+fortran_dependencies() { apt_if gfortran; }
+go_dependencies() { apt_if gccgo; }
+haskell_dependencies() { apt_if ghc; }
+jq_dependencies() { apt_if jq; }
+kotlin_dependencies() { apt_if kotlin; }
+ocaml_dependencies() { apt_if ocaml; }
+octave_dependencies() { apt_if octave; }
+perl_dependencies() { apt_if perl; }
+lisp_dependencies() { apt_if clisp; }
+python_dependencies() { apt_if python3; }
+ruby_dependencies() { apt_if ruby ; }
+scala_dependencies() { apt_if scala; }
+typescript_dependencies() { apt_if ts-node; }
 
-# a few with more than 1 dependency, but still fairly trivial
-csharp_dependencies() {
-    apt_wrapper mcs mono-mcs
-    apt_wrapper cli mono-runtime
+# getting a bit more complex here - the package name does not match the
+# command name, but it's still pretty simple.
+algol_68_dependencies() { apt_if a68g algol68g; }
+awk_dependencies() { apt_if awk mawk; } # required in Debian 12, still check
+cobol_dependencies() { apt_if cobc gnucobol; }
+cpp_dependencies() { apt_if c++ g++; }
+erlang_dependencies() { apt_if escript erlang-base; }
+java_dependencies() { apt_if javac default-jdk-headless; }
+javascript_dependencies() { apt_if node nodejs; }
+lua_dependencies() { apt_if lua lua5.2; }
+pascal_dependencies() { apt_if fpc fp-compiler; }
+php_dependencies() { apt_if php php-cli; }
+r_dependencies() { apt_if r r-cran-littler; }
+scheme_dependencies() { apt_if csi chicken-bin; }
+
+# these need more than just a single package
+c_dependencies() {
+    apt_if cc tcc # if no C compiler is installed, install gcc
+    apt_wrapper libc6-dev # need to have C standard library headers
 }
-d_dependencies() {
-    apt_wrapper ldc2 ldc
-    apt_wrapper cc gcc libc6-dev
+csharp_dependencies() {
+    apt_if mcs mono-mcs
+    apt_if cli mono-runtime
+}
+nim_dependencies() {
+    apt_if nim;
+    apt_if gcc;
+    apt_wrapper libc6-dev # need to have c standard library headers
+}
+objective-c_dependencies() {
+    apt_wrapper gcc gobjc gnustep-make make libgnustep-base-dev
+}
+vala_dependencies() {
+    apt_if cc tcc
+    apt_if valac
 }
 x86-64_linux_asm_dependencies() {
-    apt_wrapper ld binutils
-    apt_wrapper nasm nasm
+    apt_if ld binutils
+    apt_if nasm nasm
 }
 
 # rustc is in the Debian 12 repos, but Fender has a dependency that needs a
 # newer version of it, so for the sake of consistency, install the latest
 # version of rustup for anything that uses rust
-rust_dependencies() { rustup_install; }
+rust_dependencies() { rustup_if; }
 
 # a couple which need to be installed from git with cargo
 babalang_dependencies() {
@@ -86,17 +190,17 @@ fender_dependencies() {
 
 # the remaining ones have more complexity for various reasons
 
-# gcc is used to compile Objective-C as well, but needs extra packages to be
-# able to do that. Try to parse in objective-c mode to see if it's supported
-objective-c_dependencies() {
-    apt_wrapper gcc gcc
-    if ! printf 'int main(void){}' | gcc -xobjective-c -E - &>/dev/null; then
-        as_root apt-get install -qy gobjc gnustep-make make libgnustep-base-dev
-    fi
+d_dependencies() {
+    apt_wrapper libc6-dev # need to have C standard library headers
+    # ldc2 shells out to `cc`, but uses gcc-specific flags, so make sure that
+    # `cc` is actually GCC
+    apt_if gcc 
+    ln -sf "$(type -p gcc)" bin/cc
+    apt_if ldc2 ldc
 }
 
-# for those with hard-coded versions to download, store them here to make it
-# easier to change in the future
+# for dependencies with hard-coded versions to download, store them here to
+# make it easier to change in the future
 
 PWSH_V='7.4.6'
 ODIN_V='dev-2024-11'
@@ -109,12 +213,7 @@ CFUNGE_V='1,001'
 befunge_dependencies() {
     # do nothing if cfunge is already in PATH
     if cmd_exists cfunge; then return 0; fi
-    apt_wrapper cmake cmake
-    apt_wrapper make make
-    apt_wrapper cc gcc
-    apt_wrapper tar tar # required in debian, check anyway just in case
-    apt_wrapper gzip gzip # required in debian, check anyway just in case
-
+    apt_wrapper cmake make gcc tar gzip libc6-dev
     # split the second half of the URL into a var to fit within 80 columns
     local asset_path
     asset_path="archive/refs/tags/$CFUNGE_V.tar.gz"
@@ -145,8 +244,9 @@ befunge_dependencies() {
 # compile the odin compiler and symlink it into the PATH
 odin_dependencies() {
     if cmd_exists odin; then return 0; fi
-    apt_wrapper llvm-as llvm
-    apt_wrapper clang clang
+    apt_wrapper libc6-dev llvm-14-dev
+    apt_if llvm-as llvm
+    apt_if clang
     # download and compile Odin version
     wget_if "https://github.com/odin-lang/Odin/archive/refs/tags/$ODIN_V.tar.gz"
     mkdir -p odin
@@ -163,9 +263,9 @@ odin_dependencies() {
 # for colortest, the line printing that needs to be commented out.
 rockstar_dependencies() {
     if cmd_exists satriani-wrapper; then return 0; fi
-    apt_wrapper yarnpkg yarnpkg
-    apt_wrapper node nodejs
-    apt_wrapper git git
+    apt_if yarnpkg
+    apt_if node nodejs
+    apt_if git
     # clone the official rockstar repo
     git clone https://github.com/RockstarLang/rockstar
     pushd rockstar/ &>/dev/null
@@ -203,17 +303,10 @@ powershell_dependencies() {
     # do nothing if pwsh is already in PATH
     if cmd_exists pwsh; then return 0; fi
     # packages needed to download and extract PowerShell's archive
-    apt_wrapper gzip gzip # required in debian, check anyway just in case
-    apt_wrapper tar tar # required in debian, check anyway just in case
+    apt_if gzip # required in debian, check anyway just in case
+    apt_if tar # required in debian, check anyway just in case
     # PowerShell needs a bunch of libs, all but one of which start with "lib"
-    for lib in c6 gcc-s1 gssapi-krb5-2 icu72 ssl3 stdc++6; do
-        if ! dpkg --list "lib$lib" &>/dev/null; then
-            as_root apt-get install -qy "lib$lib"
-        fi
-    done
-    if ! dpkg --list zlib1g &>/dev/null; then
-        as_root apt-get install -qy zlib1g
-    fi
+    apt_wrapper libc6 libgcc-s1 libgssapi-krb5-2 libicu72 libssl3 libstdc++6 zlib1g
 
     if [ ! -f powershell/pwsh ]; then
         mkdir -p powershell
@@ -235,8 +328,8 @@ powershell_dependencies() {
 wasm_dependencies() {
     # do nothing if wasmtime is already in path
     if cmd_exists wasmtime; then return 0; fi
-    apt_wrapper tar tar # required in debian, check anyway just in case
-    apt_wrapper xz xz-utils
+    apt_if tar
+    apt_if xz xz-utils
     mkdir -p wasmtime
     pushd wasmtime &>/dev/null
     local repo
@@ -256,8 +349,8 @@ zig_dependencies() {
     # do nothing if zig is already in PATH
     if cmd_exists zig; then return 0; fi
     # packages needed to download and extract Zig's archive
-    apt_wrapper tar tar # required in debian, check anyway just in case
-    apt_wrapper xz xz-utils
+    apt_if tar
+    apt_if xz xz-utils
     mkdir -p zig
     pushd zig &>/dev/null
     wget_if "https://ziglang.org/download/$ZIG_V/zig-linux-x86_64-$ZIG_V.tar.xz"
