@@ -4,12 +4,19 @@
 
 ; NASM 64-bit with Linux syscalls, no extern
 
+; different snippets of text memory needed (index; length):
+; "\x1b[0m": (0; 4)
+; "\x1b[0m  ": (0; 6)
+; "m  ": (3; 3)
+; "  ": (4; 2)
+; "\x1b[48;5;" (6; 7)
+; "\n" (19, 1)
 SECTION .data
-    newline db 0x0a
-    clearfmt db 0x1b,"[0m"
+    clearfmt db 0x1b,"[0m  "
     sequence_start db 0x1b,"[48;5;"
-    sequence_end db "m  "
-    numbuf db "000"
+    numbuf times 3 db '0'
+    newline db 0x0a
+    sequence_end equ clearfmt + 3
 
 SECTION .text
 global _start
