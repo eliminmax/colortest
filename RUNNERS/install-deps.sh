@@ -22,7 +22,7 @@ fi
 # trivial cases - these can be handled with one apt_wrapper call on Debian 12
 algol_68_dependencies() { apt_wrapper a68g algol68g; }
 bf_dependencies() { apt_wrapper beef beef; }
-c_dependencies() { apt_wrapper cc gcc; }
+c_dependencies() { apt_wrapper cc gcc libc6-dev; }
 dc_dependencies() { apt_wrapper dc dc; }
 cobol_dependencies() { apt_wrapper cobc gnucobol; }
 cpp_dependencies() { apt_wrapper c++ g++; }
