@@ -8,6 +8,7 @@ WORKDIR /home/colortester/colortest
 RUN apt-get update && apt-get install -y doas && apt-get clean
 RUN useradd -s /usr/bin/bash colortester
 COPY .test_assets/doas.conf /etc
+COPY .test_assets/apt-no-install-recommends /etc/apt/apt.conf.d/
 USER colortester
 ADD .files.tar .
 RUN doas chown -R colortester:colortester /home/colortester
