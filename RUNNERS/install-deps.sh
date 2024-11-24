@@ -63,7 +63,7 @@ csharp_dependencies() {
 }
 d_dependencies() {
     apt_wrapper ldc2 ldc
-    apt_wrapper cc gcc
+    apt_wrapper cc gcc libc6-dev
 }
 x86-64_linux_asm_dependencies() {
     apt_wrapper ld binutils
