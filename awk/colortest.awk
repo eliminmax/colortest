@@ -12,9 +12,9 @@ function cube_row_part(crpn) {
 }
 function cube_row(crn) {
     cube_row_part(crn)
-    printf("\033[0m  ")
+    printf "\033[0m  "
     cube_row_part(crn + 36)
-    printf("\033[0m  ")
+    printf "\033[0m  "
     cube_row_part(crn + 72)
     print "\033[0m"
 }
