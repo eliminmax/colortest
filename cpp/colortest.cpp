@@ -3,19 +3,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include <iostream>
-#include <climits>
 using namespace std;
-using uchar=unsigned char;
 
-static void color_cell(uchar n) {
+static void color_cell(int n) {
     cout << "\x1b[48;5;" << +n << "m  ";
 }
 
-static void cube_row_part(uchar n) {
-    for(uchar i = n; i < n + 6; i++) color_cell(i);
+static void cube_row_part(int n) {
+    for(int i = n; i < n + 6; i++) color_cell(i);
 }
 
-static void cube_row(uchar n) {
+static void cube_row(int n) {
     cube_row_part(n);
     cout << "\x1b[0m  ";
     cube_row_part(n + 36);
@@ -27,24 +25,19 @@ static void cube_row(uchar n) {
 int main() {
     // Print the first 16 colors - these vary by terminal configuration
     cout << endl;
-    for(uchar i = 0; i < 16; i++) color_cell(i);
+    for(int i = 0; i < 16; i++) color_cell(i);
     // use one literal '\n' and one endl to only flush output once
     cout << "\x1b[0m\n" << endl;
 
     // Print the 6 sides of the color cube - these are more standardized
     // but the order is a bit odd, thus the need for the above trickery
-    for(uchar i = 16; i < 52; i += 6) cube_row(i);
+    for(int i = 16; i < 52; i += 6) cube_row(i);
     cout << endl;
-    for(uchar i = 124; i < 160; i += 6) cube_row(i);
+    for(int i = 124; i < 160; i += 6) cube_row(i);
     cout << endl;
     
     // Finally, the 24 grays
-#if UCHAR_MAX > 255
-    for(uchar i = 232; i < 256; i++) color_cell(static_cast<uchar>(i));
-#else
-    // stop when i wraps around to zero
-    for(uchar i = 232; i; i++) color_cell(static_cast<uchar>(i));
-#endif
+    for(int i = 232; i < 256; i++) color_cell(i);
     cout << "\x1b[0m\n" << endl;
 
     return 0;
