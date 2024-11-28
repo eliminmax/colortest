@@ -18,7 +18,7 @@
       * ColorCube-Row-Part iterator value
            01 ICRP PICTURE 999.
        PROCEDURE DIVISION.
-           MAIN-PARA.
+       MAIN-PARA.
       *    Print the first 16 colors - these vary by terminal config
            DISPLAY LINE-FEED WITH NO ADVANCING
            PERFORM COLORCELL-PARA WITH TEST BEFORE UNTIL I=16
@@ -37,24 +37,24 @@
            DISPLAY ESC"[0m"LINE-FEED
            STOP RUN.
 
-           COLORCELL-PARA.
+       COLORCELL-PARA.
            MOVE I TO ND
            DISPLAY ESC"[48;5;"FUNCTION TRIM(ND)"m  " WITH NO ADVANCING
            ADD 1 TO I.
 
-           COLORCUBE-ROW-PARA.
+       COLORCUBE-ROW-PARA.
            MOVE 0 TO ICRP
-           PERFORM COLRCBE-ROW-PART-PARA WITH TEST BEFORE UNTIL ICRP=6
+           PERFORM CUBE-ROW-PART-PARA WITH TEST BEFORE UNTIL ICRP=6
            DISPLAY ESC"[0m  " WITH NO ADVANCING
            MOVE 36 TO ICRP
-           PERFORM COLRCBE-ROW-PART-PARA WITH TEST BEFORE UNTIL ICRP=42
+           PERFORM CUBE-ROW-PART-PARA WITH TEST BEFORE UNTIL ICRP=42
            DISPLAY ESC"[0m  " WITH NO ADVANCING
            MOVE 72 TO ICRP
-           PERFORM COLRCBE-ROW-PART-PARA WITH TEST BEFORE UNTIL ICRP=78
+           PERFORM CUBE-ROW-PART-PARA WITH TEST BEFORE UNTIL ICRP=78
            DISPLAY ESC"[0m"
            ADD 6 TO I.
       * Name abreviated to fit within above line limits
-           COLRCBE-ROW-PART-PARA.
+       CUBE-ROW-PART-PARA.
            ADD ICRP TO I
            MOVE I TO ND
            DISPLAY ESC"[48;5;"FUNCTION TRIM(ND)"m  " WITH NO ADVANCING
