@@ -6,7 +6,7 @@
 using namespace std;
 
 static void color_cell(int n) {
-    cout << "\x1b[48;5;" << +n << "m  ";
+    cout << "\x1b[48;5;" << n << "m  ";
 }
 
 static void cube_row_part(int n) {
