@@ -19,7 +19,7 @@
            01 ICRP PICTURE 999.
        PROCEDURE DIVISION.
            MAIN-PARA.
-      *    Print the first 16 colors - these vary by terminal configuration
+      *    Print the first 16 colors - these vary by terminal config
            DISPLAY LINE-FEED WITH NO ADVANCING
            PERFORM COLORCELL-PARA WITH TEST BEFORE UNTIL I=16
            DISPLAY ESC'[0m'LINE-FEED
