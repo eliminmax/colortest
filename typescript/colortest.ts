@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 
-// SPDX-FileCopyrightText: 2022-2024 Eli Array Minkoff
+// SPDX-FileCopyrightText: 2022 - 2024 Eli Array Minkoff
 //
 // SPDX-License-Identifier: GPL-3.0-only
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-/* SPDX-FileCopyrightText: 2023-2024 Eli Array Minkoff
+/* SPDX-FileCopyrightText: 2023 - 2024 Eli Array Minkoff
    SPDX-License-Identifier: GPL-3.0-only */
 
 function color_cell($n) {

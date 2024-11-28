@@ -1,6 +1,6 @@
 #!/usr/bin/env escript
 %%! -sname colortest -mnesia debug verbose
-% SPDX-FileCopyrightText: 2023-2024 Eli Array Minkoff
+% SPDX-FileCopyrightText: 2023 - 2024 Eli Array Minkoff
 % SPDX-License-Identifier: GPL-3.0-only
 
 colorCell(N) -> io_lib:format("\x1b[48;5;~Bm  ", [N]).
