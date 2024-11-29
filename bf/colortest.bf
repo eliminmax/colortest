@@ -118,10 +118,10 @@ each row has 3 segments of 6 colors each
 
 going to be a bit of a verbose pseudocode to avoid characters with meaning in brainfuck
 (all numbers in decimal here)
-with a staring number i we want:
-     i plus ii for ii in 0 until 6
-     i plus ii for ii in 36 until 42
-     i plus ii for ii in 72 until 78
+with a starting number n we want:
+     n plus i for i in 0 until 6
+     n plus i for i in 36 until 42
+     n plus i for i in 72 until 78
 
   0  1  2  3  4  5  6  7  8  9  a  b  c …
 |00|00|00|0a|1b|5b|34|38|3b|35|20|6d|10|…
