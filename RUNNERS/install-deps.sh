@@ -206,7 +206,7 @@ PWSH_V='7.4.6'
 ODIN_V='dev-2024-11'
 ROCKSTAR_COMMIT='c6c53db'
 ZIG_V='0.13.0'
-WASMTIME_V='27.0.0'
+WASMTIME_V='28.0.1'
 CFUNGE_V='1,001'
 
 # we need to pull the source for the interpreter and build it locally
