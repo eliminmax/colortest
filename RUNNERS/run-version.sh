@@ -37,7 +37,6 @@ run_version() {
         'lua')        lua colortest.lua               ;;
         'perl')       perl colortest.pl               ;;
         'php')        php colortest.php               ;;
-        'powershell') pwsh colortest.ps1              ;;
         'python')     python3 colortest.py            ;;
         'r')          r colortest.r                   ;;
         'rockstar')   satriani-wrapper colortest.rock ;;
@@ -51,6 +50,12 @@ run_version() {
         'octave')
             mkdir -p "${XDG_DATA_HOME-$HOME/.local/share}"
             octave -q colortest.m
+        ;;
+
+        # Powershell has telemetry enabled by default unless the environment
+        # variable is set
+        'powershell')
+            env DOTNET_CLI_TELEMETRY_OPTOUT=1 pwsh colortest.ps1
         ;;
 
         # for the remaining ones, first compile them, then run them
