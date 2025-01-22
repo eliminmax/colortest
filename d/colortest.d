@@ -9,7 +9,7 @@ void color_cell(ubyte n) {
 }
 
 void cube_row_part(ubyte n) {
-    for(ubyte i = n; i < n + 6; i++) color_cell(i);
+    for (ubyte i = n; i < n + 6; i++) color_cell(i);
 }
 
 void cube_row(ubyte n) {
@@ -29,18 +29,18 @@ void cube_row(ubyte n) {
 void main() {
     // Print the first 16 colors - these vary by terminal configuration
     writeln();
-    for(ubyte i = 0; i < 16; i++) color_cell(i);
+    for (ubyte i = 0; i < 16; i++) color_cell(i);
     writeln("\x1b[0m\n"); // extra newline appended, which is intended
 
     // Print the 6 sides of the color cube - these are more standardized
     // but the order is a bit odd, thus the need for the above trickery
-    for(ubyte i = 16; i < 52; i += 6) cube_row(i);
+    for (ubyte i = 16; i < 52; i += 6) cube_row(i);
     writeln();
-    for(ubyte i = 124; i < 160; i += 6) cube_row(i);
+    for (ubyte i = 124; i < 160; i += 6) cube_row(i);
     writeln();
 
     // Finally, the 24 grays
     // once i wraps around to zero, it will be false.
-    for(ubyte i = 232; i; i++) color_cell(i);
+    for (ubyte i = 232; i; i++) color_cell(i);
     writeln("\x1b[0m\n");
 }
