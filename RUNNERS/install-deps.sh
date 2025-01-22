@@ -203,10 +203,10 @@ d_dependencies() {
 # make it easier to change in the future
 
 PWSH_V='7.4.6'
-ODIN_V='dev-2024-11'
+ODIN_V='dev-2025-01'
 ROCKSTAR_COMMIT='c6c53db'
 ZIG_V='0.13.0'
-WASMTIME_V='28.0.1'
+WASMTIME_V='29.0.1'
 CFUNGE_V='1,001'
 
 # we need to pull the source for the interpreter and build it locally
