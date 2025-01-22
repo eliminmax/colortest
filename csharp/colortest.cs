@@ -4,15 +4,14 @@
 
 using System;
 class colortest {
-    private const string ESC = "\x1b";
     private static void ColorCell(uint n) {
-        Console.Write(ESC + "[48;5;{0}m  ", n);
+        Console.Write("\x1b[48;5;{0}m  ", n);
     }
     private static void CubeRowPart(uint n) {
         for(uint i = n; i < n + 6; i++) {
             ColorCell(i);
         }
-        Console.Write(ESC + "[0m");
+        Console.Write("\x1b[0m");
     }
     private static void CubeRow(uint n) {
         CubeRowPart(n);
