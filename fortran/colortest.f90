@@ -11,28 +11,30 @@ program colortest
   COLOREND = ESC // "[0m"
 
   ! Print the first 16 colors - these vary by terminal configuration
-  write (*, "(A)", advance="no") NL
+  write (*, "()")
   do i = 0, 15
     call color_cell(i)
   end do
-  write (*, "(A, A, A)", advance="no") COLOREND, NL, NL
+  ! extra newline is intended here
+  write (*, "(2A)") COLOREND, NL
 
   ! Print the 6 sides of the color cube - these are more standardized
   ! but the order is a bit odd, thus the need for the below trickery
   do i = 16, 46, 6
     call cube_row(i)
   end do
-  write (*, "(A)", advance="no") NL
+  write (*, "()")
   do i = 124, 154, 6
     call cube_row(i)
   end do
-  write (*, "(A)", advance="no") NL
+  write (*, "()")
 
   ! Finally, the 24 grays
   do i = 232, 255
     call color_cell(i)
   end do
-  write (*,"(A, A, A)", advance="no") COLOREND, NL, NL
+  ! extra newline is intended here
+  write (*,"(2A)") COLOREND, NL
 
 contains
 
@@ -57,7 +59,7 @@ contains
     call cube_row_part(N+36)
     write (*, "(A)", advance="no") "  "
     call cube_row_part(N+72)
-    write (*, "(A)", advance="no") NL
+    write (*, "()")
   end subroutine cube_row
 end program colortest
 
