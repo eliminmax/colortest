@@ -12,26 +12,26 @@ program colortest
 
   ! Print the first 16 colors - these vary by terminal configuration
   write (*, "()")
-  do i = 0, 15
-    call color_cell(i)
+  do I = 0, 15
+    call color_cell(I)
   end do
   ! extra newline is intended here
   write (*, "(2A)") COLOREND, NL
 
   ! Print the 6 sides of the color cube - these are more standardized
   ! but the order is a bit odd, thus the need for the below trickery
-  do i = 16, 46, 6
-    call cube_row(i)
+  do I = 16, 46, 6
+    call cube_row(I)
   end do
   write (*, "()")
-  do i = 124, 154, 6
-    call cube_row(i)
+  do I = 124, 154, 6
+    call cube_row(I)
   end do
   write (*, "()")
 
   ! Finally, the 24 grays
-  do i = 232, 255
-    call color_cell(i)
+  do I = 232, 255
+    call color_cell(I)
   end do
   ! extra newline is intended here
   write (*,"(2A)") COLOREND, NL
