@@ -1,4 +1,4 @@
-! SPDX-FileCopyrightText: 2023 - 2024 Eli Array Minkoff
+! SPDX-FileCopyrightText: 2023 - 2025 Eli Array Minkoff
 ! SPDX-License-Identifier: GPL-3.0-only
 
 program colortest
@@ -22,24 +22,23 @@ program colortest
   do i = 16, 46, 6
     call cube_row(i)
   end do
-  write(*, "(A)", advance="no") NL
+  write (*, "(A)", advance="no") NL
   do i = 124, 154, 6
     call cube_row(i)
   end do
-  write(*, "(A)", advance="no") NL
+  write (*, "(A)", advance="no") NL
 
   ! Finally, the 24 grays
   do i = 232, 255
     call color_cell(i)
   end do
-  write(*,"(A, A, A)", advance="no") COLOREND, NL, NL
+  write (*,"(A, A, A)", advance="no") COLOREND, NL, NL
 
 contains
 
   subroutine color_cell(N)
     integer, intent(in) :: N
-    ! 27 is ASCII escape
-    write(*, "(A, I0, A)", advance="no") ESC // "[48;5;", N, "m  "
+    write (*, "(A, I0, A)", advance="no") ESC // "[48;5;", N, "m  "
   end subroutine color_cell
 
   subroutine cube_row_part(N)
@@ -48,17 +47,17 @@ contains
     do II = N, N+5
       call color_cell(II)
     end do
-    write(*, "(A)", advance="no") ESC // "[0m"
+    write (*, "(A)", advance="no") ESC // "[0m"
   end subroutine cube_row_part
 
   subroutine cube_row(N)
     integer, intent(in) :: N
     call cube_row_part(N)
-    write(*, "(A)", advance="no") "  "
+    write (*, "(A)", advance="no") "  "
     call cube_row_part(N+36)
-    write(*, "(A)", advance="no") "  "
+    write (*, "(A)", advance="no") "  "
     call cube_row_part(N+72)
-    write(*, "(A)", advance="no") NL
+    write (*, "(A)", advance="no") NL
   end subroutine cube_row
 end program colortest
 
