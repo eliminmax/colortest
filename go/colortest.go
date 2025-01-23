@@ -11,7 +11,7 @@ func colorCell(n uint8) {
 }
 
 func cubeRowPart(n uint8) {
-	for i := n; i < n + 6; i++ {
+	for i := n; i < n+6; i++ {
 		colorCell(i)
 	}
 }
