@@ -202,7 +202,7 @@ d_dependencies() {
 # for dependencies with hard-coded versions to download, store them here to
 # make it easier to change in the future
 
-PWSH_V='7.4.6'
+PWSH_V='7.5.0'
 ODIN_V='dev-2025-01'
 ROCKSTAR_COMMIT='c6c53db'
 ZIG_V='0.13.0'
