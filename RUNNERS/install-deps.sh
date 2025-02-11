@@ -203,7 +203,7 @@ d_dependencies() {
 # make it easier to change in the future
 
 PWSH_V='7.5.0'
-ODIN_V='dev-2025-01'
+ODIN_V='dev-2025-02'
 ROCKSTAR_COMMIT='c6c53db'
 ZIG_V='0.13.0'
 WASMTIME_V='29.0.1'
@@ -244,7 +244,7 @@ befunge_dependencies() {
 # compile the odin compiler and symlink it into the PATH
 odin_dependencies() {
     if cmd_exists odin; then return 0; fi
-    apt_wrapper libc6-dev llvm-14-dev
+    apt_wrapper libc6-dev llvm-dev
     apt_if llvm-as llvm
     apt_if clang
     # download and compile Odin version
@@ -252,7 +252,7 @@ odin_dependencies() {
     mkdir -p odin
     pushd odin &>/dev/null
     tar --strip-components=1 -xf "../$ODIN_V.tar.gz"
-    ./build_odin.sh
+    ./build_odin.sh release
     popd &>/dev/null
     ln -s ../odin/odin bin/odin
 }
