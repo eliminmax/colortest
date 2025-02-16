@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2024 - 2025 Eli Array Minkoff
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
@@ -43,16 +43,24 @@ is_installed () {
 }
 
 
-# install listed packages if not already installed
+declare -a to_install
+
+# register listed packages for installation if not already installed
 apt_wrapper() {
-    declare -a to_install
     for pkg in "$@"; do
         # `|| :` ensures that it won't exit on failure here
         is_installed "$pkg" || to_install+=("$pkg");
     done
+}
+
+# Install registered packages - should be called before non-apt commands to
+# ensure dependencies are installed, and should be called at the end of the
+# script. This allows consecutive calls to apt to be combined
+apt_install() {
     if [ "${#to_install}" -gt 0 ]; then
         as_root apt-get install -qy "${to_install[@]}"
     fi
+    to_install=()
 }
 
 # First argument is a command. If that command is not found, the rest of
@@ -68,6 +76,8 @@ apt_if() {
 rustup_if() {
     if ! cmd_exists rustup; then
         apt_wrapper gcc curl ca-certificates libc6-dev
+        # actually install the registered packages before continuing
+        apt_install
         # the rustup command from rustup.rs, with -s -- -y appended to make it
         # non-interactive
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs |\
@@ -90,6 +100,7 @@ wget_if() {
     if ! [ -f "${url_decoded##*/}" ]; then
         apt_if wget
         apt_wrapper ca-certificates
+        apt_install
         wget -nv "$1"
     fi
 }
@@ -195,8 +206,9 @@ d_dependencies() {
     # ldc2 shells out to `cc`, but uses gcc-specific flags, so make sure that
     # `cc` is actually GCC
     apt_if gcc 
-    ln -sf "$(type -p gcc)" bin/cc
     apt_if ldc2 ldc
+    apt_install
+    ln -sf "$(type -p gcc)" bin/cc
 }
 
 # for dependencies with hard-coded versions to download, store them here to
@@ -214,6 +226,7 @@ befunge_dependencies() {
     # do nothing if cfunge is already in PATH
     if cmd_exists cfunge; then return 0; fi
     apt_wrapper cmake make gcc tar gzip libc6-dev
+    apt_install
     # split the second half of the URL into a var to fit within 80 columns
     local asset_path
     asset_path="archive/refs/tags/$CFUNGE_V.tar.gz"
@@ -247,6 +260,7 @@ odin_dependencies() {
     apt_wrapper libc6-dev llvm-dev
     apt_if llvm-as llvm
     apt_if clang
+    apt_install
     # download and compile Odin version
     wget_if "https://github.com/odin-lang/Odin/archive/refs/tags/$ODIN_V.tar.gz"
     mkdir -p odin
@@ -266,6 +280,7 @@ rockstar_dependencies() {
     apt_if yarnpkg
     apt_if node nodejs
     apt_if git
+    apt_install
     # clone the official rockstar repo
     git clone https://github.com/RockstarLang/rockstar
     pushd rockstar/ &>/dev/null
@@ -307,6 +322,7 @@ powershell_dependencies() {
     apt_if tar # required in debian, check anyway just in case
     # PowerShell needs a bunch of libs, all but one of which start with "lib"
     apt_wrapper libc6 libgcc-s1 libgssapi-krb5-2 libicu72 libssl3 libstdc++6 zlib1g
+    apt_install
 
     if [ ! -f powershell/pwsh ]; then
         mkdir -p powershell
@@ -330,6 +346,7 @@ wasm_dependencies() {
     if cmd_exists wasmtime; then return 0; fi
     apt_if tar
     apt_if xz xz-utils
+    apt_install
     mkdir -p wasmtime
     pushd wasmtime &>/dev/null
     local repo
@@ -351,6 +368,7 @@ zig_dependencies() {
     # packages needed to download and extract Zig's archive
     apt_if tar
     apt_if xz xz-utils
+    apt_install
     mkdir -p zig
     pushd zig &>/dev/null
     wget_if "https://ziglang.org/download/$ZIG_V/zig-linux-x86_64-$ZIG_V.tar.xz"
@@ -376,3 +394,4 @@ else
         "${lang}_dependencies"
     done
 fi
+apt_install
