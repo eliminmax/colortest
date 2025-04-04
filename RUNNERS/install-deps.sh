@@ -215,7 +215,7 @@ d_dependencies() {
 # make it easier to change in the future
 
 PWSH_V='7.5.0'
-ODIN_V='dev-2025-03'
+ODIN_V='dev-2025-04'
 ROCKSTAR_COMMIT='c6c53db'
 ZIG_V='0.14.0'
 WASMTIME_V='31.0.0'
