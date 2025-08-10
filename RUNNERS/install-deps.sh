@@ -214,11 +214,11 @@ d_dependencies() {
 # for dependencies with hard-coded versions to download, store them here to
 # make it easier to change in the future
 
-PWSH_V='7.5.0'
-ODIN_V='dev-2025-04'
+PWSH_V='7.5.2'
+ODIN_V='dev-2025-07'
 ROCKSTAR_COMMIT='c6c53db'
-ZIG_V='0.14.0'
-WASMTIME_V='31.0.0'
+ZIG_V='0.14.1'
+WASMTIME_V='35.0.0'
 CFUNGE_V='1,001'
 
 # we need to pull the source for the interpreter and build it locally
