@@ -72,19 +72,6 @@ apt_if() {
     if ! cmd_exists "$cmd"; then apt_wrapper "$@"; fi
 }
 
-# non-interactively install rust tooling using rustup if needed
-rustup_if() {
-    if ! cmd_exists rustup; then
-        apt_wrapper gcc curl ca-certificates libc6-dev
-        # actually install the registered packages before continuing
-        apt_install
-        # the rustup command from rustup.rs, with -s -- -y appended to make it
-        # non-interactive
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs |\
-            sh -s -- -y --profile=minimal
-    fi
-}
-
 # takes a url as an argument, and downloads it unless the output already exists
 wget_if() {
     # substitute %NN with \xNN, then echo -e to process backslash escapes
@@ -108,10 +95,11 @@ wget_if() {
 # checks if command listed in first argument exists
 # if not, invoke cargo with the remaining arguments to install it
 cargo_wrapper() {
-    cmd="$1"
-    shift
-    if ! cmd_exists "$cmd"; then
-        if ! cmd_exists cargo; then rustup_if; fi
+    apt_if cargo
+    apt_wrapper ca-certificates
+    apt_install
+    if ! cmd_exists "$1"; then
+        shift
         cargo install "$@"
     fi
 }
@@ -129,7 +117,7 @@ sh_dependencies() { cmd_exists sh; }
 bf_dependencies() { apt_if beef; }
 dc_dependencies() { apt_if dc; }
 elixir_dependencies() { apt_if elixir; }
-forth_dependencies() { apt_if gforth; }
+forth_dependencies() { apt_if pforth; }
 fortran_dependencies() { apt_if gfortran; }
 go_dependencies() { apt_if gccgo; }
 haskell_dependencies() { apt_if ghc; }
@@ -141,6 +129,7 @@ perl_dependencies() { apt_if perl; }
 lisp_dependencies() { apt_if clisp; }
 python_dependencies() { apt_if python3; }
 ruby_dependencies() { apt_if ruby ; }
+rust_dependencies() { apt_if rustc; }
 scala_dependencies() { apt_if scala; }
 typescript_dependencies() { apt_if ts-node; }
 
@@ -168,11 +157,6 @@ csharp_dependencies() {
     apt_if mcs mono-mcs
     apt_if cli mono-runtime
 }
-nim_dependencies() {
-    apt_if nim;
-    apt_if gcc;
-    apt_wrapper libc6-dev # need to have c standard library headers
-}
 objective-c_dependencies() {
     apt_wrapper gcc gobjc gnustep-make make libgnustep-base-dev
 }
@@ -184,11 +168,6 @@ x86-64_linux_asm_dependencies() {
     apt_if ld binutils
     apt_if nasm nasm
 }
-
-# rustc is in the Debian 12 repos, but Fender has a dependency that needs a
-# newer version of it, so for the sake of consistency, install the latest
-# version of rustup for anything that uses rust
-rust_dependencies() { rustup_if; }
 
 # a couple which need to be installed from git with cargo
 babalang_dependencies() {
@@ -215,6 +194,7 @@ d_dependencies() {
 # make it easier to change in the future
 
 PWSH_V='7.5.2'
+NIM_V='2.2.4'
 ODIN_V='dev-2025-07'
 ROCKSTAR_COMMIT='c6c53db'
 ZIG_V='0.14.1'
@@ -225,7 +205,7 @@ CFUNGE_V='1,001'
 befunge_dependencies() {
     # do nothing if cfunge is already in PATH
     if cmd_exists cfunge; then return 0; fi
-    apt_wrapper cmake make gcc tar gzip libc6-dev
+    apt_wrapper cmake make gcc tar gzip libc6-dev libbsd-dev
     apt_install
     # split the second half of the URL into a var to fit within 80 columns
     local asset_path
@@ -254,6 +234,22 @@ befunge_dependencies() {
     ln -s ../cfunge/bin/cfunge bin/cfunge
 }
 
+nim_dependencies() {
+    if ! cmd_exists gcc; then apt_if gcc; fi
+    if cmd_exists nim; then return 0; fi
+    apt_if xz xz-utils
+    apt_install
+    mkdir -p bin
+    wget_if "https://nim-lang.org/download/nim-$NIM_V.tar.xz"
+    mkdir -p nim-build
+    pushd nim-build &>/dev/null
+    tar --strip-components=1 -xf "../nim-$NIM_V.tar.xz"
+    sh install.sh "$PWD/"
+    cd ../bin
+    ln -s ../nim/bin/nim nim
+    popd &>/dev/null
+}
+
 # compile the odin compiler and symlink it into the PATH
 odin_dependencies() {
     if cmd_exists odin; then return 0; fi
@@ -271,10 +267,11 @@ odin_dependencies() {
     ln -s ../odin/odin bin/odin
 }
 
-# the rockstar reference implementation, satriani, must be run with the cwd set
-# to the directory containing it. It also annoyingly prints out a message that
-# "(program returned no output)" after running a program. To properly use it
-# for colortest, the line printing that needs to be commented out.
+# the former rockstar reference implementation, satriani, must be run with the
+# cwd set to the directory containing it. It also annoyingly prints out a
+# message that "(program returned no output)" after running a program.
+# To properly use it for colortest, the line printing that needs to be commented
+# out.
 rockstar_dependencies() {
     if cmd_exists satriani-wrapper; then return 0; fi
     apt_if yarnpkg
@@ -321,7 +318,7 @@ powershell_dependencies() {
     apt_if gzip # required in debian, check anyway just in case
     apt_if tar # required in debian, check anyway just in case
     # PowerShell needs a bunch of libs, all but one of which start with "lib"
-    apt_wrapper libc6 libgcc-s1 libgssapi-krb5-2 libicu72 libssl3 libstdc++6 zlib1g
+    apt_wrapper libc6 libgcc-s1 libgssapi-krb5-2 libicu76 libssl3 libstdc++6 zlib1g
     apt_install
 
     if [ ! -f powershell/pwsh ]; then

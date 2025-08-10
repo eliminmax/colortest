@@ -30,7 +30,7 @@ run_version() {
         'elixir')     elixir colortest.exs            ;;
         'erlang')     escript colortest.erl           ;;
         'fender')     fender colortest.fndr           ;;
-        'forth')      gforth colortest.fth -e bye     ;;
+        'forth')      pforth -q colortest.fth         ;;
         'jq')         jq -njf colortest.jq            ;;
         'javascript') node colortest.js               ;;
         'lisp')       clisp colortest.lisp            ;;

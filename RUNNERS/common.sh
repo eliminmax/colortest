@@ -1,5 +1,5 @@
 #shellcheck shell=bash
-# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2024 - 2025 Eli Array Minkoff
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
@@ -39,11 +39,6 @@ export CARGO_HOME="${CARGO_HOME-$basedir/cargo}"
 cmd_exists() {
     command -v "$1" &>/dev/null
 }
-
-if ! { cmd_exists rustup && cmd_exists rustc ; }; then 
-    # if we install rust with rustup, keep it local to this project.
-    export RUSTUP_HOME="${RUSTUP_HOME-$basedir/rustup}"
-fi
 
 ensure_in_path "$basedir/bin"
 ensure_in_path "$basedir/cargo/bin"
