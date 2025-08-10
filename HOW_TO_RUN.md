@@ -25,9 +25,7 @@ dependencies for all implementations. It will only run on systems where running
 `uname -mo` results in `x86_64 GNU/Linux`, or systems which do not have a file
 at `/etc/debian_version`. If you want to edit it to handle other cases, feel
 free to open a pull request. Wherever possible, it uses packages found in the
-Debian 12 "Bookworm" repositories, except for Rust, as some interpreters for
-lesser-known languages are written in Rust, and at least one of them (Fender)
-needs a newer Rust compiler than the one Debian provides.
+Debian 13 "Trixie" repositories.
 
 You can alternatively run each implementation manually using a similar process
 to the one used in those scripts, but the process for that is not documented.
