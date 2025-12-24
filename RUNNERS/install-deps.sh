@@ -13,8 +13,10 @@ cd "$(dirname "$(realpath "$0")")"
 
 source common.sh
 
-# ensure the bin dir exists
-mkdir -p "$basedir/bin"
+# shorthand wrapper for command -v <some command> &>/dev/null
+cmd_exists() {
+    command -v "$1" &>/dev/null
+}
 
 # create a wrapper function to use the best available "run as root" command
 # prefer sudo over doas, doas over pkexec, and pkexec over crashing

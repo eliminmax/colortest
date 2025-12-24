@@ -98,7 +98,7 @@ run_version() {
 }
 
 test_implementation() {
-    if ! cmd_exists diff; then
+    if ! command -v diff &>/dev/null; then
         printf 'Can'\''t test without diff installed!\n' >&2
         exit 1
     fi
