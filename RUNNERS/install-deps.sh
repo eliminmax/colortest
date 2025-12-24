@@ -100,7 +100,7 @@ cargo_wrapper() {
     apt_install
     if ! cmd_exists "$1"; then
         shift
-        cargo install "$@"
+        cargo install --locked "$@"
     fi
 }
 
