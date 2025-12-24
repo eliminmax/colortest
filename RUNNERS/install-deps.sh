@@ -244,18 +244,19 @@ befunge_dependencies() {
 }
 
 nim_dependencies() {
-    if ! cmd_exists gcc; then apt_if gcc; fi
+    apt_if gcc
+    apt_wrapper libc6-dev
     if cmd_exists nim; then return 0; fi
     apt_if xz xz-utils
     apt_install
-    mkdir -p bin
     wget_if "https://nim-lang.org/download/nim-$NIM_V.tar.xz"
     mkdir -p nim-build
     pushd nim-build &>/dev/null
     tar --strip-components=1 -xf "../nim-$NIM_V.tar.xz"
-    sh install.sh "$PWD/"
+    sh build.sh
+    sh install.sh ..
     cd ../bin
-    ln -s ../nim/bin/nim nim
+    ln -s ../nim/bin/nim
     popd &>/dev/null
 }
 
