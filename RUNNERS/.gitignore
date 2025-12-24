@@ -5,3 +5,4 @@
 !install-deps.sh
 !run-version.sh
 !common.sh
+!.gitignore
