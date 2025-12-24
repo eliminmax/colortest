@@ -100,6 +100,13 @@ cargo_wrapper() {
     apt_if cargo
     apt_wrapper ca-certificates
     apt_install
+
+    # if CARGO_HOME isn't defined, and its default location doesn't exist,
+    # set it to RUNNERS/cargo to avoid polluting the user's home directory.
+    if [[ "${CARGO_HOME+defined}" != defined && ! -e ~/.cargo ]]; then
+        export CARGO_HOME="$PWD/cargo"
+    fi
+
     if ! cmd_exists "$1"; then
         shift
         cargo install --root . --locked "$@"
