@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2024 - 2025 Eli Array Minkoff
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
@@ -30,19 +30,31 @@ else
 fi
 
 
-mkdir -p results
-date +%s >results/start-time
-
-podman run --name 'colortester_FULL_RUN' \
-    --rm -a stdout -a stderr "$podman_img" \
-    sh -c 'RUNNERS/install-deps.sh && RUNNERS/run-version.sh -a' \
-    >results/FULL_RUN.stdout 2>results/FULL_RUN.stderr &
-
-test_single () {
-    podman run --name "colortester_$1" \
+(
+    podman run --name 'colortester_FULL_RUN' \
         --rm -a stdout -a stderr "$podman_img" \
-        sh -c "RUNNERS/install-deps.sh $1 && RUNNERS/run-version.sh -t $1" \
-        >"results/$1.stdout" 2>"results/$1.stderr" &
+        sh -c 'RUNNERS/install-deps.sh && RUNNERS/run-version.sh -a' \
+        >results/FULL_RUN.stdout 2>results/FULL_RUN.stderr
+    echo "$?" > results/FULL_RUN.status
+) &
+
+run_test () {
+    local install_cmd
+    local run_cmd
+    install_cmd="RUNNERS/install-deps.sh $1"
+    run_cmd="RUNNERS/run-version.sh -t $1"
+    # remove trailing " FULL_RUN" from locals if present
+    install_cmd="${install_cmd% FULL_RUN}"
+    run_cmd="${run_cmd% FULL_RUN}"
+
+    podman run --name "colortester-$1" --rm \
+        -a stdout -a stderr "$podman_img" \
+        sh -c "$install_cmd && $run_cmd" \
+        >"results/$1.stdout" \
+        2>"results/$1.stderr"
+    result="$?"
+    echo "$result" >"results/$1.status"
+    printf '>> completed %s with exit code %d\n' "$1" "$result" >&2
 }
 
 list_colortest_implementations () (
@@ -53,13 +65,38 @@ list_colortest_implementations () (
         -x dirname | sort
 )
 
-if [ "$#" -gt 0 ]; then
-    if ! { [ "$#" -eq 1 ] && [ "$1" = "FULL_RUN" ]; }; then
-        for i in "$@"; do test_single "$i"; done
-    fi
-else
-    for i in $(list_colortest_implementations); do test_single "$i"; done
-fi
+run_tests() {
+    # run all tests in the background
+    for test in "$@"; do run_test "$test" & done
+    # wait for all tests to finish
+    wait
 
-wait # without any arguments, waits for all background processes to finish
+    local -i failures=0
+    local -i successes=0
+    local -i result
+    for test in "$@"; do
+        result="$(cat "results/$test.status")"
+        if [ "$result" -ne 0 ]; then
+            failures+=1
+            printf '> %s failed with code %d.\n' "$test" "$result"
+        else
+            successes+=1
+            printf '> %s succeeded.\n' "$test"
+        fi
+    done
+    printf '%d/%d runs passed.\n' "$successes" "$#"
+    [ "$failures" -eq 0 ]
+}
+
+mkdir -p results
+# clean up leftovers from previous runs
+find results -type f -exec rm '{}' +
+
+date +%s >results/start-time
+if [ "$#" -gt 0 ]; then
+    run_tests "$@"
+else
+    # shellcheck disable=2046 # word splitting is intended
+    run_tests FULL_RUN $(list_colortest_implementations)
+fi
 date +%s >results/finish-time
