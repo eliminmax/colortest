@@ -33,7 +33,7 @@ ensure_in_path() {
 }
 
 # if something is installed with cargo, install it here
-export CARGO_HOME="${CARGO_HOME-$basedir/cargo}"
+export CARGO_HOME="$basedir/cargo"
 
 # shorthand wrapper for command -v <some command> &>/dev/null
 cmd_exists() {
