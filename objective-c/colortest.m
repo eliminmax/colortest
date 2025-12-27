@@ -12,31 +12,35 @@
  * Anyway, the following has been tested for GNUstep only. */
 #import <Foundation/Foundation.h>
 
-@interface stdoutWriter: NSObject {
+@interface stdoutWriter : NSObject {
     NSFileHandle *stdoutHandle;
 }
--(id)init;
--(void)writeToStdout:(NSString *)str;
+- (id)init;
+- (void)writeToStdout:(NSString *)str;
 @end
 
 @implementation stdoutWriter
--(id)init {
+
+- (id)init {
     stdoutHandle = [NSFileHandle fileHandleWithStandardOutput];
     return self;
 }
--(void)writeToStdout:(NSString *)str {
-    [stdoutHandle writeData: [str dataUsingEncoding: NSUTF8StringEncoding]];
+
+- (void)writeToStdout:(NSString *)str {
+    [stdoutHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
 }
+
 @end
 
 static stdoutWriter *writer;
+
 static void colorCell(unsigned short n) {
     [writer writeToStdout:[NSString stringWithFormat:@"\x1b[48;5;%hum  ", n]];
 }
 
 static void cubeRowPart(unsigned short n) {
     unsigned short i;
-    for(i = n; i < n + 6; i++) colorCell(i);
+    for (i = n; i < n + 6; i++) colorCell(i);
 }
 
 static void cubeRow(unsigned short n) {
@@ -55,18 +59,18 @@ int main(void) {
     writer = [[stdoutWriter alloc] init];
     /* Print the first 16 colors - these vary by terminal configuration */
     [writer writeToStdout:@"\n"];
-    for(i = 0; i < 16; i++) colorCell(i);
+    for (i = 0; i < 16; i++) colorCell(i);
     [writer writeToStdout:@"\x1b[0m\n\n"];
 
     /* Print the 6 sides of the color cube - these are more standardized,
      * but the order is a bit odd, thus the need for the above trickery */
-    for(i = 16; i < 52; i += 6) cubeRow(i);
+    for (i = 16; i < 52; i += 6) cubeRow(i);
     [writer writeToStdout:@"\n"];
-    for(i = 124; i < 160; i += 6) cubeRow(i);
+    for (i = 124; i < 160; i += 6) cubeRow(i);
     [writer writeToStdout:@"\n"];
 
     /* Finally, the 24 grays */
-    for(i = 232; i < 256; i++) colorCell(i);
+    for (i = 232; i < 256; i++) colorCell(i);
     [writer writeToStdout:@"\x1b[0m\n\n"];
 
     /* drain allocation pool */
