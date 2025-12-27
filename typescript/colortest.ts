@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 
-// SPDX-FileCopyrightText: 2022 - 2024 Eli Array Minkoff
+// SPDX-FileCopyrightText: 2022 - 2025 Eli Array Minkoff
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -13,7 +13,7 @@ function color_cell(n: number) {
 }
 
 function cube_row_part(n: number) {
-    for (var i = n; i < n + 6; i++) color_cell(i)
+    for (let i: number = n; i < n + 6; i++) color_cell(i)
 }
 
 function cube_row(n: number) {
