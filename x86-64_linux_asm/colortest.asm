@@ -47,7 +47,6 @@ color_cell:
 cube_row_part:
     MOV cl, al
     ADD cl, 6
-    REP 
     .cube_row_part_loop:
     CALL color_cell
     INC al
