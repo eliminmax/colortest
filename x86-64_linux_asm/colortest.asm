@@ -125,10 +125,10 @@ _start:
     SYSCALL
 
 ; exit syscall
-    XOR edi, edi ; sets edi to 0 more efficiently than MOV
-    CMP eax, buffer
-    JB .end
-    INC edi
-.end:
+    CMP eax, edx
+    ; if eax and edx compare not equal, sets dil to 1, otherwise, sets it to 0
+    ; as rdi had previously held the value 1, all higher-bits are zeroed
+    ; already.
+    SETNE dil
     MOV eax, 60 ; exit system call number
     SYSCALL
