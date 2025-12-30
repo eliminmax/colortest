@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2022-2024 Eli Array Minkoff
+SPDX-FileCopyrightText: 2022 - 2025 Eli Array Minkoff
 
 SPDX-License-Identifier: CC0-1.0
 -->
@@ -107,6 +107,9 @@ replaced by '␛':
 ```
 
 The MD5 checksum of the output should be `5ee6c8ad78719bc2a515fbee5957ba06`. *Note: I am aware that it is trivial to find MD5 hash collisions, and would not rely on MD5 for security under any circumstance. Given the assumption that it looks right, and I just want to validate that nothing is off about the whitespace, I think it should be fine.*
+
+Implementations in languages that automatically add a carriage-return before a newline on Windows are allowed to have them on Windows, but not on Unix-like systems. The checksum if carriage-returns are added would be `9b5a4e0d34114838c2818befe17cc38c
+`
 
 ### General program structure
 
