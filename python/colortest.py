@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
-# SPDX-FileCopyrightText: 2022 - 2024 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2022 - 2025 Eli Array Minkoff
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-from collections.abc import Iterable
 
-
-def color_cells(nums: Iterable[int]) -> str:
+def color_cells(nums: range) -> str:
     return "".join(f"\x1b[48;5;{i}m  " for i in nums) + "\x1b[0m"
 
 
