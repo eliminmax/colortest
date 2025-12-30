@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2024 - 2025 Eli Array Minkoff
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
@@ -98,10 +98,6 @@ run_version() {
 }
 
 test_implementation() {
-    if ! command -v diff &>/dev/null; then
-        printf 'Can'\''t test without diff installed!\n' >&2
-        exit 1
-    fi
     local fails
     local tests
     fails=0
