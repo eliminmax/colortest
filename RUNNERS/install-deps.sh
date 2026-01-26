@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# SPDX-FileCopyrightText: 2024 - 2025 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2024 - 2026 Eli Array Minkoff
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
@@ -185,6 +185,11 @@ babalang_dependencies() {
 
 fender_dependencies() {
     cargo_wrapper fender --git https://github.com/FenderLang/Fender
+}
+
+ial_dependencies() {
+    cargo_wrapper ial-as --git https://github.com/eliminmax/ial \
+        --features bin_deps --bin ial-as --bin intcode_ascii
 }
 
 # the remaining ones have more complexity for various reasons

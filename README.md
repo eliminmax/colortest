@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2022 - 2025 Eli Array Minkoff
+SPDX-FileCopyrightText: 2022 - 2026 Eli Array Minkoff
 
 SPDX-License-Identifier: CC0-1.0
 -->
@@ -34,6 +34,7 @@ At the current moment, I've implemented it in the following languages:
 * Fortran
 * Go
 * Haskell
+* Intcode Assembly Language (a dialect of assembly for Advent of Code's Intcode architecture, available [here](https://github.com/eliminmax/ial))
 * Java
 * JavaScript (via Node.js)
 * jq (a domain-specific language for dealing with JSON data)

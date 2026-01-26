@@ -1,0 +1,180 @@
+; SPDX-FileCopyrightText: 2026 Eli Array Minkoff
+;
+; SPDX-License-Identifier: GPL-3.0-only
+
+OUT #'\n'
+
+; Print the first 16 colors - these vary by terminal configuration
+
+ADD #0, #0, color_cell_number
+ADD #_first_16_loop_tail, #0, color_cell_ret
+
+first_16_loop:
+    JNZ #1, #color_cell
+    _first_16_loop_tail:
+    ADD color_cell_number, #1, color_cell_number
+    LT color_cell_number, #16, jump_cond
+    JNZ jump_cond, #first_16_loop
+
+OUT #'\e'
+OUT #'['
+OUT #'0'
+OUT #'m'
+OUT #'\n'
+OUT #'\n'
+
+; Print the 6 sides of the color cube - these are more standardized,
+; but the order is a bit odd, thus the need for the trickery below
+
+ADD #_cube_row_upper, #0, cube_row_ret
+_cube_row_upper:
+    LT color_cell_number, #52, jump_cond
+    JNZ jump_cond, #cube_row
+OUT #'\n'
+
+ADD #124, #0, color_cell_number
+ADD #_cube_row_lower, #0, cube_row_ret
+_cube_row_lower:
+    LT color_cell_number, #160, jump_cond
+    JNZ jump_cond, #cube_row
+OUT #'\n'
+
+; Finally, the 24 grays
+ADD #232, #0, color_cell_number
+ADD #_gray_24_loop_tail, #0, color_cell_ret
+
+gray_24_loop:
+JNZ #1, #color_cell
+    _gray_24_loop_tail:
+    ADD color_cell_number, #1, color_cell_number
+    LT color_cell_number, #256, jump_cond
+    JNZ jump_cond, #gray_24_loop
+
+OUT #'\e'
+OUT #'['
+OUT #'0'
+OUT #'m'
+OUT #'\n'
+OUT #'\n'
+
+HALT
+
+; used for temporaries that are exclusively used as the jump condition in the
+; instruction immediately following the one that sets it
+jump_cond: DATA -1
+
+; the address to return to at the end of the color_cell routine
+color_cell_ret: DATA -1
+; the color cell number
+color_cell_number: DATA -1
+
+color_cell:
+    ; save the color_cell_number
+    ADD #0, color_cell_number, _cc_store
+
+    ; print the start of the escape sequence
+    ; set the parameter of the out instruction to _cc_start
+    ADD #_cc_start, #0, _cc_idx
+_cc_out_prefix_loop:
+    ADD _cc_idx, #0, _cc_out_prefix + 1
+_cc_out_prefix:
+    OUT -1
+    ; set the parameter to the next character of the prefix
+    ADD _cc_idx, #1, _cc_idx
+    ADD _cc_idx, #0, _cc_out_prefix_jump + 1
+_cc_out_prefix_jump:
+    JNZ -1, #_cc_out_prefix_loop
+
+    ; ascii zero out the digits
+    ADD #0, #'0', _cc_digits + 0
+    ADD #0, #'0', _cc_digits + 1
+    ADD #0, #'0', _cc_digits + 2
+
+hundreds_loop:
+    LT _cc_store, #100, jump_cond
+    JNZ jump_cond, #tens_loop
+    ADD _cc_digits + 0, #1, _cc_digits + 0
+    ADD _cc_store, #-100, _cc_store
+    JNZ #1, #hundreds_loop
+
+tens_loop:
+    LT _cc_store, #10, jump_cond
+    JNZ jump_cond, #ones
+    ADD _cc_digits + 1, #1, _cc_digits + 1
+    ADD _cc_store, #-10, _cc_store
+    JNZ #1, #tens_loop
+
+ones:
+    ADD #'0', _cc_store, _cc_digits + 2
+
+    ; reset the digit write head
+    ADD #_cc_digits, #0, _cc_out_suffix + 1
+
+    ; Check if leading digit is zero. if so, omit it, if not
+    ; skip the check for the middle digit
+    EQ #'0', _cc_digits + 0, jump_cond
+    JZ jump_cond, #_cc_out_suffix
+    ADD _cc_out_suffix + 1, #1, _cc_out_suffix + 1
+    ; check if middle digit is zero
+    EQ #'0', _cc_digits + 1, jump_cond
+    JZ jump_cond, #_cc_out_suffix
+    ADD _cc_out_suffix + 1, #1, _cc_out_suffix + 1
+
+_cc_out_suffix:
+    OUT -1
+    ADD _cc_out_suffix + 1, #1, _cc_out_suffix + 1
+    LT _cc_out_suffix + 1, #_cc_end, jump_cond
+    JNZ jump_cond, #_cc_out_suffix
+
+    JNZ #1, color_cell_ret
+
+; locals used by color_cell subroutine
+_cc_start: ASCII "\e[48;5;\0"
+_cc_digits: ASCII "000m  "
+_cc_end: ; the end of the cube row
+_cc_store: DATA -1
+_cc_idx: DATA -1
+
+; the address to return to at the end of the cube_row routine
+cube_row_ret: DATA -1
+
+cube_row:
+    ADD #_crp_check, #0, color_cell_ret
+
+    ADD #_cr_break_0, #0, _crp_ret
+    JNZ #1, #_cr_part
+    _cr_break_0: 
+    OUT #' '
+    OUT #' '
+
+    ADD color_cell_number, #30, color_cell_number
+    ADD #_cr_break_1, #0, _crp_ret
+    JNZ #1, #_cr_part
+    _cr_break_1: 
+    OUT #' '
+    OUT #' '
+    ADD color_cell_number, #30, color_cell_number
+
+    ADD #_cr_break_2, #0, _crp_ret
+    JNZ #1, #_cr_part
+    _cr_break_2:
+    OUT #'\n'
+    ADD color_cell_number, #-72, color_cell_number
+    JNZ #1, cube_row_ret
+
+    _cr_part:
+        ADD color_cell_number, #6, _crp_check_cmp + 2
+        _cr_part_loop:
+            JNZ #1, #color_cell
+            _crp_check:
+                ADD color_cell_number, #1, color_cell_number
+                _crp_check_cmp:
+                EQ color_cell_number, #-1, jump_cond
+                JZ jump_cond, #_cr_part_loop
+        OUT #'\e'
+        OUT #'['
+        OUT #'0'
+        OUT #'m'
+        JNZ #1, _crp_ret
+
+    _crp_ret: DATA -1
