@@ -94,25 +94,6 @@ wget_if() {
     fi
 }
 
-# checks if command listed in first argument exists
-# if not, invoke cargo with the remaining arguments to install it
-cargo_wrapper() {
-    apt_if cargo
-    apt_wrapper ca-certificates
-    apt_install
-
-    # if CARGO_HOME isn't defined, and its default location doesn't exist,
-    # set it to RUNNERS/cargo to avoid polluting the user's home directory.
-    if [[ "${CARGO_HOME+defined}" != defined && ! -e ~/.cargo ]]; then
-        export CARGO_HOME="$PWD/cargo"
-    fi
-
-    if ! cmd_exists "$1"; then
-        shift
-        cargo install --root . --locked "$@"
-    fi
-}
-
 # this script assumes the presence of GNU coreutils on a Debian-based distro
 if [[ "$(uname -mo)" != 'x86_64 GNU/Linux' || ! -e /etc/debian_version ]]; then
     printf 'Unsupported system!\n' >&2
@@ -138,7 +119,6 @@ perl_dependencies() { apt_if perl; }
 lisp_dependencies() { apt_if clisp; }
 python_dependencies() { apt_if python3; }
 ruby_dependencies() { apt_if ruby ; }
-rust_dependencies() { apt_if rustc; }
 scala_dependencies() { apt_if scala; }
 typescript_dependencies() { apt_if ts-node; }
 
@@ -178,7 +158,29 @@ x86-64_linux_asm_dependencies() {
     apt_if nasm nasm
 }
 
-# a couple which need to be installed from git with cargo
+# Because IAL targets a version of Rust that's newer than what's available in
+# the Debian repositories, install Rust tooling with rustup
+rust_dependencies() {
+    if cmd_exists rustc && cmd_exists cargo; then return; fi
+    apt_if curl
+    apt_if gcc 
+    apt_wrapper ca-certificates libc6-dev binutils
+    apt_install
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh
+    chmod +x rustup.sh
+    ./rustup.sh --quiet --no-modify-path --profile minimal -y
+}
+
+# checks if command listed in first argument exists
+# if not, invoke cargo with the remaining arguments to install it
+cargo_wrapper() {
+    if ! cmd_exists "$1"; then
+        rust_dependencies
+        shift
+        cargo install --locked "$@"
+    fi
+}
+
 babalang_dependencies() {
     cargo_wrapper babalang --git https://github.com/RocketRace/babalang
 }

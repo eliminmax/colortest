@@ -21,11 +21,25 @@ colortest_implementations=(
     ruby rust scala scheme sh typescript vala wasm x86-64_linux_asm zig
 )
 
-bindir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")/bin"
+rundir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+mkdir -p "$rundir/bin"
 
-mkdir -p "$bindir"
-# if the bindir isn't in the PATH, append it
-case ":$PATH:" in
-    *":$bindir:"*) : ;; # do nothing
-    *) PATH="$PATH:$bindir" ;;
-esac
+pathappend() {
+    if [ "$#" -ne 1 ]; then printf 'internal error\n'>&2; exit 1; fi
+    # if the parameter isn't in the PATH, append it
+    case ":$PATH:" in
+        *":$1:"*) : ;; # do nothing
+        *) PATH="$PATH:$1" ;;
+    esac
+}
+
+pathappend "$rundir/bin"
+pathappend "$rundir/cargo/bin"
+
+if [ "${RUSTUP_HOME+set}" != 'set' ] && ! [ -e "$HOME/.rustup" ]; then
+    export RUSTUP_HOME="$rundir/rustup"
+fi
+
+if [ "${CARGO_HOME+set}" != 'set' ] && ! [ -e "$HOME/.cargo" ]; then
+    export CARGO_HOME="$rundir/cargo"
+fi
