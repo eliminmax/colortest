@@ -383,8 +383,8 @@ zig_dependencies() {
     apt_install
     mkdir -p zig
     pushd zig &>/dev/null
-    wget_if "https://ziglang.org/download/$ZIG_V/zig-linux-x86_64-$ZIG_V.tar.xz"
-    tar --strip-components=1 -xJf "zig-linux-x86_64-$ZIG_V.tar.xz"
+    wget_if "https://ziglang.org/download/$ZIG_V/zig-x86_64-linux-$ZIG_V.tar.xz"
+    tar --strip-components=1 -xJf "zig-x86_64-linux-$ZIG_V.tar.xz"
     cd ../bin
     ln -s ../zig/zig zig
     popd &>/dev/null
