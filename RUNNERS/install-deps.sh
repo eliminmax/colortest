@@ -263,7 +263,7 @@ nim_dependencies() {
     sh build.sh
     sh install.sh ..
     cd ../bin
-    ln -s ../nim/bin/nim
+    ln -s ../nim/bin/nim nim
     popd &>/dev/null
 }
 
