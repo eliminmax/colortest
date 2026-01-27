@@ -161,7 +161,7 @@ x86-64_linux_asm_dependencies() {
 # Because IAL targets a version of Rust that's newer than what's available in
 # the Debian repositories, install Rust tooling with rustup
 rust_dependencies() {
-    if cmd_exists rustc && cmd_exists cargo; then return; fi
+    if cmd_exists rustc && cmd_exists cargo; then return 0; fi
     apt_if curl
     apt_if gcc 
     apt_wrapper ca-certificates libc6-dev binutils
