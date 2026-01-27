@@ -291,6 +291,7 @@ odin_dependencies() {
 # out.
 rockstar_dependencies() {
     if cmd_exists satriani-wrapper; then return 0; fi
+    apt_wrapper ca-certificates
     apt_if yarnpkg
     apt_if node nodejs
     apt_if git
