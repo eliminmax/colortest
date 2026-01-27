@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# SPDX-FileCopyrightText: 2024 - 2025 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2024 - 2026 Eli Array Minkoff
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
@@ -28,15 +28,6 @@ else
     # rebuild the container if it doesn't exist at all
     ./build_test_container.sh
 fi
-
-
-(
-    podman run --name 'colortester_FULL_RUN' \
-        --rm -a stdout -a stderr "$podman_img" \
-        sh -c 'RUNNERS/install-deps.sh && RUNNERS/run-version.sh -a' \
-        >results/FULL_RUN.stdout 2>results/FULL_RUN.stderr
-    echo "$?" > results/FULL_RUN.status
-) &
 
 run_test () {
     local install_cmd
