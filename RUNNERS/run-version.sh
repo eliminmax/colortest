@@ -68,7 +68,7 @@ run_version() {
         'fortran') gfortran colortest.f90 -o colortest >&2 && ./colortest ;;
         'go')      gccgo colortest.go -o colortest >&2 && ./colortest     ;;
         'haskell') ghc colortest.hs >&2 && ./colortest                    ;;
-        'ial')     ial-as colortest.ial | intcode_ascii /dev/stdin        ;;
+        'ial')     ial-as colortest.ial | intcode-ascii /dev/stdin        ;;
         'java')    javac colortest.java >&2 && java colortest             ;;
         'kotlin')  kotlinc colortest.kt >&2 && kotlin ColortestKt         ;;
         'nim')     nim c colortest.nim >&2 && ./colortest                 ;;
