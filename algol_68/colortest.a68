@@ -19,7 +19,7 @@ PROC cube_row = (INT n) VOID:
         cube_row_part(n + 72);
         print((esc, "[0m", newline))
     END;
-    
+
 
 # Print the first 16 colors - these vary by terminal configuration #
 print(newline);

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-proc color_cell(n: uint8) = 
+proc color_cell(n: uint8) =
   stdout.write "\x1b[48;5;", n, "m  "
 
 proc cube_row_part(n: uint8) =

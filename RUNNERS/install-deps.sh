@@ -66,7 +66,7 @@ apt_install() {
 }
 
 # First argument is a command. If that command is not found, the rest of
-# the arguments are passed to apt_wrapper. As a special case, if only one arg 
+# the arguments are passed to apt_wrapper. As a special case, if only one arg
 # was passed, it's assumed to be both the command and the package name.
 apt_if() {
     cmd="$1"
@@ -163,7 +163,7 @@ x86-64_linux_asm_dependencies() {
 rust_dependencies() {
     if cmd_exists rustc && cmd_exists cargo; then return 0; fi
     apt_if curl
-    apt_if gcc 
+    apt_if gcc
     apt_wrapper ca-certificates libc6-dev binutils
     apt_install
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh
@@ -200,7 +200,7 @@ d_dependencies() {
     apt_wrapper libc6-dev # need to have C standard library headers
     # ldc2 shells out to `cc`, but uses gcc-specific flags, so make sure that
     # `cc` is actually GCC
-    apt_if gcc 
+    apt_if gcc
     apt_if ldc2 ldc
     apt_install
     ln -sf "$(type -p gcc)" bin/cc
@@ -227,7 +227,7 @@ befunge_dependencies() {
     local asset_path
     asset_path="archive/refs/tags/$CFUNGE_V.tar.gz"
     wget_if "https://github.com/VorpalBlade/cfunge/$asset_path"
-    
+
     # create local install prefix at colortest/RUNNERS/cfunge
     local pfx
     pfx="$PWD/cfunge"

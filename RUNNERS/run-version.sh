@@ -86,7 +86,7 @@ run_version() {
             gcc $(gnustep-config --objc-flags) \
                 colortest.m -o colortest       \
                 $(gnustep-config --base-libs) >&2 && \
-            ./colortest 
+            ./colortest
         ;;
         'x86-64_linux_asm')
 			nasm -f elf64 -o colortest.o colortest.asm

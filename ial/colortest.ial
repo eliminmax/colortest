@@ -134,14 +134,14 @@ cube_row:
 
     ADD #_cr_break_0, #0, _crp_ret
     JNZ #1, #_cr_part
-    _cr_break_0: 
+    _cr_break_0:
     OUT #' '
     OUT #' '
 
     ADD color_cell_number, #30, color_cell_number
     ADD #_cr_break_1, #0, _crp_ret
     JNZ #1, #_cr_part
-    _cr_break_1: 
+    _cr_break_1:
     OUT #' '
     OUT #' '
     ADD color_cell_number, #30, color_cell_number

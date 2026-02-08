@@ -7,7 +7,7 @@
 const util = require('util')
 
 function color_cell(n) {
-    // process.stdout.write(util.format()) is basically console.log without 
+    // process.stdout.write(util.format()) is basically console.log without
     // the automatic trailing newline
     process.stdout.write(util.format("\u001b[48;5;%dm  ", n))
 }

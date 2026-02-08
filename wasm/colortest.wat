@@ -29,7 +29,7 @@
   ;; use bytes 20-23 for fd_write's *nwritten
   ;; use bytes 24-31 for the iovs array
 
-  (func $write ;; write size bytes 
+  (func $write ;; write size bytes
     (param $index i32)
     (param $size i32)
     (i32.store (i32.const 24) (local.get $index))
@@ -131,10 +131,10 @@
     (param $n i32)
     (call $cube_row_part (local.get $n))
     (call $write (i32.const 0) (i32.const 6))
-    (local.set $n (i32.add (local.get $n) (i32.const 36))) 
+    (local.set $n (i32.add (local.get $n) (i32.const 36)))
     (call $cube_row_part (local.get $n))
     (call $write (i32.const 0) (i32.const 6))
-    (local.set $n (i32.add (local.get $n) (i32.const 36))) 
+    (local.set $n (i32.add (local.get $n) (i32.const 36)))
     (call $cube_row_part (local.get $n))
     (call $write (i32.const 0) (i32.const 4))
     (call $write (i32.const 19) (i32.const 1))

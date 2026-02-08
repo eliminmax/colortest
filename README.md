@@ -189,7 +189,7 @@ print("\e[0m\n\n")
 
 Due to the repetition of `print("\e[48;5;{n}m  ")` for a value `n`, it may make sense to create a `color_cell` function for that, though as it's a one-line function, it may not be. Additionally, if it makes for cleaner or more idiomatic code in a given language, `cube_row` and/or `cube_row_part` functions may be defined for use in the second part. I first used that approach for some of the functional programming languages, but later used it more broadly, and have adjusted some of the implementations that predate my use of that approach to use it.
 
-Depending on how simple and/or readable it is to represent an escape character within the source code, I might store it within an alias, macro, or global constant called `ESC` and use that. 
+Depending on how simple and/or readable it is to represent an escape character within the source code, I might store it within an alias, macro, or global constant called `ESC` and use that.
 
 An implementation that has such variations, using the same pseudocode "language" as before, would be as follows:
 

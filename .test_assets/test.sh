@@ -14,7 +14,7 @@ if podman image exists "$podman_img"; then
     # date doesn't understand the format output, and messing with LC_ALL
     # doesn't seem to change it. Cut off the time zone field, and it will work.
     container_ts="$(date -d"${container_time% UTC}" +%s)"
-    
+
     # stat -c%W prints only UNIX timestamp, sort -un sorts numerically,
     # removing duplicates, and tail -n1 grabs the last line
     latest_ts="$(

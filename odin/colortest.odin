@@ -29,7 +29,7 @@ main :: proc() {
     // Print the first 16 colors - these vary by terminal configuration
 	fmt.println("")
     for i in 0..<16 {
-        fmt.printf("\e[48;5;%dm  ", i)       
+        fmt.printf("\e[48;5;%dm  ", i)
     }
     fmt.println("\e[0m\n")
 

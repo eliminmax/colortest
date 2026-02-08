@@ -31,7 +31,7 @@ begin
     write(esc, '[0m  ');
     cubeRowParts(n + 72);
     writeLn(esc, '[0m');
-    
+
 end;
 
 begin
