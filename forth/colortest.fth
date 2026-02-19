@@ -24,7 +24,7 @@
 ( restores stack to starting state )
 : CUBE_ROW_PART 6 0 DO DUP I + COLOR_CELL LOOP CLEAR_FMT ;
 
-( prints a full cube row startin with the color at top of stack )
+( prints a full cube row starting with the color at top of stack )
 ( consumes top value of stack )
 : CUBE_ROW
     CUBE_ROW_PART ."   "
