@@ -190,8 +190,8 @@ fender_dependencies() {
 }
 
 ial_dependencies() {
-    cargo_wrapper ial-as --git https://github.com/eliminmax/ial \
-        ial-as intcode-ascii
+    cargo_wrapper ial-cli --git https://github.com/eliminmax/ial \
+        ial-cli
 }
 
 # the remaining ones have more complexity for various reasons
