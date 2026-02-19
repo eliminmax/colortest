@@ -6,7 +6,7 @@
  * specific to Objective C, and it does not provide anywhere string type, which
  * is called NSString, has no simple way to write to stdout without just using
  * stdio.h anyway. Either I just copy the C implementation, which feels lazy, or
- * I acutally use the NSString datatype and create a wrapper class to write to
+ * I actually use the NSString datatype and create a wrapper class to write to
  * stdout, which is both uglier and less efficient.
  *
  * Anyway, the following has been tested for GNUstep only. */
