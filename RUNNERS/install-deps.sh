@@ -210,10 +210,10 @@ d_dependencies() {
 
 PWSH_V='7.5.4'
 NIM_V='2.2.6'
-ODIN_V='dev-2025-12'
+ODIN_V='dev-2026-03'
 ROCKSTAR_COMMIT='c6c53db'
 ZIG_V='0.15.2'
-WASMTIME_V='40.0.0'
+WASMTIME_V='42.0.1'
 CFUNGE_V='1,001'
 
 # we need to pull the source for the interpreter and build it locally
