@@ -1,11 +1,11 @@
-# SPDX-FileCopyrightText: 2024 Eli Array Minkoff
+# SPDX-FileCopyrightText: 2024 - 2026 Eli Array Minkoff
 #
 # SPDX-License-Identifier: CC0-1.0
 
 FROM debian:latest
 WORKDIR /home/colortester/colortest
 
-RUN apt-get update && apt-get install -y doas && apt-get clean
+RUN apt-get update && apt-get install -y doas auto-apt-proxy && apt-get clean
 RUN useradd -s /usr/bin/bash colortester
 COPY .test_assets/doas.conf /etc
 COPY .test_assets/apt-no-install-recommends /etc/apt/apt.conf.d/
