@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2023 - 2024 Eli Array Minkoff
+// SPDX-FileCopyrightText: 2023 - 2026 Eli Array Minkoff
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -25,10 +25,10 @@ fn cubeRow(n: u8, writer: *Writer) !void {
     try writer.writeAll("\x1b[0m\n");
 }
 
-pub fn main() !void {
+pub fn main(init: std.process.Init) !void {
     // Print the first 16 colors - these vary by terminal configuration
     var buffer: [4096]u8 = undefined;
-    var stdout_writer = std.fs.File.stdout().writer(&buffer);
+    var stdout_writer = std.Io.File.stdout().writer(init.io, &buffer);
     var writer = &stdout_writer.interface;
 
     try writer.writeAll("\n");
